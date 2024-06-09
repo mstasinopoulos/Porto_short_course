@@ -1,0 +1,342 @@
+---
+title: "Mixed Distributions"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Fernanda De Bastiani
+  - Gillian Heller 
+  - Niki  Umlauf 
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    css: styles.css
+    theme: sky
+---
+
+## introduction 
+
+- A mixed distribution is special case of a finite mixture distribution
+
+- it has  two components: a `continuous` distribution and a `discrete` distribution
+
+- it is a continuous distribution where the range of $Y$ also includes discrete values with non-zero probabilities.
+
+
+## Types
+
+-   Zero adjusted distributions on $[0, \infty]$
+
+-   inflated distributions on $[0,1]$
+
+      -- $[0,1)$ inflated at zero
+      
+      -- $(0,1]$ inflated at one
+      
+      --  $[0,1]$ inflated at zero and one
+      
+
+# Zero adjusted distributions 
+
+
+## Zero adjusted distributions 
+
+- explicit: (they exist in `gamlss.dist` package)
+
+- impicit (they can be generated generated  using the package `gamlss.inf`)
+
+
+## Explicit mixed dist (con.)
+| name  | gamlss | range | parameter-links |
+|----------------|--------|-------|------------------|
+| beta inf. |  `BEINF0`    | $[0,  1)$ | logit , logit , log ,  -  |  
+| beta-inf. |  `BEOI`      | $[0 , 1)$ | logit , log , logit ,   - |
+| beta 1-inf.|  `BEINF1`       | $(0,  1]$ | logit , logit , log ,   -  |
+| beta 1-inf. |  `BEZI`     | $(0, 1]$ | logit,  log,  logit,    -  | 
+| beta 0 & 1 inf |  `BEINF` | $[0, 1]$ | logit, logit, log,  log |
+| gamma  0-adj. |  `ZAGA`  | $[0, \infty)$ | log, log, logit,    - |
+| inv Gaussian 0-adj| `ZAIG`| $[0, \infty)$ | log, log, logit,   - |
+
+
+## zero adjusted 
+
+- pdf
+
+\begin{split}
+f_Y(y)=  
+\begin{cases}
+p  & \mbox{if } y=0 \\ 
+(1-p)f_{Y_1}(y)  & \mbox{if } y>0\ .
+\end{cases}
+\label{E:MPFZAW}
+\end{split}
+
+- cdf 
+\begin{equation}
+P(Y \leq y)= p + (1-p) P (Y_1 \leq y)
+\label{E:CDFZAW}
+\end{equation}
+
+## zero adjusted con.
+
+![](ZeroadjustedBCT.png){height=650}
+
+## example zero adjusted 
+
+```{r}
+#| echo: true
+library(gamlss.inf)
+gen.Family(family="SST", type="log")
+gen.Zadj(family="logSST")
+```
+
+## example zero adjusted  (con.)
+
+```{r}
+#| echo: true
+plotlogSSTZadj(mu= 1, sigma=1, nu=1, tau=10, xi0=.1); title("(a)")
+```
+
+## example zero adjusted  (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=-1, sigma=1, nu=1, tau=10, xi0=.1); title("(b)")
+```
+
+## example zero adjusted  (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=-1, sigma=2, nu=1, tau=10, xi0=.1); title("(c)")
+```
+
+## example zero adjusted  (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=0,  sigma=2, nu=1, tau=10, xi0=.1); title("(d)")
+```
+
+## example zero adjusted (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=0,  sigma=1, nu=10,tau=10, xi0=.1); title("(e)")
+```
+
+## example zero adjusted  (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=0,  sigma=1, nu=1, tau=3,  xi0=.1); title("(f)")
+```
+
+## example zero adjusted  (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=0,  sigma=1, nu=2, tau=3,  xi0=.5); title("(g)")
+```
+
+## example zero adjusted  (con.)
+```{r}
+#| echo: true
+plotlogSSTZadj(mu=0,  sigma=1, nu=.3,tau=100,xi0=.1); title("(h)")
+```
+
+
+# Zero and one inflated distributions 
+
+
+## Zero and one inflated distributions 
+
+\begin{eqnarray}
+f_Y(y)=\left\{ \begin{array}{ll}
+                                 p_0  & \mbox{if $y=0$} \\
+(1-p_0-p_1) f_W(y) & \mbox{if $0<y<1$}  \\
+p_1  & \mbox{if $y=1$} \\
+ \end{array}
+\label{pdfDINF} \right.
+\end{eqnarray}
+
+
+## example of Zero and one inflated 
+
+```{r}
+#| echo: true
+library(gamlss.dist)
+plotBEINF( mu =.5 , sigma=.5, nu = 0.5, tau = 0.5)
+```
+
+## example of Zero and one inflated (con.)
+
+```{r}
+#| echo: true
+library(gamlss.inf)
+gen.Family(family="SST", type="logit")
+gen.Inf0to1(family="logitSST",  type.of.Inflation="Zero&One")
+```
+
+## example of Zero and one inflated (con.)
+
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu= 1, sigma=1, nu=1, tau=10, xi0=.1, xi1=.2); title("(a)")
+```
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=-1, sigma=1, nu=1, tau=10, xi0=.1, xi1=.2); title("(b)")
+```
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=-1, sigma=2, nu=1, tau=10, xi0=.1, xi1=.2); title("(c)")
+```
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=0,  sigma=2, nu=1, tau=10, xi0=.1, xi1=.2); title("(d)")
+```
+
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=0,  sigma=1, nu=10,tau=10, xi0=.1, xi1=.2); title("(e)")
+```
+
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=0,  sigma=1, nu=1, tau=3,  xi0=.1, xi1=.2); title("(f)")
+```
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=0,  sigma=1, nu=2, tau=3,  xi0=.5, xi1=.1); title("(g)")
+```
+
+## example of Zero and one inflated (con.)
+```{r}
+#| echo: true
+plotlogitSSTInf0to1(mu=0,  sigma=1, nu=.3,tau=100,xi0=.1, xi1=.5); title("(h)")
+
+```
+
+# select distribution
+
+## Find a distribution {.scrollable}
+
+```{mermaid}
+%%| label: fig-responseType
+%%| fig-cap: "Type of distribution for the response."
+%%| fig-width: 10
+%%| fig-height: 6
+%%| fig-size: 10
+flowchart TB
+  A[responce] --> B(continuous) 
+  A --> C[discrete]
+  A --> D[factor]
+  B --> F[real line]
+  B --> G[pos. real line]
+  B --> H[0 to 1]
+  C --> J[infinite count]
+  C --> I[finite count]
+  D --> K[unordered]
+  D --> L[ordered]
+  I --> N[binary]
+  K --> N[binary]
+```
+
+## Summary {.scrollable}
+
+-   Select an appropriate class of distributions following the diagram above.
+-   Use the function `chooseDist()` to fit a "linear" models for both $\mu$ and $\sigma$
+-   Use GAIC to finds the best fit
+-   Use model diagnostics to check the distribution
+
+## `chooseDist()`
+
+```{r}
+#| echo: true
+#| warning: false
+library(gamlss2)
+da <- rent99[, -c(2,9)]
+# fit a linear model with all variables above to both mu and sigma
+ m1 <- gamlss2(rent~.|., data=da, family=GA,trace=FALSE)
+ M1 <- chooseDist(m1, type="realplus", parallel="snow", ncpus=10)
+```
+## `chooseDist()` (con.)
+```{r}
+#| echo: true
+#| eval: true
+getOrder(M1, column=1) 
+```
+
+## worm plot
+
+```{r}
+#| warning: false
+#| message: false
+da <- rent99[, -c(2,9)]
+mGA <- gamlss2(rent~.|., data=da, family=GA,trace=FALSE)
+mBCTo <- gamlss2(rent~.|., data=da, family=BCTo,trace=FALSE)
+```
+
+```{r}
+#| warning: false
+#| message: false
+#| label: fig-model_diag6
+library(gamlss.ggplots)
+model_wp(mGA, mBCTo)
+```
+
+## bucket plot
+
+```{r}
+#| warning: false
+#| message: false
+moment_bucket(mGA, mBCTo)
+```
+
+## Summary
+
+```{mermaid}
+%%| label: fig-distributions
+%%| fig-cap: "Summary for finding an initial distribution."
+%%| fig-width: 10
+%%| fig-height: 6
+%%| fig-size: 10
+flowchart LR
+  A(responce) --> B[type] 
+  B --> C[initial fit]
+  C --> D[chooseDist]
+  D --> F{check}
+  F --> G[residual diagnostics]
+  F --> E[overfitting]
+```
+
+# practical 3
+
+
+## END
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
