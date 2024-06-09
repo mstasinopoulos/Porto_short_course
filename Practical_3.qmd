@@ -1,0 +1,300 @@
+---
+title: "Practical 3"
+author: 
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format: 
+   html: 
+    code-fold: false
+    toc: true
+    cover-image: cover.png
+    code-copy: true
+    html-math-method: katex
+   pdf:
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \usepackage[utf8]{inputenc}
+        \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    latex-auto-install: true
+editor: visual
+bibliography: book2021.bib
+---
+
+## The stylometric data.
+
+-   **R** data file:\] \texttt{stylo} in package `gamlss.data` of dimensions $64 \times 2$
+
+    -   `word`: number of times a word appears in a single text
+    -   `freq`: frequency of the number of times a word appears in a text *purpose* to demonstrate the fitting of a truncated discrete distribution.
+
+Note that the response variable `word` is (left) truncated at 0.
+
+-   Load the data and plot them.
+
+```{r}
+#| warning: false
+library(gamlss)
+library(gamlss2)
+library(gamlss.tr)
+library(ggplot2)
+library(gamlss.ggplots)
+data(stylo)
+ plot(freq ~ word, data = stylo, type = "h", xlim =
+ c(0, 22), xlab = "no of times", ylab =  "frequencies", col = "blue")
+# in ggplots
+ ggplot(data=stylo, aes(x=word, y=freq))+
+   geom_segment(mapping = aes(x=word, y=freq, 
+                          xend = word, yend = 0),  size=1)
+ 
+```
+
+-   Create different truncated at zero count data distributions (`PO`, `NBII`, `DEL`, `SICHEL`, for example:
+
+```{r}
+library(gamlss.tr)
+gen.trun(par = 0, family = PO, type = "left")
+gen.trun(par = 0, family = PO, type = "left")
+gen.trun(par = 0, family = NBII, type = "left")
+gen.trun(par = 0, family = DEL, type = "left")
+gen.trun(par = 0, family = SICHEL, type = "left",delta = 0.001)
+```
+
+-   Fit the different truncated distributions, for example:
+
+```{r}
+ mPO <- gamlss2(word ~ 1, weights = freq, data = stylo, 
+              family = POtr, trace = FALSE)
+mNBII <- gamlss(word ~ 1, weights = freq, data = stylo,              
+                family = NBIItr, n.cyc = 50, trace = FALSE)
+mDEL <- gamlss(word ~ 1, weights = freq, data = stylo,
+               family = DELtr, n.cyc = 50, trace = FALSE)
+mSI <- gamlss(word ~ 1, weights = freq, data = stylo,
+               family = SICHELtr, n.cyc = 50, trace = FALSE)
+```
+
+-   Compare the distributions using GAIC.% as in Exercise 4(e) of this Chapter.
+
+```{r}
+GAIC(mPO, mNBII, mDEL, mSI)
+```
+
+-   Check the residuals of the chosen model using `resid_plots()` and `resid_wp()`.
+
+```{r}
+wp(mSI)
+```
+
+-   Plot the fitted distributions using `histDist()`.
+
+```{r}
+op <- par(mfrow = c(2, 2))
+  mPO <- histDist(stylo$word, family = POtr, freq = stylo$freq,
+      main = "(b) Poisson", ylim = c(0, 0.65), xlim = c(1, 26),
+     trace = FALSE)
+  mNBII <- histDist(stylo$word, family = NBIItr, freq = stylo$freq,
+     main = "(c) negative binomial II", ylim = c(0, 0.65), xlim = c(1,
+          26), start.from = mNBII, trace = FALSE)
+  mDEL <- histDist(stylo$word, family = DELtr, freq = stylo$freq,
+     main = "(c) Delaporte", ylim = c(0, 0.65), xlim = c(1, 26),
+      start.from = mDEL, trace = FALSE)
+  mSI <- histDist(stylo$word, family = SICHELtr, freq = stylo$freq,
+      main = "(d) Sichel", ylim = c(0, 0.65), xlim = c(1, 26),
+      start.from = mSI, trace = FALSE)
+  par(op)
+```
+
+## The fish species data.
+
+-   **R** data file: `species` in package `gamlss.data` of dimension $70 \times 2$\
+-   `fish`: the number of different species in 70 lakes in the world
+-   `lake`: the lake area
+
+<!-- \item[purpose:] to demonstrate results of fitting using RS, CG and `mixed' algorithms  -->
+
+```{r}
+#| warning: false
+library(gamlss)
+library(gamlss2)
+library(ggplot2)
+ggplot(data=species, aes(x=log(lake), y=fish))+
+  geom_point()
+```
+
+The number of different fish species `fish` was recorded for 70 lakes of the world together with explanatory variable `x = log lake area`.
+
+The data were analysed by Stein and Juritz (1988) using a Poisson inverse Gaussian (`PIG`$(\mu, \sigma)$) distribution for `fish`, with a linear model in `log(lake)` for $\log \mu$, and a constant for $\sigma$. Rigby \textit{et al.} analysed this data set and identified the following questions that need to be answered. Note that the same questions could apply to any regression situation where the response variable is a count and `x` represents a set of explanatory variables.
+
+-   How does the mean of the response variable depend on texttt{x}?
+-   Is the response variable overdispersed Poisson?
+-   How does the variance of the response variable depend on its mean?
+-   What is the conditional distribution of the response variable given texttt{x}?
+-   Do the scale and shape parameters of the response variable distribution depend on texttt{x}?
+
+Here we will model the data using different discrete distributions and consider flexible models for the distribution parameters, where any or all of them may depend on the explanatory variable `log(lake)`. We start by fitting all available count distributions to the data including:
+
+-   Poisson (`PO`),
+-   double Poisson (`DPO`),
+-   negative binomial types I and II (`NBI`, `NBII`),
+-   Poisson inverse Gaussian (`PIG`),
+-   Delaporte (`DEL`) and
+-   Sichel ('SICHEL')
+
+We first use a linear model for `x=log(lake` and using `chooseDist()` we then trying to find an appropriate distribution for the response. Note that $T1$ is a table containing as colunms different GAIC criteria in this case $k=2, 3.84, log(n)$ representing AIC, $\chi^2$ and BIC respectively.
+
+```{r}
+#| warning: false
+mpo <- gamlss2(fish~log(lake), data=species, family=PO, trace=FALSE)
+T1 <- chooseDist(mpo, type="count")
+T1
+```
+
+The folowing command orders the models from best to worst (here we use `column=3` for BIC);
+
+```{r}
+getOrder(T1, column=3)[1:5] 
+```
+
+Now we fit a quadratic polynomial in `x=log(lake`.
+
+```{r}
+#| warning: false
+mpo <- gamlss2(fish~poly(log(lake),2), data=species, family=PO, trace=FALSE)
+T2 <- chooseDist(mpo, type="count")
+getOrder(T2, column=3)[1:5] 
+```
+
+Now we fit a smooth function in `x=log(lake)`.
+
+```{r}
+#| warning: false
+mpo <- gamlss2(fish~s(log(lake)), data=species, family=PO, trace=FALSE)
+T3 <- chooseDist(mpo, type="count")
+getOrder(T3, column=3)[1:5] 
+```
+
+```{r}
+# getOrder(T1, column=3)[1:5] 
+# getOrder(T2, column=3)[1:5] 
+# getOrder(T3, column=3)[1:5]
+```
+
+<!-- ```{r} -->
+
+<!-- mpo <- gamlss(fish~log(lake), data=species, family=PO) -->
+
+<!-- T11 <- chooseDist(mpo, type="count") -->
+
+<!-- getOrder(T1, column=3)[1:5]  -->
+
+<!-- getOrder(T11, column=3)[1:5]  -->
+
+<!-- ``` -->
+
+The Poisson distribution model has a very large BIC compared to the rest of the distributions and do not appears in the best 5 fits. We can conclude that the data are over-dispersed. The quadratic polynomial in `log(lake)` seems to fit slightly better than the linear term across the distributions and the smoothing only improves BIC marginally. The best distribution at this stage is the generalized Poisson `GPO` model with a quadratic polynomial in `log(lake)`. <!-- The fitted smooth function do not improve the fit for the quadratic polynomial in `log(lake)`.  -->
+
+We will try now to model all other parameters as a linear function of \`log(lake). (Note that the Poisson distribution has only the $\mu$ parameter but we include the linear terms for all parameters in the formula so it can fitted for the more compicated distributions).
+
+```{r}
+#| warning: false
+mpo <- gamlss2(fish~poly(log(lake),2)|log(lake)|log(lake), data=species, family=PO, trace=FALSE)
+T21 <- chooseDist(mpo, type="count")
+getOrder(T21, column=3)[1:5] 
+```
+
+Something radically went wrong with`ZANBI` distribution so let ignore it competely.
+
+```{r}
+getOrder(T21, column=3)[2:6] 
+```
+
+<!-- try proper `gamlss`; -->
+
+<!-- ```{r} -->
+
+<!-- #| warning: false -->
+
+<!-- mpo <- gamlss(fish~poly(log(lake),2),~log(lake),~log(lake), data=species, family=PO, trace=FALSE) -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- T22 <- chooseDist(mpo, type="count") -->
+
+<!-- getOrder(T22, column=3)[1:5]  -->
+
+<!-- ``` -->
+
+Modelling $\log(\sigma)$ as a linear function of `x` shows that the `PIG` distribution is the best but in fact its BIC is not better than the BIC of the `GPO` distribution fitted earlier.
+
+Now let us look at the shape of the fitted distributions and the residual of the two best model `PIC` and `GPO`.
+
+```{r}
+library(gamlss2)
+mGPO <-gamlss2(fish~poly(log(lake),2), data=species, family=GPO, trace=FALSE)
+mPIG <-gamlss2(fish~poly(log(lake),2)|log(lake), data=species, family=PIG, trace=FALSE)
+library(gamlss.ggplots)
+fitted_pdf(mGPO, obs=c(40,67), from=0, to=110)
+fitted_pdf(mPIG, obs=c(40,67), from=0, to=110)
+```
+
+Similar shape as expected. Now look at residuals from the two models
+
+```{r}
+library(gamlss.ggplots)
+model_wp(mGPO, mPIG)
+```
+
+## Finding the best distribution
+
+From the lecture we have that in order to select an appropriate ditribution from the data we have to:
+
+-   Select an appropriate class of distributions following the range of the resposnse.
+-   Use the function `chooseDist()` to fit a "linear" models for both $\mu$ and $\sigma$
+-   Use GAIC to finds the best fit
+-   Use model diagnostics to check the distribution
+
+Here we apply tis to the `rent99` data
+
+The respoose `rent` is defined in the positive real so we use
+
+```{r}
+#| echo: true
+#| warning: false
+library(gamlss2)
+da <- rent99[, -c(2,9)]
+# fit a linear model with all variables above to both mu and sigma
+ m1 <- gamlss2(rent~.|., data=da, family=GA,trace=FALSE)
+ M1 <- chooseDist(m1, type="realplus", parallel="snow", ncpus=10)
+ M1
+```
+
+### Using AIC
+
+```{r}
+#| echo: true
+#| eval: true
+getOrder(M1, column=1) 
+```
+
+## Diagnostics
+
+```{r}
+#| warning: false
+#| message: false
+da <- rent99[, -c(2,9)]
+mGA <- gamlss2(rent~.|., data=da, family=GA,trace=FALSE)
+mBCTo <- gamlss2(rent~.|., data=da, family=BCTo,trace=FALSE)
+```
+
+```{r}
+#| warning: false
+#| message: false
+#| label: fig-model_diag6
+library(gamlss.ggplots)
+model_wp(mGA, mBCTo)
+```

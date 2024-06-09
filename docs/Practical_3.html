@@ -350,6 +350,10 @@ mPO   9207.459  1</code></pre>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wp</span>(mSI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wp(mSI): Some points are missed out 
+increase the y limits using ylim.all</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -362,23 +366,23 @@ mPO   9207.459  1</code></pre>
 <li>Plot the fitted distributions using <code>histDist()</code>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  mPO <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> POtr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"(b) Poisson"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  mNBII <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> NBIItr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"(c) negative binomial II"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>          <span class="dv">26</span>), <span class="at">start.from =</span> mNBII, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  mPO <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> POtr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"(b) Poisson"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  mNBII <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> NBIItr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"(c) negative binomial II"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>          <span class="dv">26</span>), <span class="at">start.from =</span> mNBII, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in MLE(ll2, start = list(eta.mu = eta.mu, eta.sigma = eta.sigma), :
 possible convergence problem: optim gave code=1 false convergence (8)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>  mDEL <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> DELtr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"(c) Delaporte"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">start.from =</span> mDEL, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  mSI <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> SICHELtr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"(d) Sichel"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">start.from =</span> mSI, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  mDEL <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> DELtr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"(c) Delaporte"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">start.from =</span> mDEL, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  mSI <span class="ot">&lt;-</span> <span class="fu">histDist</span>(stylo<span class="sc">$</span>word, <span class="at">family =</span> SICHELtr, <span class="at">freq =</span> stylo<span class="sc">$</span>freq,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"(d) Sichel"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.65</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">26</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">start.from =</span> mSI, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -386,7 +390,7 @@ possible convergence problem: optim gave code=1 false convergence (8)</code></pr
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-fish-species-data." class="level2">
@@ -399,11 +403,11 @@ possible convergence problem: optim gave code=1 false convergence (8)</code></pr
 </ul>
 <!-- \item[purpose:] to demonstrate results of fitting using RS, CG and `mixed' algorithms  -->
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>species, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(lake), <span class="at">y=</span>fish))<span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>species, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(lake), <span class="at">y=</span>fish))<span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -432,14 +436,14 @@ possible convergence problem: optim gave code=1 false convergence (8)</code></pr
 </ul>
 <p>We first use a linear model for <code>x=log(lake</code> and using <code>chooseDist()</code> we then trying to find an appropriate distribution for the response. Note that <span class="math inline">T1</span> is a table containing as colunms different GAIC criteria in this case <span class="math inline">k=2, 3.84, log(n)</span> representing AIC, <span class="math inline">\chi^2</span> and BIC respectively.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">log</span>(lake), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">log</span>(lake), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>minimum GAIC(k= 2 ) family: GPO 
 minimum GAIC(k= 3.84 ) family: GPO 
 minimum GAIC(k= 4.25 ) family: GPO </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>T1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>T1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2      3.84      4.25
 PO       1900.1562 1903.8362 1904.6562
@@ -478,7 +482,7 @@ ZISICHEL  627.3930  636.5930  638.6430</code></pre>
 </div>
 <p>The folowing command orders the models from best to worst (here we use <code>column=3</code> for BIC);</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T1, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T1, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GAIG with k= 4.25 </code></pre>
 </div>
@@ -489,14 +493,14 @@ ZISICHEL  627.3930  636.5930  638.6430</code></pre>
 </div>
 <p>Now we fit a quadratic polynomial in <code>x=log(lake</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>minimum GAIC(k= 2 ) family: GPO 
 minimum GAIC(k= 3.84 ) family: GPO 
 minimum GAIC(k= 4.25 ) family: GPO </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T2, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T2, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GAIG with k= 4.25 </code></pre>
 </div>
@@ -507,14 +511,14 @@ minimum GAIC(k= 4.25 ) family: GPO </code></pre>
 </div>
 <p>Now we fit a smooth function in <code>x=log(lake)</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">s</span>(<span class="fu">log</span>(lake)), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>T3 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">s</span>(<span class="fu">log</span>(lake)), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>T3 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>minimum GAIC(k= 2 ) family: GPO 
 minimum GAIC(k= 3.84 ) family: GPO 
 minimum GAIC(k= 4.25 ) family: GPO </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T3, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T3, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GAIG with k= 4.25 </code></pre>
 </div>
@@ -524,9 +528,9 @@ minimum GAIC(k= 4.25 ) family: GPO </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># getOrder(T1, column=3)[1:5] </span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># getOrder(T2, column=3)[1:5] </span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># getOrder(T3, column=3)[1:5]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># getOrder(T1, column=3)[1:5] </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># getOrder(T2, column=3)[1:5] </span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># getOrder(T3, column=3)[1:5]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- ```{r} -->
 <!-- mpo <- gamlss(fish~log(lake), data=species, family=PO) -->
@@ -537,14 +541,14 @@ minimum GAIC(k= 4.25 ) family: GPO </code></pre>
 <p>The Poisson distribution model has a very large BIC compared to the rest of the distributions and do not appears in the best 5 fits. We can conclude that the data are over-dispersed. The quadratic polynomial in <code>log(lake)</code> seems to fit slightly better than the linear term across the distributions and the smoothing only improves BIC marginally. The best distribution at this stage is the generalized Poisson <code>GPO</code> model with a quadratic polynomial in <code>log(lake)</code>. <!-- The fitted smooth function do not improve the fit for the quadratic polynomial in `log(lake)`.  --></p>
 <p>We will try now to model all other parameters as a linear function of `log(lake). (Note that the Poisson distribution has only the <span class="math inline">\mu</span> parameter but we include the linear terms for all parameters in the formula so it can fitted for the more compicated distributions).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>)<span class="sc">|</span><span class="fu">log</span>(lake)<span class="sc">|</span><span class="fu">log</span>(lake), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>T21 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mpo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>)<span class="sc">|</span><span class="fu">log</span>(lake)<span class="sc">|</span><span class="fu">log</span>(lake), <span class="at">data=</span>species, <span class="at">family=</span>PO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>T21 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(mpo, <span class="at">type=</span><span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>minimum GAIC(k= 2 ) family: ZANBI 
 minimum GAIC(k= 3.84 ) family: ZANBI 
 minimum GAIC(k= 4.25 ) family: ZANBI </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T21, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T21, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GAIG with k= 4.25 </code></pre>
 </div>
@@ -555,7 +559,7 @@ minimum GAIC(k= 4.25 ) family: ZANBI </code></pre>
 </div>
 <p>Something radically went wrong with<code>ZANBI</code> distribution so let ignore it competely.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T21, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(T21, <span class="at">column=</span><span class="dv">3</span>)[<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GAIG with k= 4.25 </code></pre>
 </div>
@@ -576,11 +580,11 @@ minimum GAIC(k= 4.25 ) family: ZANBI </code></pre>
 <p>Modelling <span class="math inline">\log(\sigma)</span> as a linear function of <code>x</code> shows that the <code>PIG</code> distribution is the best but in fact its BIC is not better than the BIC of the <code>GPO</code> distribution fitted earlier.</p>
 <p>Now let us look at the shape of the fitted distributions and the residual of the two best model <code>PIC</code> and <code>GPO</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>mGPO <span class="ot">&lt;-</span><span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>), <span class="at">data=</span>species, <span class="at">family=</span>GPO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>mPIG <span class="ot">&lt;-</span><span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>)<span class="sc">|</span><span class="fu">log</span>(lake), <span class="at">data=</span>species, <span class="at">family=</span>PIG, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted_pdf</span>(mGPO, <span class="at">obs=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">67</span>), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">110</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>mGPO <span class="ot">&lt;-</span><span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>), <span class="at">data=</span>species, <span class="at">family=</span>GPO, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>mPIG <span class="ot">&lt;-</span><span class="fu">gamlss2</span>(fish<span class="sc">~</span><span class="fu">poly</span>(<span class="fu">log</span>(lake),<span class="dv">2</span>)<span class="sc">|</span><span class="fu">log</span>(lake), <span class="at">data=</span>species, <span class="at">family=</span>PIG, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted_pdf</span>(mGPO, <span class="at">obs=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">67</span>), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">110</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -588,7 +592,7 @@ minimum GAIC(k= 4.25 ) family: ZANBI </code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted_pdf</span>(mPIG, <span class="at">obs=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">67</span>), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">110</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted_pdf</span>(mPIG, <span class="at">obs=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">67</span>), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">110</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -599,8 +603,8 @@ minimum GAIC(k= 4.25 ) family: ZANBI </code></pre>
 </div>
 <p>Similar shape as expected. Now look at residuals from the two models</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_wp</span>(mGPO, mPIG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_wp</span>(mGPO, mPIG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -622,17 +626,17 @@ minimum GAIC(k= 4.25 ) family: ZANBI </code></pre>
 <p>Here we apply tis to the <code>rent99</code> data</p>
 <p>The respoose <code>rent</code> is defined in the positive real so we use</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> rent99[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">9</span>)]</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit a linear model with all variables above to both mu and sigma</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a> m1 <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>.<span class="sc">|</span>., <span class="at">data=</span>da, <span class="at">family=</span>GA,<span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a> M1 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(m1, <span class="at">type=</span><span class="st">"realplus"</span>, <span class="at">parallel=</span><span class="st">"snow"</span>, <span class="at">ncpus=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> rent99[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">9</span>)]</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit a linear model with all variables above to both mu and sigma</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a> m1 <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>.<span class="sc">|</span>., <span class="at">data=</span>da, <span class="at">family=</span>GA,<span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a> M1 <span class="ot">&lt;-</span> <span class="fu">chooseDist</span>(m1, <span class="at">type=</span><span class="st">"realplus"</span>, <span class="at">parallel=</span><span class="st">"snow"</span>, <span class="at">ncpus=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>minimum GAIC(k= 2 ) family: BCTo 
 minimum GAIC(k= 3.84 ) family: BCCGo 
 minimum GAIC(k= 8.03 ) family: BCCGo </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a> M1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a> M1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2     3.84     8.03
 EXP      43706.40 43721.12 43754.64
@@ -663,7 +667,7 @@ GB2      38469.66 38502.78 38578.20</code></pre>
 <section id="using-aic" class="level3">
 <h3 class="anchored" data-anchor-id="using-aic">Using AIC</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(M1, <span class="at">column=</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getOrder</span>(M1, <span class="at">column=</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GAIG with k= 2 </code></pre>
 </div>
@@ -681,13 +685,13 @@ GB2      38469.66 38502.78 38578.20</code></pre>
 <section id="diagnostics" class="level2">
 <h2 class="anchored" data-anchor-id="diagnostics">Diagnostics</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> rent99[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">9</span>)]</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>mGA <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>.<span class="sc">|</span>., <span class="at">data=</span>da, <span class="at">family=</span>GA,<span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>mBCTo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>.<span class="sc">|</span>., <span class="at">data=</span>da, <span class="at">family=</span>BCTo,<span class="at">trace=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> rent99[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">9</span>)]</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>mGA <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>.<span class="sc">|</span>., <span class="at">data=</span>da, <span class="at">family=</span>GA,<span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>mBCTo <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>.<span class="sc">|</span>., <span class="at">data=</span>da, <span class="at">family=</span>BCTo,<span class="at">trace=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_wp</span>(mGA, mBCTo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_wp</span>(mGA, mBCTo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-model_diag6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
