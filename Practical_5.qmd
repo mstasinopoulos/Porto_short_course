@@ -1,0 +1,189 @@
+---
+title: "Practical 5"
+author: 
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format: 
+   html: 
+    code-fold: false
+    toc: true
+    cover-image: cover.png
+    code-copy: true
+    html-math-method: katex
+   pdf:
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \usepackage[utf8]{inputenc}
+        \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    latex-auto-install: true
+editor: visual
+bibliography: book2021.bib
+---
+
+
+## Centile estimation 
+
+
+### Instructions
+
+
+<!-- %The second data set is a random sample of length 1000 from the data set used to analyse handgrip strength in relation to gender and age in English schoolchildren, see Cohen {\it et al.} (2010). -->
+
+@Cohenetal10 analysed the  handgrip (HG) strength in relation to gender and age in 3766 English schoolchildren.  The data are stored in the packages `gamlss.data` under the name  `grip` and contain the variables `grip` and `age`.  The aim here is to create centile curves for `grip`  given  `age`. 
+     
+
+ 1.  Read the data file by typing `data(grip)` into **R**. Note that  the following packages are used here;
+
+```{r}
+#| warning: false
+library(gamlss2)
+library(gamlss)
+library(gamlss.ggplots)
+library(ggplot2)
+data(grip)
+```
+
+  2.  Plot `grip` against `age`.
+  
+```{r}
+ggplot(data=grip, aes(x=age, y=grip))+
+  geom_point()
+```
+
+
+  3. Now follow the step described in the lecture to construct centile curves.
+  
+    - select transformation 
+    
+    - fit different distribution models 
+    
+    - use diagnostic tools 
+    
+    - get the centiles
+     
+
+
+### Select transformation 
+
+- explain why transformation for `age` is not needed for the `grip` data set.
+
+
+### Fit different distribution models
+
+
+```{r}
+    gNO <- gamlss2(grip~s(age)|s(age), data=grip, family=NO)
+ gBCCGo <- gamlss2(grip~s(age)|s(age)|s(age), data=grip, family=BCCGo)
+ gBCPEo <- gamlss2(grip~s(age)|s(age)|s(age)|s(age), data=grip,  family=BCPEo)
+  gBCTo <- gamlss2(grip~s(age)|s(age)|s(age)|s(age), data=grip, family=BCTo)
+```
+
+
+Use the generalised Akaike information criterion, GAIC, to compare the models. 
+
+```{r}
+gamlss2::GAIC(gNO, gBCCGo, gBCPEo, gBCTo)
+model_GAIC_lollipop(gNO, gBCCGo, gBCPEo, gBCTo)
+```
+
+###  Use diagnostic tools 
+
+
+#### model comparision using worm plots
+
+```{r}
+model_wp(gBCCGo, gBCTo)
+```
+
+#### worm plots for diffrent values of age 
+
+```{r}
+model_wp_wrap(gBCCGo, gBCTo, gNO, xvar=grip$age)
+```
+
+### Model bucket plots 
+
+```{r}
+#| warning: false
+moment_bucket(gBCCGo, gBCTo, gNO, gBCPEo)
+```
+#### Q-statistics
+
+
+
+```{r}
+gamlss.ggplots:::resid_Qstats(gBCTo, xvar=grip$age)
+```
+
+#### the fitted distribution parameters
+
+```{r}
+plot(gBCTo)
+```
+
+### get centiles
+
+ To obtain a centile plot for the fitted
+     models use 
+
+```{r}
+fitted_centiles(gBCTo)
+```
+
+
+```{r}
+fitted_centiles_legend(gBCTo)
+```
+
+
+  
+### centiles just curves
+
+```{r}
+#| echo: true 
+fitted_centiles(gBCTo, points=FALSE)
+```
+     
+### model centiles
+
+
+```{r}
+#| echo: true 
+model_centiles(gBCTo, gBCCGo)
+```
+### model centiles
+  
+```{r}
+#| echo: true 
+model_centiles(gBCTo, gBCCGo, in.one=TRUE)
+```
+
+### centiles for different ages
+
+
+```{r}
+#| echo: true 
+model_centiles(gBCTo, gBCCGo, in.one=TRUE)+
+   facet_wrap(cut_number(grip$age, 4), scales = "free_x")
+```
+
+## preditive values 
+
+```{r}
+#| echo: true
+library(broom)
+library(knitr)
+da <- predict(gBCTo, newdata=db[c(1, 1000, 2000, 3000, 6000,7000),])
+da  |> head() |> kable(digits = c(2, 4, 4, 4), format="pipe")
+```
+
+
+
+
+
+
+
