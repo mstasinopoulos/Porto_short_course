@@ -1,0 +1,131 @@
+---
+title: "Practical 4"
+author: 
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format: 
+   html: 
+    code-fold: false
+    toc: true
+    cover-image: cover.png
+    code-copy: true
+    html-math-method: katex
+   pdf:
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \usepackage[utf8]{inputenc}
+        \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    latex-auto-install: true
+editor: visual
+bibliography: book2021.bib
+---
+
+## Correlation of a distribution family
+
+The code below shows how to create a correlation coefficient table for the parameters of the BCTo distribution. It generates 10000 obstbations from the BCTo distribution at given values for $\mu$, $\sigma$, $\nu$ and $\tau$ them fits a model and plots the empirical correlation matrix of the parameters.
+
+```{r}
+#| warning: false
+source("~/Dropbox/GAMLSS-development/ggplot/family_cor.R")
+library(gamlss)
+library(ggplot2)
+family_cor("BCTo", mu=1, sigma=0.11, nu=1, tau=5, no.sim=10000)
+```
+
+1.  Try different values for $\mu$, $\sigma$, $\nu$ and $\tau$ for the BCTo distribution
+
+2.  Try different distribution i.e SHASH
+
+## Fitting different models
+
+Fit the
+
+-   linear,
+-   smooth additive,
+-   regression tree,
+-   neural networks and
+-   random forest
+
+described in the slides.
+
+### the data
+
+```{r}
+#| warning: false
+library(gamlss2)
+library(gamlss.ggplots)
+library(gamlss.prepdata)
+rent99 |> data_rm( c(2,9)) |>
+ data_few2fac() -> da
+```
+
+### the linear model
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| output: true
+#| output-location: slide
+mlinear <- gamlss2(rent~area+poly(yearc,2)+location+bath+kitchen+
+              cheating|area+yearc+location+bath+kitchen+cheating, 
+              family=BCTo, trace=FALSE, data=da)
+summary(mlinear)
+```
+
+### the additive model
+
+```{r}
+madditive <- gamlss2(rent~s(area)+s(yearc)+location+bath+kitchen+
+                cheating|s(area)+s(yearc)+location+bath+kitchen+cheating, 
+              family=BCTo, data=da, trace=F)
+GAIC(mlinear, madditive)
+summary(madditive)
+plot(madditive)
+
+```
+
+### Regression tree model
+
+```{r}
+mregtree <- gamlss2(rent~tree(~area+yearc+location+bath+kitchen+cheating)|
+                       tree(~area+yearc+location+bath+kitchen+cheating),
+                  family=BCTo, data=da, trace=FALSE) 
+
+GAIC(mlinear, madditive, mregtree)
+pp<- specials(mregtree, model = "mu", elements = "model")
+plot(pp)
+text(pp)
+pp<-specials(mregtree, model = "sigma", elements = "model")
+plot(pp)
+text(pp)
+```
+
+### Neural network model
+
+```{r}
+f <- rent ~ n(~area+yearc+location+bath+kitchen, size=10)|      n(~area+yearc+location+bath+kitchen, size=3)
+mneural <- gamlss2(f,family=BCTo, data=da)
+gamlss2::GAIC(mlinear, madditive, mneural, mregtree, k=2)
+source("~/Dropbox/GAMLSS-development/nnet/plot_NN.R")
+plot(specials(mneural, model = "mu", elements = "model"))
+plot(specials(mneural, model = "sigma", elements = "model"))
+```
+
+### Random forest model
+
+```{r}
+f <- rent ~ cf(~area+yearc+location+bath+kitchen)|    cf(~area+yearc+location+bath+kitchen)
+mcf <- gamlss2(f,family=BCTo, data=da)
+```
+
+## GAIC evaluation
+
+```{r}
+gamlss2::GAIC(mlinear, madditive, mneural, mregtree, mcf, k=2)
+model_GAIC_lollipop(mlinear, madditive, mneural, mregtree, mcf)
+```
