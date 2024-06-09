@@ -1,0 +1,543 @@
+---
+project:
+  type: website
+  output-dir: docs
+title: "Why GAMLSS?"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format:
+  revealjs:
+    revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    css: styles.css
+    theme: sky
+    auto-stretch: true
+    view-distance: 5
+---
+
+# Introduction
+
+## DAY 1
+
+-   Morning
+
+    -   `why GAMLSS`
+
+    -   `Available software`
+
+    -   `Practical 1`
+
+-   Afternoon
+
+    -   `Distributions`
+
+    -   `Continuous distributions`
+
+    -   `Practical 2`
+
+## DAY 2
+
+-   Morning
+
+    -   `Discrete Distributions`
+
+    -   `Mixed distributions`
+
+    -   `Practical 3`
+
+-   Afternoon
+
+    -   `Model Fitting`
+
+    -   `Model Selection`
+
+    -   `Practical 4`
+
+## DAY 3
+
+-   Morning
+
+    -   `Centile estination`
+
+    -   `Diagnostics and ggplots`
+
+    -   `Practical 5`
+
+-   Afternoon
+
+    -   `Model Comparison`
+
+    -   `Model Interpretation`
+
+    -   `Discussion`
+
+## Why GAMLSS
+
+-   Statistical modelling
+
+-   Ditributional Regression
+
+# Statistical modelling
+
+------------------------------------------------------------------------
+
+## Statistical models
+
+> "all models are wrong but some are useful".
+>
+> -- George Box
+
+-   Models should be **parsimonious**
+
+-   Models should be **fit for purpose** and able to answer the question at hand
+
+-   Statistical models have a **stochastic** component
+
+-   All models are based on **assumptions**.
+
+::: notes
+A common theme in the following scientific subjects; *statistical analysis*; *statistical inference*; *statistical modelling*; *machine learning*; *statistical learning*; *data mining*; *information harvesting*; *information discovery*; *knowledge extraction*; *data analytics*, is **data**.
+:::
+
+------------------------------------------------------------------------
+
+## Assumptions
+
+-   Assumptions are made to simplify things
+
+-   **Explicit** assumptions
+
+-   **Implicit** assumptions
+
+-   it is easier to check the explicit assumptions rather the implicit ones
+
+------------------------------------------------------------------------
+
+## Model circle
+
+![](Model_cicle.png){width="600"}
+
+::: aside
+We keep going until we find an adequate model
+:::
+
+------------------------------------------------------------------------
+
+## Regression {#sec-Regression}
+
+-   $$
+    X  \stackrel{\textit{M}(\theta)}{\longrightarrow} Y
+    $$
+-   $y$: **targer**, the **y** or the **dependent** variable
+-   $X$: **explanatory**, **features**, **x's** or **independent** variables or **terms**
+
+::: aside
+$M(\theta)$ is a model depending on parameters $\theta$
+:::
+
+------------------------------------------------------------------------
+
+## Linear Model
+
+-   standard way
+
+$$
+\begin{equation}
+y_i= b_0 + b_1 x_{1i}  +  b_2  x_{2i}, \ldots,  b_p x_{pi}+ \epsilon_i
+\end{equation}
+$$ {#eq-LinearModel}
+
+::: aside
+the model $M(\theta)$ is linear, and there are $n$ observations for $i=1,2,\ldots,n$.
+:::
+
+## Linear Model
+
+-   different way
+
+$$
+\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim } &  {N}(\mu_i, \sigma) \nonumber \\
+\mu_i &=& b_0 + b_1 x_{1i}  +  b_2  x_{2i}, \ldots,  b_p x_{pi}
+\end{split}
+$$ {#eq-LinearModel1}
+
+::: aside
+the model $M(\theta)$ is linear, $\mu$ and $\sigma$ are the parameter and $\beta$ are the linear coefficients.
+:::
+
+## Example: `BMI` data
+
+```{r}
+#| warning: false
+library(gamlss)
+library(gamlss.ggplots)
+library(ggplot2)
+```
+
+```{r}
+#| warning: false
+data(dbbmi)
+# data for boys aged 10 to 20
+db_bmi_10 <- dbbmi[db$age>10&db$age<20,]
+
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   theme_bw(base_size = 20)
+```
+
+## Example: `BMI` fitted model
+
+```{r}
+library(gamlss2)
+m1 <- gamlss2(bmi~age, data=db_bmi_10, trace=FALSE)
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m1, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+
+```
+
+------------------------------------------------------------------------
+
+## Additive Models
+
+$$
+\begin{split}
+y_i   &  \stackrel{\small{ind}}{\sim } &  {N}(\mu_i, \sigma) \nonumber \\
+\mu_i &=& b_0 + s_1(x_{1i})  +  s_2(x_{2i}), \ldots,  s_p(x_{pi})
+\end{split}
+$$ {#eq-AdditiveModel}
+
+::: aside
+$s(x)$ are smooth functions determined by the data
+:::
+
+## Example: additive fitted model
+
+```{r}
+m2 <- gamlss2(bmi~s(age), data=db_bmi_10, trace=FALSE)
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m2, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+
+```
+
+## Machine Learning Models
+
+$$\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim }&  {N}(\mu_i, \sigma) \nonumber \\
+\mu_i &=& ML(x_{1i},x_{2i}, \ldots,  x_{pi})
+\end{split}
+$$ {#eq-MachineLearning}
+
+::: aside
+All models concentrate on the mean and implicitly assumed a symmetric distribution
+:::
+
+## Example: neural networks
+
+```{r}
+library(gamlss.add)
+source("~/Dropbox/GAMLSS-development/nnet/NeuralNetworks-2.R")
+m3 <- gamlss2(bmi~n(~age), data=db_bmi_10, trace=FALSE)
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m3, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+```
+
+## Example: regression tree
+
+```{r}
+source("~/Dropbox/GAMLSS-development/nnet/reg.tree.R")
+m4 <- gamlss2(bmi~tree(~age), data=db_bmi_10, trace=FALSE)
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m4, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+```
+
+## Generalised Linear Models
+
+$$\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim }&  {E}(\mu_i, \phi) \nonumber \\
+g(\mu_i) &=& b_0 + b_1 x_{1i}  +  b_2  x_{2i}, \ldots,  b_p x_{pi}
+\end{split}
+$$ {#eq-GenaralisedLinearModel}
+
+-   ${E}(\mu_i, \phi)$ : `Exponential` family
+
+-   $g(\mu_i)$ : the `link` function
+
+::: aside
+Still modelling only shifts in the mean
+:::
+
+## Example: GLM
+
+```{r}
+m5 <- gamlss2(bmi~age, data=db_bmi_10, trace=FALSE, family=GA)
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m5, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+```
+
+::: aside
+gamma fitted distribution
+:::
+
+## Example: diagnostics 1
+
+```{R}
+model_qqplot(m1, m5)+
+       theme_bw(base_size = 15)
+```
+
+::: aside
+QQ-plot
+:::
+
+## Example: diagnostics 2
+
+```{R}
+model_wp(m1, m5)
+```
+
+::: aside
+Worm-plot
+:::
+
+## Example: diagnostics 3
+
+```{R}
+moment_bucket(m1, m5)+
+   theme_bw() + 
+   theme(legend.position = "none")
+```
+
+::: aside
+Bucket-plot
+:::
+
+## Example: conclusion
+
+-   the `mean` of the response is fitted fine with the linear model but the distribution is not
+
+-   the distribution (implicit `Normal`) is not-adequate
+
+-   even the explicit `Gamma` distribution of the GLM is not-adequate
+
+-   therefore if we are interested on a statistic different from the `mean` we need something extra.
+
+# Distributional regression {#sec-Distributionalregression}
+
+## Distributional regression
+
+$$
+X  \stackrel{\textit{M}(\boldsymbol{\theta})}{\longrightarrow} D\left(Y|\boldsymbol{\theta}(\textbf{X})\right)
+$$
+
+-   All parameters $\boldsymbol{\theta}$ could functions of the explanatory variables $\boldsymbol{\theta}(\textbf{X})$.
+
+-   $D\left(Y|\boldsymbol{\theta}(\textbf{X})\right)$ can be any $k$ parameter distribution
+
+## Generalised Additive models for Location Scale and Shape
+
+$$\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim }&  {D}( \theta_{1i}, \ldots, \theta_{ki}) \nonumber \\
+g(\theta_{1i})  &=& b_{10} + s_1({x}_{1i})  +  \ldots,  s_p({x}_{pi}) \nonumber\\
+ \ldots &=& \ldots \nonumber\\
+g({\theta}_{ki})  &=& b_0 + s_1({x}_{1i})  +   \ldots,  s_p({x}_{pi})
+\end{split} 
+$$ {#eq-GAMLSS}
+
+::: aside
+for $i=1,2,\ldots,n$.
+:::
+
+## GAMLSS + ML
+
+$$\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim }&  {D}( \theta_{1i}, \ldots, \theta_{ki}) \nonumber \\
+g({\theta}_{1i}) &=& {ML}_1({x}_{1i},{x}_{2i}, \ldots,  {x}_{pi}) \nonumber \\
+ \ldots &=& \ldots \nonumber\\
+g({\theta}_{ki}) &=& {ML}_1({x}_{1i},{x}_{2i}, \ldots,  {x}_{pi}) 
+ \end{split} 
+ $$ {#eq-GAMLSS_ML} <!--  --> <!--  \ldots &=& \ldots \nonumber\\ --> <!-- g(\boldsymbol{\theta}_k) &=& {ML}_k(\textbf{x}_{1i},\textbf{x}_{2i}, \ldots,  \textbf{x}_{pi})  -->
+
+::: aside
+for $i=1,2,\ldots,n$.
+:::
+
+## Example: GAMLSS {#sec-Example}
+
+```{r}
+library(gamlss.add)
+m6 <- gamlss2(bmi~age, data=db_bmi_10, trace=FALSE, family=BCT)
+ggplot(data=db_bmi_10, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m6, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+```
+
+::: aside
+BCT distribution GAMLSS model
+:::
+
+## Example: diagnostics
+
+```{R}
+model_qqplot(m3, m6)+
+       theme_bw(base_size = 15)
+```
+
+::: aside
+QQ-plot, Gamma, `m3`, against BCT model, `m6`.
+:::
+
+## Example: diagnostics 2
+
+```{R}
+model_wp(m3, m6)
+```
+
+::: aside
+Worm-plot: Gamma, `m3`, against BCT model, `m6`.
+:::
+
+## Example: diagnostics 3
+
+```{R}
+moment_bucket(m3, m6)+
+   theme_bw() + 
+   theme(legend.position = "none")
+```
+
+::: aside
+Bucket-plot, Gamma, `m3`, against BCT model, `m6`.
+:::
+
+## Fitted Centiles
+
+```{r}
+#| label: fig-diagfigg
+#| fig.cap: "Centile-plot of the fitted `m6` model"
+#| fig-width: 10.00
+#| fig-height: 5
+#| warning: false
+fitted_centiles(m6, title="fitted centiles", ylim=c(20,450))+
+  theme_bw(base_size = 20)
+```
+
+## The true `BMI` data
+
+```{r}
+#| warning: false
+data(dbbmi)
+# data for boys aged 10 to 20
+ggplot(data=dbbmi, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   theme_bw(base_size = 20)
+```
+
+## The fitted model
+
+```{r}
+library(gamlss.add)
+#| warning: false
+#| cache: true
+m7 <- gamlss2(bmi~s(I(age^.3))|s(I(age^.3))|s(I(age^.3))|s(I(age^.3)), data=dbbmi, trace=FALSE, family=BCT)
+ggplot(data=dbbmi, aes(x=age, y=bmi))+
+  geom_point(pch=20, col=gray(.5))+xlab("AGE")+ylab("BMI")+
+   geom_line(aes(x=age, fitted(m7, model="mu")), col="blue", lwd=2)+ 
+  theme_bw(base_size = 20)
+```
+
+## The fitted centiles
+
+```{r}
+library(gamlss.ggplots)
+#| warning: false
+fitted_centiles(m7)
+```
+
+::: aside
+see `centile estimation` of 3rd day
+:::
+
+## Diagnostics 1
+
+```{r}
+resid_qqplot(m7)
+```
+
+::: aside
+QQ-plot
+:::
+
+## Diagnostics 2
+
+```{r}
+resid_wp(m7)
+```
+
+::: aside
+worm plot
+:::
+
+## Diagnostics 3
+
+```{r}
+moment_bucket(m7)
+```
+
+::: aside
+bucket plot
+:::
+
+## Summary {.smaller}
+
+-   Distributional assumptions often needed for the response to be fitted properly
+
+-   In the BMI example above we needed to model all the parameters of the distribution as function of the explanatory variable `age`.
+
+-   Those parameters were the `location` parameter $\mu$, the `scale` parameter, $\sigma$, the `skewness` parameter, $\nu$, and the `kurtotic` parameter $\tau$
+
+-   Machine Learning methods are useful (especially for modelling interactions between variables) but they are not suitable if the interest do non lie in the mean.
+
+<!-- -   `quantile regression` could be used in certain circumstances  but  it is more difficult to check its adequancy -->
+
+<!-- ::: callout-tip -->
+
+<!-- Implicit assumptions are more difficult to check in general -->
+
+<!-- ::: -->
+
+## end
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
