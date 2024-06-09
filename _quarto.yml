@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: docs
+website:
+  title: "GAMLSS Short Course"
+  navbar:
+    background: primary
+    search: true
+    left:
+      - href: index.qmd
+        text: Home
+      
+sidebar:
+  contents: auto
+      
+format:
+  html:
+    theme: sky
+    css: styles.css
+    toc: true
+
+editor: visual
+
