@@ -2224,5 +2224,12 @@
     "title": "Practical 5",
     "section": "preditive values",
     "text": "preditive values\n\nlibrary(broom)\nlibrary(knitr)\nda &lt;- predict(gBCTo, newdata=db[c(1, 1000, 2000, 3000, 6000,7000),])\nda  |&gt; head() |&gt; kable(digits = c(2, 4, 4, 4), format=\"pipe\")\n\n\n\n\n\nmu\nsigma\nnu\ntau\n\n\n\n\n1\n3.90\n0.7239\n0.0457\n0.4552\n\n\n1042\n4.32\n0.6595\n0.0578\n0.5537\n\n\n2091\n5.16\n0.5619\n0.0787\n0.7755\n\n\n3118\n10.83\n0.2880\n0.1656\n3.1610\n\n\n6327\n49.25\n0.2214\n1.2786\n39.0640\n\n\n7422\n88.19\n0.2872\n2.3255\n101.9300"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "GAMLSS short course slides for Port 2024",
+    "section": "",
+    "text": "This website contains slides from the short course on GAMLSS given in June 2024 at Porto - Portugal.\n\nWhy GAMLSS\nThe R shoftware\nPractical 1\nDistributions\nContinuous Distributions\nPractical 2\nDiscrete Distributions\nMixed Distributions\nPractical 3\nModel Fitting\nModel Selection\nCentile Estimation\nDiagnostics\nComparison of Models\nInterpretation of Models"
   }
 ]
