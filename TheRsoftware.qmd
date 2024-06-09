@@ -1,0 +1,333 @@
+---
+title: "The `R` software"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    css: styles.css
+    theme: sky
+---
+
+## Introduction
+
+-   `residuals` in GAMLSS
+
+-   an example; the `rent99` data
+
+-   `R` packages
+
+# Residuals
+
+## Introduction
+
+-   GAMLSS uses as `residuals` the
+
+    -  `normalised quantile residuals`$\equiv$  `z-scores` 
+
+## `PIT` and `z-scores` residuals
+
+let $y_i$ and $F(y_i, \hat(\theta)_i)$ be the ith observation and its fitted cdf respectively. Then the Probability Integral Transformed (`PIT`) residuals are
+
+$$u_i = F(y_i, \hat(\theta)_i) $$ and the `z-scores` residuals are
+
+$$z_i = \Phi^{-1}(y_i, \hat(\theta)_i) $$
+
+## properties
+
+If the distribution of $y_i$ is specified correctly then `PIT` are `uniform`;
+
+i.e $$u_i \sim U(0,1)$$
+
+and `z-scores` are `normally` distributed
+
+i.e. $$z_i \sim NO(0,1)$$
+
+## PIT 
+
+```{r}
+#| warning: false
+library(gamlss.ggplots)
+library(ggplot2)
+da <- dbbmi[db$age>10&db$age<20,]
+m6 <- gamlss(bmi~age, data=da, trace=FALSE, family=BCTo)
+y100 <- da[100,]$bmi
+u100 <- pBCTo(y100, mu=fitted(m6, "mu")[100], sigma=fitted(m6, "sigma")[100], nu=fitted(m6, "nu")[100], tau=fitted(m6, "tau")[100])  
+
+fitted_cdf_data(m6, 100, from=10, to=30, title="the 100th observation PIT")+
+  ylab("PIT")+
+ ggplot2::geom_vline(xintercept = y100, colour="pink")+  
+ ggplot2::geom_hline(yintercept = u100, colour="pink")+
+  geom_text(x=y100+0.15, y=.01, label="Y")+
+  geom_text(x=10-0.15, y=u100, label="U")+
+  geom_segment(aes(x=y100, y=0, xend=y100, yend=u100), arrow = arrow(length=unit(0.4, 'cm')))+
+  geom_segment(aes(x=y100, y=u100, xend=10, yend=u100), arrow = arrow(length=unit(0.4, 'cm')))
+
+```
+
+## z-scores
+
+```{r}
+z100 <- qNO(u100)
+
+p9 <- ggplot(data.frame(u = c(0, 1)), aes(x = u)) +
+        stat_function(fun = qnorm, lwd=1.5)+ylab("z-score")+
+   ggplot2::geom_vline(xintercept = u100, colour="pink")+
+   ggplot2::geom_hline(yintercept = z100, colour="pink")+
+   geom_text(x=u100+0.08, y=-2.3, label="U")+
+   geom_text(x=-0.01, y=u100, label="Z")+
+   geom_segment(aes(x=u100, y=-2.3, xend=u100, yend=z100), arrow = arrow(length=unit(0.4, 'cm')))+
+  geom_segment(aes(x=u100, y=z100, xend=0, yend=z100), arrow = arrow(length=unit(0.4, 'cm')))
+p9
+```
+
+## diagnostics plots
+
+-   residuals plots against other variables
+
+    ```         
+    index 
+    x-variable
+    parameters 
+    quantiles
+    ```
+
+-   qqplots
+
+-   worm plots
+
+-   density plots
+
+-   bucket plots
+
+-   skewness plots
+
+# Example: `rent`
+
+## Data {.smaller}
+
+| obs number | y      | x~1~    | x~2~    | x~3~    | ... | x~r-1~    | x~r~    |
+|------------|--------|---------|---------|---------|-----|-----------|---------|
+| 1          | y~1~   | x~11~   | x~12~   | x~13~   | ... | x~1r-1~   | x~1r~   |
+| 2          | y~2~   | x~21~   | x~22~   | x~23~   | ... | x~2r-1~   | x~2r~   |
+| 3          | y~3~   | x~31~   | x~32~   | x~33~   | ... | x~3r-1~   | x~3r~   |
+| ...        | ...    | ...     | ...     | ...     | ... | ...       | ...     |
+| n-1        | y~n-1~ | x~n-11~ | x~n-12~ | x~n-12~ | ... | x~n-1r-1~ | x~n-1r~ |
+| n          | y~n~   | x~n1~   | x~n2~   | x~n3~   | ... | x~nr-1~   | x~nr~   |
+
+: The Table of Data {#tbl-TheTableofData .striped .hover}
+
+## The rent 1999 Munich data {.smaller}
+
+```{r}
+#| label: tbl-stats
+#| tbl-cap: "Variables in  Munich rent data"
+#| warning: false
+library(gamlss.ggplots)
+library(gamlss2)
+library(broom)
+library(knitr)
+library(gamlss.ggplots)
+# remove two variables
+da <- rent[, -c(4,5)]
+da  |> head() |> kable(digits = c(2, 0, 0, 0, 0,0,0), format="pipe")
+```
+
+## Fitting
+
+```{r}
+#| echo: true
+r1 <- gamlss2(R~pb(Fl)+pb(A)+H+loc|pb(Fl)+pb(A)+H+loc, 
+           family=GA, data=rent)
+```
+
+
+
+## residual plots agaist index
+
+```{r}
+#| echo: true
+library(gamlss.ggplots)
+resid_index(r1)
+```
+
+## against continuous x-variables
+
+```{r}
+#| echo: true
+resid_xvar(r1, A)
+```
+
+## against factor x-variables
+
+```{r}
+#| echo: true
+resid_xvar(r1,loc)
+```
+
+## QQ-plots
+
+```{r}
+#| echo: true
+resid_qqplot(r1)
+```
+
+## worm plots
+
+```{r}
+#| echo: true
+resid_wp(r1)
+```
+
+## density plots
+
+```{r}
+#| echo: true
+resid_density(r1)
+```
+
+## bucket plots
+
+```{r}
+#| echo: true
+moment_bucket(r1)
+```
+
+## symmetry plots
+
+```{r}
+#| echo: true
+resid_symmetry(r1)
+```
+
+## ecdf plot
+
+```{r}
+#| echo: true
+resid_ecdf(r1)
+```
+
+## detrended ecdf plot
+
+```{r}
+#| echo: true
+resid_dtop(r1)
+```
+
+## all in one plots
+
+```{r}
+#| echo: true
+resid_plots(r1)
+```
+
+## all in one plots (standard)
+
+```{r}
+#| echo: true
+plot(r1,which="resid")
+```
+
+# R-packages
+
+## Older Packages {.smaller}
+
+-   `gamlss`: the original (needs `dist` and `data`)
+
+-   `gamlss.dist`: defining the `gamlss.family` distributions
+
+-   `gamlss.data`: for extra data sets
+
+-   `gamlss.add`: connect with `mgcv`, `nnet` and `trees`
+
+-   `gamlss.tr`: for truncating `gamlss.family` distributions
+
+-   `gamlss.cens`: for censored response variables
+
+-   `gamlss.demo`: for demonstrating GAMLSS concepts
+
+-   `gamlss.mx`: for fitting finite mixtures
+
+## New Packages {.smaller}
+
+-   `gamboostLSS` for GAMLSS boosting
+
+-   `bamlss` the Bayesian GAMLSS
+
+-   `gamlss2`$^*$: the new version of GAMLSS
+
+-   `gamlss.ggplots`: using `ggplot2` within GAMLSS
+
+-   `gamlss.foreach`: for parallel computing
+
+-   `gamlss.prepdata`: preparation of data before fitting
+
+-   `gamlss.lasso`: for LASSO. Ridge and elastic Net regression
+
+-   `gamlss.shiny`$^*$: similar to `gamlss.demo`
+
+-   `topmodels` distributional regression help (not necessary gamlss)
+
+::: aside
+$^*$ in GitHub needed testing
+:::
+
+
+## why gamlss2 {.smaller}
+
+- `gamlss()` for very large data is slow
+
+- `predict` in `gamlss` is not easy to use
+
+- current implementation can cope with only 4 parameters $\mu$, $\sigma$, $\nu$ and $\tau$ 
+
+- to connect different estimation statistical approaches 
+    
+     - `penalised likelihood`
+     - `Bayesian`
+     - `boosting`
+     
+- to implement extra algorithms i.e. `stepwise`, `robust`
+
+- to implement `machine learning` methodology 
+
+## getting the libraries
+
+-   For `CRAN` use
+    -   `install.packages(gamlss)`
+-   for `GitHub` use
+    -   `devtools::install_github("gamlss-dev/gamlss2")`
+     - <https://gamlss-dev.r-universe.dev/builds>
+
+-   and then use
+    -   `library(gamlss2)`
+    
+   
+
+# Practical 1
+
+## end
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
