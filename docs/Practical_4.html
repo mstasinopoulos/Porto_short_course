@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mikis Stasinopoulos">
+<meta name="author" content="Bob Rigby">
+<meta name="author" content="Gillian Heller">
+<meta name="author" content="Fernanda De Bastiani">
+<meta name="author" content="Niki Umlauf">
+
+<title>GAMLSS Short Course - Practical 4</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">GAMLSS Short Course</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.qmd"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#correlation-of-a-distribution-family" id="toc-correlation-of-a-distribution-family" class="nav-link active" data-scroll-target="#correlation-of-a-distribution-family">Correlation of a distribution family</a></li>
+  <li><a href="#fitting-different-models" id="toc-fitting-different-models" class="nav-link" data-scroll-target="#fitting-different-models">Fitting different models</a>
+  <ul class="collapse">
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">the data</a></li>
+  <li><a href="#the-linear-model" id="toc-the-linear-model" class="nav-link" data-scroll-target="#the-linear-model">the linear model</a></li>
+  <li><a href="#the-additive-model" id="toc-the-additive-model" class="nav-link" data-scroll-target="#the-additive-model">the additive model</a></li>
+  <li><a href="#regression-tree-model" id="toc-regression-tree-model" class="nav-link" data-scroll-target="#regression-tree-model">Regression tree model</a></li>
+  <li><a href="#neural-network-model" id="toc-neural-network-model" class="nav-link" data-scroll-target="#neural-network-model">Neural network model</a></li>
+  <li><a href="#random-forest-model" id="toc-random-forest-model" class="nav-link" data-scroll-target="#random-forest-model">Random forest model</a></li>
+  </ul></li>
+  <li><a href="#gaic-evaluation" id="toc-gaic-evaluation" class="nav-link" data-scroll-target="#gaic-evaluation">GAIC evaluation</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Practical_4.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Practical 4</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mikis Stasinopoulos </p>
+             <p>Bob Rigby </p>
+             <p>Gillian Heller </p>
+             <p>Fernanda De Bastiani </p>
+             <p>Niki Umlauf </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="correlation-of-a-distribution-family" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-of-a-distribution-family">Correlation of a distribution family</h2>
+<p>The code below shows how to create a correlation coefficient table for the parameters of the BCTo distribution. It generates 10000 obstbations from the BCTo distribution at given values for <span class="math inline">\mu</span>, <span class="math inline">\sigma</span>, <span class="math inline">\nu</span> and <span class="math inline">\tau</span> them fits a model and plots the empirical correlation matrix of the parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"~/Dropbox/GAMLSS-development/ggplot/family_cor.R"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">family_cor</span>(<span class="st">"BCTo"</span>, <span class="at">mu=</span><span class="dv">1</span>, <span class="at">sigma=</span><span class="fl">0.11</span>, <span class="at">nu=</span><span class="dv">1</span>, <span class="at">tau=</span><span class="dv">5</span>, <span class="at">no.sim=</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li><p>Try different values for <span class="math inline">\mu</span>, <span class="math inline">\sigma</span>, <span class="math inline">\nu</span> and <span class="math inline">\tau</span> for the BCTo distribution</p></li>
+<li><p>Try different distribution i.e SHASH</p></li>
+</ol>
+</section>
+<section id="fitting-different-models" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-different-models">Fitting different models</h2>
+<p>Fit the</p>
+<ul>
+<li>linear,</li>
+<li>smooth additive,</li>
+<li>regression tree,</li>
+<li>neural networks and</li>
+<li>random forest</li>
+</ul>
+<p>described in the slides.</p>
+<section id="the-data" class="level3">
+<h3 class="anchored" data-anchor-id="the-data">the data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.prepdata)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rent99 <span class="sc">|&gt;</span> <span class="fu">data_rm</span>( <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">9</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">data_few2fac</span>() <span class="ot">-&gt;</span> da</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>************************************************************** 
+    rent     area    yearc location     bath  kitchen cheating 
+    2723      132       68        3        2        2        2 
+************************************************************** 
+4 vectors with fewer number of values than 10 were transformed to factors 
+************************************************************** 
+************************************************************** </code></pre>
+</div>
+</div>
+</section>
+<section id="the-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="the-linear-model">the linear model</h3>
+<div class="cell" data-output-location="slide">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mlinear <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span>area<span class="sc">+</span><span class="fu">poly</span>(yearc,<span class="dv">2</span>)<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen<span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>              cheating<span class="sc">|</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen<span class="sc">+</span>cheating, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family=</span>BCTo, <span class="at">trace=</span><span class="cn">FALSE</span>, <span class="at">data=</span>da)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlinear)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+gamlss2(formula = rent ~ area + poly(yearc, 2) + location + bath + 
+    kitchen + cheating | area + yearc + location + bath + kitchen + 
+    cheating, data = da, family = BCTo, ... = pairlist(trace = FALSE))
+---
+Family: BCTo 
+Link function: mu = log, sigma = log, nu = identity, tau = log
+*--------
+Parameter: mu 
+---
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     5.0132864  0.0275445 182.007  &lt; 2e-16 ***
+area            0.0106293  0.0002329  45.640  &lt; 2e-16 ***
+location2       0.0878750  0.0104118   8.440  &lt; 2e-16 ***
+location3       0.1983303  0.0383017   5.178 2.39e-07 ***
+bath1           0.0415152  0.0206509   2.010   0.0445 *  
+kitchen1        0.1129557  0.0236130   4.784 1.80e-06 ***
+cheating1       0.3304758  0.0240475  13.743  &lt; 2e-16 ***
+poly(yearc, 2)1 5.0471663  0.3301520  15.287  &lt; 2e-16 ***
+poly(yearc, 2)2 3.3575299  0.2751069  12.204  &lt; 2e-16 ***
+*--------
+Parameter: sigma 
+---
+Coefficients:
+              Estimate Std. Error   t value Pr(&gt;|t|)    
+(Intercept)  1.047e+01  6.245e-02   167.650  &lt; 2e-16 ***
+area         1.218e-03  6.099e-04     1.996   0.0460 *  
+yearc       -5.972e-03  8.078e-07 -7392.764  &lt; 2e-16 ***
+location2    5.971e-02  2.911e-02     2.051   0.0403 *  
+location3    2.176e-01  9.224e-02     2.359   0.0184 *  
+bath1        5.069e-03  5.966e-02     0.085   0.9323    
+kitchen1     3.750e-02  7.106e-02     0.528   0.5977    
+cheating1   -2.431e-01  4.766e-02    -5.100  3.6e-07 ***
+*--------
+Parameter: nu 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.65342    0.05454   11.98   &lt;2e-16 ***
+*--------
+Parameter: tau 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.18974    0.01758   181.4   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+*--------
+n = 3082 df =  19 res.df =  3063
+Deviance = 38254.617 Null Dev. Red. = 5.95%
+AIC = 38292.617 elapsed =  0.31sec</code></pre>
+</div>
+</div>
+</section>
+<section id="the-additive-model" class="level3">
+<h3 class="anchored" data-anchor-id="the-additive-model">the additive model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>madditive <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span><span class="fu">s</span>(area)<span class="sc">+</span><span class="fu">s</span>(yearc)<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen<span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                cheating<span class="sc">|</span><span class="fu">s</span>(area)<span class="sc">+</span><span class="fu">s</span>(yearc)<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen<span class="sc">+</span>cheating, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">family=</span>BCTo, <span class="at">data=</span>da, <span class="at">trace=</span>F)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">GAIC</span>(mlinear, madditive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               AIC      df
+madditive 38196.95 32.2364
+mlinear   38292.62 19.0000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(madditive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+gamlss2(formula = rent ~ s(area) + s(yearc) + location + bath + 
+    kitchen + cheating | s(area) + s(yearc) + location + bath + 
+    kitchen + cheating, data = da, family = BCTo, ... = pairlist(trace = F))
+---
+Family: BCTo 
+Link function: mu = log, sigma = log, nu = identity, tau = log
+*--------
+Parameter: mu 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  5.71524    0.02082 274.541  &lt; 2e-16 ***
+location2    0.08808    0.01102   7.994 1.83e-15 ***
+location3    0.20998    0.04965   4.229 2.41e-05 ***
+bath1        0.05792    0.04280   1.353  0.17605    
+kitchen1     0.10859    0.03642   2.982  0.00289 ** 
+cheating1    0.34594    0.02021  17.114  &lt; 2e-16 ***
+---
+Smooth terms:
+    s(area) s(yearc)
+edf  6.6271   6.4275
+*--------
+Parameter: sigma 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -1.15569    0.03695 -31.277  &lt; 2e-16 ***
+location2    0.05293    0.02264   2.338   0.0195 *  
+location3    0.21218    0.08616   2.463   0.0138 *  
+bath1        0.03440    0.08318   0.414   0.6792    
+kitchen1     0.01861    0.07591   0.245   0.8063    
+cheating1   -0.23431    0.03754  -6.242 4.91e-10 ***
+---
+Smooth terms:
+    s(area) s(yearc)
+edf  1.1077   4.0742
+*--------
+Parameter: nu 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.69275    0.04548   15.23   &lt;2e-16 ***
+*--------
+Parameter: tau 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  3.26960    0.07549   43.31   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+*--------
+n = 3082 df =  32.24 res.df =  3049.76
+Deviance = 38132.48 Null Dev. Red. = 6.25%
+AIC = 38196.9528 elapsed =  0.48sec</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(madditive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-tree-model" class="level3">
+<h3 class="anchored" data-anchor-id="regression-tree-model">Regression tree model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mregtree <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(rent<span class="sc">~</span><span class="fu">tree</span>(<span class="sc">~</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen<span class="sc">+</span>cheating)<span class="sc">|</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">tree</span>(<span class="sc">~</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen<span class="sc">+</span>cheating),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family=</span>BCTo, <span class="at">data=</span>da, <span class="at">trace=</span><span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required namespace: rpart</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GAIC</span>(mlinear, madditive, mregtree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               AIC      df
+madditive 38196.95 32.2364
+mlinear   38292.62 19.0000
+mregtree  38754.64 30.0000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pp<span class="ot">&lt;-</span> <span class="fu">specials</span>(mregtree, <span class="at">model =</span> <span class="st">"mu"</span>, <span class="at">elements =</span> <span class="st">"model"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(pp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pp<span class="ot">&lt;-</span><span class="fu">specials</span>(mregtree, <span class="at">model =</span> <span class="st">"sigma"</span>, <span class="at">elements =</span> <span class="st">"model"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pp)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(pp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="neural-network-model" class="level3">
+<h3 class="anchored" data-anchor-id="neural-network-model">Neural network model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> rent <span class="sc">~</span> <span class="fu">n</span>(<span class="sc">~</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen, <span class="at">size=</span><span class="dv">10</span>)<span class="sc">|</span>      <span class="fu">n</span>(<span class="sc">~</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen, <span class="at">size=</span><span class="dv">3</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mneural <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(f,<span class="at">family=</span>BCTo, <span class="at">data=</span>da)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required namespace: nnet</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GAMLSS-RS iteration  1: Global Deviance = 38207.0928 eps = 0.289906     
+GAMLSS-RS iteration  2: Global Deviance = 38173.117 eps = 0.000889     
+GAMLSS-RS iteration  3: Global Deviance = 38164.1525 eps = 0.000234     
+GAMLSS-RS iteration  4: Global Deviance = 38161.8465 eps = 0.000060     
+GAMLSS-RS iteration  5: Global Deviance = 38160.1274 eps = 0.000045     
+GAMLSS-RS iteration  6: Global Deviance = 38159.1637 eps = 0.000025     
+GAMLSS-RS iteration  7: Global Deviance = 38158.2825 eps = 0.000023     
+GAMLSS-RS iteration  8: Global Deviance = 38157.9348 eps = 0.000009     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gamlss2<span class="sc">::</span><span class="fu">GAIC</span>(mlinear, madditive, mneural, mregtree, <span class="at">k=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               AIC       df
+madditive 38196.95  32.2364
+mlinear   38292.62  19.0000
+mneural   38377.93 110.0000
+mregtree  38754.64  30.0000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"~/Dropbox/GAMLSS-development/nnet/plot_NN.R"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">specials</span>(mneural, <span class="at">model =</span> <span class="st">"mu"</span>, <span class="at">elements =</span> <span class="st">"model"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">specials</span>(mneural, <span class="at">model =</span> <span class="st">"sigma"</span>, <span class="at">elements =</span> <span class="st">"model"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="random-forest-model" class="level3">
+<h3 class="anchored" data-anchor-id="random-forest-model">Random forest model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> rent <span class="sc">~</span> <span class="fu">cf</span>(<span class="sc">~</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen)<span class="sc">|</span>    <span class="fu">cf</span>(<span class="sc">~</span>area<span class="sc">+</span>yearc<span class="sc">+</span>location<span class="sc">+</span>bath<span class="sc">+</span>kitchen)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mcf <span class="ot">&lt;-</span> <span class="fu">gamlss2</span>(f,<span class="at">family=</span>BCTo, <span class="at">data=</span>da)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required namespace: partykit</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GAMLSS-RS iteration  1: Global Deviance = 38472.7742 eps = 0.284968     
+GAMLSS-RS iteration  2: Global Deviance = 38318.7632 eps = 0.004003     
+GAMLSS-RS iteration  3: Global Deviance = 38313.3108 eps = 0.000142     
+GAMLSS-RS iteration  4: Global Deviance = 38311.9149 eps = 0.000036     
+GAMLSS-RS iteration  5: Global Deviance = 38311.2696 eps = 0.000016     
+GAMLSS-RS iteration  6: Global Deviance = 38311.2646 eps = 0.000000     </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="gaic-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="gaic-evaluation">GAIC evaluation</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gamlss2<span class="sc">::</span><span class="fu">GAIC</span>(mlinear, madditive, mneural, mregtree, mcf, <span class="at">k=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               AIC       df
+madditive 38196.95  32.2364
+mlinear   38292.62  19.0000
+mneural   38377.93 110.0000
+mcf       38719.26 204.0000
+mregtree  38754.64  30.0000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_GAIC_lollipop</span>(mlinear, madditive, mneural, mregtree, mcf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Practical_4_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
