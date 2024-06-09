@@ -1,0 +1,422 @@
+---
+title: "Practical 1"
+author: 
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format: 
+   html: 
+    code-fold: false
+    toc: true
+    cover-image: cover.png
+    code-copy: true
+    html-math-method: katex
+   pdf:
+    include-in-header:
+      text: |
+        \usepackage{amsmath}
+        \usepackage[utf8]{inputenc}
+        \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    latex-auto-install: true
+editor: visual
+bibliography: book2021.bib
+---
+
+## The 1980s Munich rent data
+
+The `rent` data come from a survey conducted in April 1993 by Infratest Sozialforschung, where a random sample of accommodation with new tenancy agreements or increases of rents within the last four years in Munich was selected, including single rooms, small apartments, flats and two-family houses. The data were analysed by @StasinopoulosetalModelling and they are in the package `gamlss.data` (which is automatically loaded when `gamlss` is loaded). There are 1,969 observations on nine variables in the data set but, for the purpose of demonstrating GAMLSS, we will use only the following five variables:
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
+```{r}
+#| label: tbl-stats
+#| tbl-cap: "Variables in  Munich rent data"
+#| warning: false
+library(gamlss.ggplots)
+library(broom)
+library(knitr)
+library(gamlss.ggplots)
+# remove two variables
+da <- rent[, -c(4,5, 6, 8)]
+da  |> head() |> kable(digits = c(2, 0, 0, 0, 0,0,0), format="pipe")
+```
+
+```{r}
+#| fig-cap: "Plot of the rent `R` against explanatory variables `Fl`, `A`, `H` and `loc`."
+#| label: fig-1plots
+library(gamlss.prepdata)
+data_xyplot(da, response=R)
+```
+
+@fig-1plots shows plots of the rent, `R`, against each of the explanatory variables. Although these are bivariate exploratory plots and take no account of the interplay between the explanatory variables, they give an indication of the complexity of these data. The first two explanatory variables, `Fl` and `A`, are continuous. %the plots also show exploratory univariate
+
+The plot of rent, `R`, against floor space, `Fl`, suggests a positive relationship, with increased variation for larger floor spaces, with the result that an assumption of homogeneity of variance would be violated here. There is also some indication of positive skewness in the distribution of rent, `R`. The peculiarity of the plot of `R` against year of construction, `A`, is due to the method of data collection. Many of the observations of `A` were collected on an interval scale and assigned the value of the interval midpoint, while for the rest the actual year of construction was recorded. The plot suggests that for flats up to 1960 the median rent is roughly constant but, for those constructed after that year, there is an increasing trend in the median rent. The two boxplots display how the rent varies according to the explanatory factors. The median rent increases if the flat has central heating, and increases as the location changes from below average to average and then to above average. There are no surprises in the plots here but again the problem of skewness is prominent, with asymmetrical boxes about the median and longer upper than lower whiskers.
+
+In summary, any statistical model used for the analysis of the rent data should be able to deal with the following statistical problems:
+
+-   **Complexity of the relationship between rent and the explanatory variables**. The dependence of the median of the response variable rent on floor space and age of construction is nonlinear, and nonparametric smoothing functions may be needed. Median rent may also depend on linear or nonlinear interactions between the explanatory variables.
+
+-   **Non-homogeneity of variance of rent.** There is clear indication of non-homogeneity of the variance of rent. The variance of rent may depend on its mean and/or explanatory variables. A statistical model in which this dependence can be modelled explicitly, is needed.
+
+-   **Skewness in the distribution of rent.** There is clear indication of positive skewness in the distribution of rent which may depend on explanatory variables and this has to be accounted for within the statistical model.
+
+## The linear regression model {#sec-Thelinearregressionmodel}
+
+Linear regression is a simple but effective model, which served the statistical community well for most of the last century. With response variable $Y$, $r$ covariates $x_1,\ldots,x_r$ and sample size $n$, it is defined as \begin{align*}
+Y_i&=\beta_0+\beta_1 x_{i1}+\ldots+\beta_r x_{ir} +\epsilon_i\\
+\text{where }\qquad\epsilon_i &\stackrel{\hbox{\tiny{ind}}}{\sim}\mathcal{N}(0,\sigma^2)\ ,\qquad \text{for }i=1,2,\ldots,n
+\end{align*} i.e. $\epsilon_i$ for $i=1,2,\ldots,n$ are independently distributed each with a normal distribution with mean zero and variance $\sigma^2$. This specification is equivalent to $$
+\begin{split}
+   Y_i        &  \stackrel{\hbox{\tiny{ind}}}{\sim }\mathcal{N}(\mu_i,\sigma^2)\nonumber\\
+ \text{where }\qquad\mu_i &=\beta_0+\beta_1 x_{i1}+\ldots+\beta_r x_{ir}\ ,\qquad \text{for }i=1,2,\ldots,n\ .     
+\end{split} $$ {#eq-regression_2} We rewrite model (@eq-regression_2) in matrix form as: $$\begin{split}
+\textbf{Y} & \stackrel{\hbox{\tiny{ind}}}{\sim}   \mathcal{N}( \boldsymbol{\mu},\sigma^2 {\textbf I}) \\
+\boldsymbol{\mu} &= \textbf{X} \boldsymbol{\beta} \nonumber
+\end{split}$$ where $\textbf{Y}=(Y_1,\ldots,Y_n)^\top$ is the response vector, $\textbf{X}$ is the $n \times p$ design matrix ($p=r+1$) containing the $r$ covariate columns, plus a column of ones (if the constant is required), $\boldsymbol{\beta}=(\beta_0,\ldots,\beta_r)^\top$ is the coefficient vector, and ${\boldsymbol{\mu}}=(\mu_1,\ldots,\mu_n)^\top$ is the mean vector. Note that in order for the model to be fitted, both $\boldsymbol{\beta}$ and $\sigma^2$ have to be estimated from the data. The usual practice is to estimate $\boldsymbol{\beta}$ using the least squares estimator, obtained by minimizing the sum of squared differences between the observations $y_i$ and the fitted means $\hat\mu_i=\hat\beta_0+\hat\beta_1 x_{i1}+\ldots+\hat\beta_r x_{ir}$, with respect to the $\hat\beta$'s . In matrix form this is written as In matrix form this is written as $$
+\boldsymbol{\hat\beta}=\text{argmin}_{\hat\beta}\,(\textbf{y}-\textbf{X}\boldsymbol{\hat\beta})^\top(\textbf{y}-\textbf{X}\boldsymbol{\hat\beta})
+$$ which has solution
+
+$$\begin{split}
+\hat{\boldsymbol{\beta}} = (\textbf{X}^ \top \textbf{X})^{-1} \textbf{X}^\top \textbf{Y}\ .
+\end{split} $$ It can be shown that $\hat{\boldsymbol{\beta}}$ is also the maximum likelihood estimator (MLE) of $\boldsymbol{\beta}$. Let\
+$$ \hat{\boldsymbol{\mu}}= \textbf{X} \hat{\boldsymbol{\beta}}$$ be the fitted values of the model and $\hat{\boldsymbol{\epsilon }}= \textbf{Y}-\hat{\boldsymbol{\mu}}$ the standard residuals (i.e. fitted errors). Then the MLE for $\sigma^2$ is $$\begin{split}
+\hat{\sigma}^{2}=\frac{ \hat{\boldsymbol{\epsilon}}^\top \hat{\boldsymbol{\epsilon}}}{n}\ ,
+\end{split}$$ which is a biased estimator, i.e. $E \left(\hat{\sigma}^2 \right) \neq \sigma^2$. An unbiased estimator of $\sigma^{2}$ is given by $$\begin{split}
+s^{2}=\frac{\hat{\boldsymbol{\epsilon}}^\top \hat{\boldsymbol{\epsilon}}}{n-p}\ .
+\end{split}$$ Sometimes $s^2$ is referred as the REML (Restricted Maximum Likelihood) estimator of $\sigma^2$.
+
+A linear regression model can be fitted in `R` using the function `lm()`. Here we compare the results from `lm()` to the ones obtained by `gamlss2()`. The notation
+
+```{r}
+#| eval: false
+R ~ Fl+A+H+loc
+```
+
+refers to a formula in `R` for more information type `?formula`. <!-- is explained in Section @LinearAdditiveterms. -->
+
+```{r}
+#| warning: false
+library(gamlss2)
+r1 <-  gamlss2(R ~ Fl+A+H+loc, family=NO,  data=rent, trace=FALSE)
+l1 <- lm(R ~ Fl+A+H+loc,data=rent)
+coef(r1)
+coef(l1)
+```
+
+The coefficient estimates for the $\mu$ parameter of the two fits are identical. Note the `gamlss2` produce an extra coefficient from the variance model which is a constant. Note that the two factors of the `rent` data, `H` and `loc`, are fitted as dummy variables as explained in more detail in later section Section.
+
+The fitted objects `r1` and `l1` use the methods `fitted()` and `resid()` to obtain fitted values and residuals respectively. Note that the `gamlss2` object residuals are the normalized (randomized) quantile residuals as explained in <!-- Section @Normalized_randomized_quantile_residuals,  --> the lecture and not the usual residuals $\hat{\boldsymbol{\epsilon }}$ that might be expected.
+
+The MLE of $\sigma$ can be obtained from a `gamlss2` fitted object using the command `fitted(r1, type="parameter", what="sigma")[1]`. (Here `[1]` shows the first element of the fitted vector for $\sigma$) since it is constant for all observations. `summary()` will show the standard errors and t-tests of the estimated coefficients. The method used to calculate standard errors in the `summary()` function of a `gamlss2` model are the standard methods based on the second derivative of the likelihood function.
+
+<!-- is explained in Section @Functions_to_obtain_standard_errors.  -->
+
+```{r}
+head(fitted(r1, type="parameter"),5)
+summary(r1)
+```
+
+The fitted model is given by $$
+y \sim \mathcal{N}(\hat\mu,\hat\sigma^2)
+$$ where
+
+$$
+\begin{split}
+\hat\mu &= -2775.03
++ 8.83 \, Fl
++ 1.48 \, A
+-204.75 \texttt{if H=1)} + \\
+& + 134.0 \texttt{if loc=2)} \quad + 209.5 \texttt{(if loc=3)}\\
+\log(\hat\sigma) &=  5.73
+\end{split}
+$$ Note that $\sigma$ is fitted on the log scale (indicated by the log link function, so its fitted value is computed from its intercept as $$\hat{\sigma}= \exp(5.73).$$\
+$R^2$ is obtained from the `gamlss` fitted object as
+
+```{r}
+Rsq(r1)
+```
+
+One way of checking the adequacy of a model is to examine the residuals.
+
+```{r}
+resid_plots(r1)
+```
+
+<!-- More about the interpretation of the four plots in Figure \ref{fig:LM_residual_plot} can be found in Section \ref{The plot() function}. -->
+
+The important issue here is that the distributional assumption of normality is easily rejected by looking at the normal Q-Q plot (bottom right panel, Figure \ref{fig:LM_residual_plot}). There is a systematic departure from a linear relationship between the observed (normalized quantile) residuals and their approximate expected values, indicating that the residuals are positively skewed. Note also that the plot of residuals against fitted values (top left panel, Figure \ref{fig:LM_residual_plot}) is not randomly scattered about a horizontal line at 0, but fans out, indicating variance heterogeneity, in particular that the variance increases with the mean.
+
+Given that the normal (or Gaussian) assumption is violated because of the positive skewness, we consider the generalized linear model next.
+
+## The generalized linear model (GLM)
+
+The generalized linear model (GLM) was introduced by @NelderWeddeburn72 and further developed in @McCullaghNelder89. There are three major innovations in their approach: (i) the normal distribution for the response variable is replaced by the exponential family of distributions (denoted here as $\mathcal{E}$), \index{exponential family} (ii) a monotonic \textit{link} function $g(\cdot)$ is used in modelling the relationship between $E(Y)$ and the explanatory variables, and finally (iii) in order to find the MLE for the parameters $\boldsymbol{\beta}$ it uses an iteratively reweighted least squares algorithm, which can be implemented easily in any statistical package having a good weighted least squares algorithm.
+
+The GLM can be written as: \begin{align*}
+   Y_i        &  \stackrel{\hbox{\tiny{ind}}}{\sim }\mathcal{E}(\mu_i,\phi)\nonumber\\
+ \text{where }\qquad g(\mu_i) &=\beta_0+\beta_1 x_{i1}+\ldots+\beta_r x_{ir}\ ,\qquad \text{for }i=1,2,\ldots,n\ ,     
+\end{align*} and $\phi$ is the \textit{dispersion} parameter. This is written in matrix form as
+
+$$
+\begin{split}
+\textbf{Y} & \stackrel{\hbox{\tiny{ind}}}{\sim} \mathcal{E}( \boldsymbol{\mu},\phi) \\
+{\boldsymbol \eta} &=g(\boldsymbol{\mu}) = \textbf{X} \boldsymbol{\beta}\ . \nonumber
+\end{split}
+$$ where ${\boldsymbol \eta}$ is called the **linear predictor**.
+
+The exponential family distribution $\mathcal{E}(\mu, \phi)$ is defined by the probability (density) function $f(y | \mu,\phi)$ having the form: \index{exponential family}
+
+```{=tex}
+\begin{split}
+f(y | \mu, \phi)=\exp\left\{ \frac{y\theta- b(\theta)}{\phi} +c(y,\phi) \right\}
+\end{split}
+```
+where $E(Y)=\mu=b'(\theta)$ and $V(Y)=\phi\, V(\mu)$, where $V(\mu)=b''\left[\theta(\mu)\right]$. ($V(\mu)$ is called the \textit{variance function}.) \index{variance function} The form of (\ref{ExponentialFamily}) includes many important distributions including the normal, Poisson, gamma, inverse Gaussian and Tweedie \citep{tweedie1984index} distributions having variance functions $V(\mu)=1,\mu, \mu^2, \mu^3$ and $\mu^p$ for $p<0$ or $p>1$, respectively, and also the binomial with variance function $V(\mu)=\frac{\mu (1-\mu)}{N}$, where $N$ is the binomial denominator.
+
+Within the GLM framework the Gaussian distribution, used in the previous section to fit the `rent` data, might be replaced by the gamma distribution with probability density function (pdf) given by
+
+$$
+\begin{split}
+f(y;\mu,\phi)&=\frac{y^{1/\phi-1}\exp(-\frac{y}{\phi\mu})}{(\phi\mu)^{(1/\phi)}\Gamma(1/\phi)}\ ,\qquad y>0,\; \mu>0,\; \phi>0.
+\end{split}
+$$ (In package `gamlss` the gamma distribution is parametrized with scale parameter $\sigma$, where $\sigma=\sqrt{\phi}$.)
+
+Link functions were introduced by @NelderWeddeburn72 for GLMs, but are appropriate for all regression models since they guarantee that parameter estimates remain within the appropriate range.\
+For example if a parameter $\theta$ has range $0<\theta<\infty$, the logarithmic transformation $$\eta=\log(\theta)$$ produces $-\infty<\eta<\infty$. In parameter estimation, if the logarithmic link is used, $\eta$ is estimated and transformed back to $\theta$ as $$e^\eta=\theta\ ,$$ which is guaranteed to be in the range $(0,\infty)$. For the logarithmic link, $\log(\theta)$ is the link function and $e^\eta$ is the inverse link function. In general, the link function is denoted as $\eta=g(\theta)$, and the inverse link as $g^{-1}(\eta)=\theta$. Generally, for a \texttt{gamlss.family} distribution, each model parameter has its own link function, appropriate to its range. For the gamma distribution we have two model parameters $\mu$ and $\sigma$. GAMLSS uses the log link function as default for both parameters, since the range of both is $(0, \infty)$. Their link functions are denoted as
+
+$$
+\begin{split}
+\eta_1=g_1(\mu)&=\log(\mu)\\
+\eta_2=g_2(\sigma)&=\log(\sigma)\ .
+\end{split}
+$$ (Note that a log link assumes that the relationship between the parameter and the predictor variables is multiplicative.) The `glm()` function has as default the `canonical` link function for $\mu$, which is different for each distribution. For the `Gamma` is the `inverse`, i.e. $g(\mu)=1/\mu$.
+
+**Important**: The GAMLSS model as implemented in the \pkg{gamlss2} package does not use canonical links as default for $\mu$ as in the \texttt{glm()} function, but generally uses links reflecting the range of the parameter values, i.e. `identity" for $(-\infty, \infty)$,`log" for $(0, \infty)$, \`\`logit" for $(0, 1)$, etc.
+
+We fit the gamma distribution, using both the \texttt{gamlss()} and \texttt{glm()} functions. For \texttt{gamlss()}, the gamma distribution is specified as the argument \texttt{family=GA}, whereas for \texttt{glm()} it is specified as \texttt{family=Gamma}. We use the log link for $\mu$.
+
+```{r}
+r2 <-  gamlss2(R ~ Fl+A+H+loc, family=GA,  data=rent)
+coef(r2)
+deviance(r2)
+### using glm 
+l2 <- glm(R ~ Fl+A+H+loc, family=Gamma(link="log"),  data=rent)
+coef(l2)
+summary(l2)$dispersion  ### extract phi
+deviance(l2)
+```
+
+The fitted coefficients for $\log(\mu)$ from the two models are essentially the same, as are the estimates of dispersion. From `gamlss2` we have $\hat{\sigma}=\exp\{-0.982199103\}=0.382$ and hence $\hat{\phi}=\hat{\sigma}^2=0.14$. From \texttt{glm} we have $\hat{\phi}=0.1402403$. Note that for estimation of $\phi$, `gamlss2` uses maximum likelihood estimation whereas `glm` uses the method of moments.
+
+The deviances for models `r2` and `l2` are different because they are defined differently. The GLM deviance is defined as\
+$$\text{D}_{\text{GLM}}= -2 \log\left(\frac{\hat{L}_c}{\hat{L}_s}\right)$$ where $\hat{L}_c$ is the fitted likelihood of the current fitted model, and $\hat{L}_s$ that of the \textit{saturated} model (the model where in modelling $\mu$ a parameter is fitted for each observation.) \index{deviance} \index{likelihood!fitted} The GAMLSS deviance is defined as \index{deviance!GAMLSS} $$\text{D}_{\text{GAMLSS}}=-2 \log \hat{L}_c\ ,$$ which we refer to as the **global deviance** or $\text{GDEV}$.\
+\index{global deviance}\
+To compare models one can used the generalized Akaike information criterion (GAIC) given by $$GAIC(\kappa)=-2 \log \hat{L}_c +\left(\kappa \times df\right),$$ where `df` denotes the total effective degrees of freedom of the model and ${\kappa}$ is the penalty for each extra degree of freedom used. Hence $GAIC(\kappa=2)$ gives the Akaike information criterion (AIC) and $GAIC(\kappa=\log(n))$ gives the Schwarz Bayesian Criterion (SBC) or Bayesian Information Criterion (BIC). The model with the lowest value of $GAIC(\kappa)$ for a chosen value of $\kappa$ is selected as \`best'.
+
+To get the coefficients with their standard errors use: `function!summary()`
+
+```{r}
+summary(r2)
+```
+
+The fitted model os given by
+
+$$
+\begin{split}
+y & \sim GA(\hat\mu,\hat\sigma)\\
+\text{where}\qquad\qquad&\\
+\log(\hat\mu)&= 2.864+0.0106 \, FL+ 0.0015 \, A+
+-0.3 \, \texttt{(if H=1)} \\
+&+ 0.1907 \, \texttt{(if loc=2)}+ 0.264 \texttt{(if loc=3)}\\
+\log(\hat\sigma)&= -.9822 .
+\end{split}
+$$ To check which of the normal, gamma and inverse Gaussian distributions is best for the data, compare the three models using the GAIC. In this case, because all three models have the same number of parameters we could just compare the global deviance, i.e. $GAIC(\kappa)$ with $\kappa=0$.
+
+```{r}
+r22 <-  gamlss2(R ~ Fl+A+H+loc, family=IG,  data=rent, trace=FALSE)
+GAIC(r1, r2, r22, k=0) # GD
+```
+
+The conclusion is that the gamma provides the best fit. Now we check the residuals:
+
+```{r}
+resid_plots(r2)
+```
+
+The residuals at this stage look a lot better than the residuals of the linear model in that at least some of the heterogeneity in the residuals, in the plot of residuals against fitted values, has disappeared. Also the curvature in the normal Q-Q plot has been substantially reduced.
+
+Even though presence of heterogeneity and skewness in the residuals has been (partially) addressed, we next introduce the generalized additive model (GAM), which allows more flexible modelling of the relationship between the distribution parameter $\mu$ and the continuous explanatory variables. This extra flexibility might be needed to improve the residuals of the GLM.
+
+## The generalized additive model (GAM)
+
+Smoothing techniques became popular in the late 1980s. @HastieTibshirani90 introduced them within the GLM framework, coining the term generalized additive models (GAM). @Wood06 has contributed extensively to GAM theory and popularity by allowing, in his implementation of GAM in **R** (package `mgcv`), the automatic selection of the smoothing parameters in the model. (In the original implementation of GAM in S-plus and **R** the smoothing parameters \$ \boldsymbol{\lambda}\$ or equivalently the effective degrees of freedom have to be fixed.) The GAM can be written as: \index{degrees of freedom!effective}
+
+$$
+\begin{split}
+Y & \stackrel{\hbox{\tiny{ind}}}{\sim} \mathcal{E}( \boldsymbol{\mu},\phi) \nonumber\\
+{\boldsymbol \eta}&=g\left( \boldsymbol{\mu} \right)=\textbf{X}\boldsymbol{\beta} + s_1(x_{1})+\ldots+ s_J(x_{J})
+\end{split}
+$$ where the $s_j$ are smoothing nonparametric functions applied to covariates $x_j$, $j=1,\ldots,J$. The idea is to let the data determine the relationship between the **predictor** [^1] $\eta=g(\mu)$ and the explanatory variables, rather than enforcing a linear (or polynomial) relationship. More detail about smoothers within the 'gamlss2' package can be found in the manual. Here we will use the smoothing function `s()`, which is an implementation of the thin-plate smoother in `gamlss2` \@ @Wood06.
+
+[^1]: Note that we refer to ${\boldsymbol \eta}$ as the predictor rather than the linear predictor, since the smoothing terms introduce nonlinearities in the model.
+
+We now model the `rent` parameter $\mu$ using smooth functions for `Fl` and `A`, and compare this model with the simple GLM fitted using `gamlss2`, (`r2`) in the previous section.
+
+```{r}
+r3 <-  gamlss2(R ~ s(Fl)+s(A)+H+loc, family=GA,  data=rent)
+AIC(r2,r3)
+```
+
+According to the AIC, the GAM model with smoothers is better than the simple GLM with linear terms for `Fl` and age `A`. The summary of the fit is shown below:
+
+```{r}
+summary(r3)
+```
+
+Note that the summary gives a table for the linear fitted terms only and reports the effective degrees of freedom for the smoothers.
+
+Now we use `drop1()` to check for the significance of the contribution of the smoothers (including the linear terms).
+
+```{r}
+ source("~/Dropbox/GAMLSS-development/stepWise/ExtractAIC.gamlss2.R")
+drop1(r3)
+```
+
+All terms contribute significantly to modelling the predictor $\log (\mu)$. Note that `drop1()` can be very slow for large data sets and for models with many smoother terms.
+
+One of the properties of the fitted nonparametric smooth functions is that they cannot be described simply in a mathematical form. However they can be displayed. Here we plot them using the the function `plot()`:
+
+```{r}
+plot(r3)
+```
+
+The plot shows that the predictor $\eta=\log(\mu)$ for the mean \texttt{rent} rises almost linearly with floor space `Fl`, but nonlinearly with age `A`, remaining stable if the flat was built before the 1960's and rising after that. <!-- The contribution of the two factors \texttt{H} and \texttt{loc} are what we would expect, i.e. lower rent if the flat does not have central heating (\texttt{H=1}) and increasing rent as the location of the flat changes  from below average to average and then to above average (\texttt{loc}=1, 2 and 3 respectively).  The shaded areas are the pointwise 95\% confidence bands for the smoothing curves and factor levels. --> The GAMs in general allow for a flexible specification of the dependence of the parameter predictors on different explanatory terms. To check the adequacy of the fitted GAM we use a `worm plot` @vanBuurenFredriks01:
+
+```{r}
+resid_wp(r3)
+```
+
+Diagnostics explains in detail later and how to interpret a worm plot. Here it is sufficient to say that for an adequate fitted model we would expect the dots (which appear like a worm) to be close to the middle horizontal line and 95% of them to lie between the upper and lower dotted curves, which act as 95% pointwise confidence intervals, with no systematic departure. This does not appear to be the case for the fitted GAM, where the worm is well below the lower curve on the left of the figure. Multiple worm plots allow investigation of the adequacy of the model within ranges of the explanatory variables, and are often used in centile estimation.
+
+## Modelling the scale parameter
+
+The gamma distribution has two parameters: $\mu$, the mean of the distribution and $\sigma$, a `scale` parameter which is related to the variance by $\V(Y)=\sigma^2 \mu^2$. Hence $\sigma$ is the coefficient of variation of the gamma distribution. Up to now we have modelled only $\mu$ as a function of explanatory variables, but there are occasions (as for the Munich rent data) in which the assumption of a constant scale parameter is not appropriate. On these occasions modelling $\sigma$ as a function of explanatory variables could solve the problem. Modelling $\sigma$ started in the 1970's: @Harvey76 and @Aitkin87, were the first to model the variance of the normal distribution. As a solution to the problem of heteroscedasticity, @engle1982autoregressive proposed a time series model for $\sigma$ (volatility) for financial data. Engle's ARCH (Autoregressive Conditional Heteroscedastic) model has created a whole industry of related models in finance. Modelling the dispersion parameter within the GLM was done by @Nelder&Pregibon87, @Smyth89 and @Verbyla93. @RigbyStasinopoulos96a, @RigbyStasinopoulos96b introduced smooth functions for modelling both $\mu$ and $\sigma$, which they called the mean and dispersion additive model (MADAM). In the original MADAM formulation the response distribution had to be in the exponential family, but the method of fitting was Quasi-likelihood rather than full maximum likelihood, which is used in GAMLSS.
+
+We now consider the following submodel of the GAMLSS model:
+
+$$
+\begin{split}
+Y & \stackrel{\hbox{\tiny{ind}}}{\sim}  \mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}) \nonumber\\
+{\boldsymbol \eta}_1 &= g_1\left( \boldsymbol{\mu} \right)=X_{1}\boldsymbol{\beta}_{1} + s_{11}(x_{1 1})+\ldots+ s_{1 J_1}(x_{1 J_1}) \nonumber\\
+{\boldsymbol \eta}_2 &= g_2\left( \boldsymbol{\sigma} \right)=X_{2}\boldsymbol{\beta}_{2} + s_{21}(x_{2 1})+\ldots+ s_{2 J_2}(x_{2 J_2}) 
+\end{split}
+$$ where $\mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma})$ denotes any two-parameter distribution and both $\mu$ and $\sigma$ are linear and/or smooth functions of the explanatory variables. We model the Munich rent data using the gamma (\texttt{GA}) and inverse Gaussian (\texttt{IG}) distributions in model (\ref{MADAM_Model}). The following models for $\mu$ and $\sigma$ are specified:
+
+$$
+\begin{split}
+\log(\mu)&=\beta_{10}+s_{11}\texttt{(Fl)}+s_{12}\texttt{(A)}+\beta_{11}\texttt{(if H=1)}
++\beta_{12}\texttt{(if loc=2)}+ \\ 
+         &  \; \quad \beta_{13}\texttt{(if loc=3)}\\
+\log(\sigma)&=\beta_{20}+s_{21}\texttt{(Fl)}+s_{22}\texttt{(A)}+\beta_{21}\texttt{(if H=1)}
++\beta_{22}\texttt{(if loc=2)}+ \\
+ &  \; \quad \beta_{23}\texttt{(if loc=3)}\ .
+\end{split}
+$$ In the \R code, the model for $\mu$ is specified after \\verb\|R \~\|, while the model for $\sigma$ is specified after \\verb\|sigma.fo=\~\| .
+
+```{r}
+r4 <-  gamlss2(R ~ s(Fl)+s(A)+H+loc|s(Fl)+s(A)+H+loc, 
+              family=GA, data=rent, trace=FALSE)
+r5 <-  gamlss2(R ~ s(Fl)+s(A)+H+loc|s(Fl)+s(A)+H+loc, 
+              family=IG, data=rent, trace=FALSE)
+AIC(r3, r4, r5)
+```
+
+The smallest value of AIC for \texttt{r4} indicates that the gamma distribution fits better than the inverse Gaussian (model \texttt{r5}). To plot the fitted terms for $\sigma$ use:
+
+```{r}
+plot(r4)
+```
+
+The significance of the terms for $\sigma$ can be tested using the \texttt{drop1()} function:
+
+```{r}
+drop1(r4, what="sigma")
+```
+
+Every term apart from \texttt{H} seems to contribute significantly to explaining the behaviour of the $\sigma$ parameter. To check the adequacy of the distribution use the worm plot:
+
+```{r}
+resid_wp(r4)
+```
+
+There are a few points of the worm plot falling outside the 95% pointwise confidence intervals, indicating that the distribution may be inadequate. Furthermore, the inverted U-shape of the residuals indicates negative skewness in the residuals and suggests that the gamma distribution might not be flexible enough to capture the skewness in the data. Thus, we will fit a more general GAMLSS model because it allows for greater flexibility compared with the GLM and GAM models.
+
+## The generalized additive model for location, scale and shape
+
+One of the problems of a two-parameter distribution is the fact that the skewness and kurtosis of the distribution are fixed for fixed $\mu$ and $\sigma$. With a relatively large set of data we would like to have the option of a model with more flexible skewness and/or kurtosis. The MADAM Model can be extended as follows:
+
+$$
+\begin{split}
+Y & \stackrel{\hbox{\tiny{ind}}}{\sim}   \mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau}) \nonumber \\
+{\boldsymbol \eta}_1&=g_1\left( \boldsymbol{\mu} \right)=\textbf{X}_{1}\boldsymbol{\beta}_{1} + s_{11}(\textbf{x}_{11})+\ldots+ s_{1J_1}(\textbf{X}_{1 J_1}) \nonumber\\
+{\boldsymbol \eta}_2&= g_2\left( \boldsymbol{\sigma} \right)=\textbf{X}_{2}\boldsymbol{\beta}_{2} + s_{21}(\textbf{X}_{2 1})+\ldots+ s_{2J_2}(\textbf{X}_{2 J_2})  \\
+{\boldsymbol \eta}_3 &=g_3\left( \boldsymbol{\nu} \right)=\textbf{X}_{3}\boldsymbol{\beta}_{3} + s_{31}(\textbf{X}_{3 1})+\ldots+ s_{3J_3}(\textbf{X}_{3 J_3})  \nonumber\\
+{\boldsymbol \eta}_4 &=g_4\left( \boldsymbol{\tau} \right)=\textbf{X}_{4}\boldsymbol{\beta}_{4} + s_{41}(\textbf{X}_{4 1})+\ldots+ s_{4J_4}(\textbf{X}_{4 J_4}) \nonumber
+\end{split}
+$$ where $\mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})$ is a four-parameter distribution and where $\boldsymbol{\nu}$ and $\boldsymbol{\tau}$ are shape parameters which are often related to the skewness and kurtosis aspects of the distribution. Model (\ref{GAMLSS_Model}) defines the generalized additive model for location, scale and shape (GAMLSS) first introduced by \cite{RigbyStasinopoulos05}. GAMLSS, and in particular its implementation in \R{}, is the main subject of this book. The following comments related to model (\ref{GAMLSS_Model}) are appropriate here:
+
+-   **Distributions** The form of the distribution $\mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})$ is general and only implies that the distribution should be in parametric form. In the current implementation there are around 100 \textit{discrete}, \textit{continuous} and \textit{mixed} distributions implemented in \texttt{gamlss.family}, including some highly skew and kurtotic distributions. Chapter \ref{The gamlss.family distributions} describes the available distributions, while more detail about individual distributions can be found in \cite{gamlss.dist}. In addition:
+
+    -   Creating a \textit{new} distribution is relatively easy (Section \ref{Amending an existing distribution and constructing a new distribution});
+    -   Any distribution in \texttt{gamlss.family} can be left-, right- or both sides- \textit{truncated} (Section \ref{Truncating gamlss.family distributions});\
+    -   A \textit{censored} version of any \texttt{gamlss.family} distribution can be created, allowing modelling of censored and interval response variables (Section \ref{Censored gamlss.family distributions});
+    -   Any distributions in \texttt{gamlss.family} can be mixed to create a new finite mixture distribution as described in Chapter \ref{Finite mixture distributions};
+    -   \textit{Discretized} continuous distributions can be created for modelling discrete response variables, for example Section \ref{Count data: the fish species data};
+    -   Any continuous \texttt{gamlss.family} distribution on $(-\infty, \infty)$ can be transformed to a distribution in $(0, \infty)$ or $(0,1)$ using the arguments \texttt{type} with options \texttt{log} or \texttt{logit} respectively of the function \texttt{gen.Family()} (Section \ref{New log and logit versions from a continuous gamlss.family on}). \\end{itemize}
+
+-   **Additive terms** Explanatory variables can affect the parameters of the specified distribution in different ways. GAMLSS models allow linear or nonlinear parametric functions, or nonparametric smoothing functions. The \pkg{gamlss} package allows the following smooth additive terms: (i) P-splines (Penalized B-splines), (ii) monotone P-splines, (iii) cycle P-splines, (iv) varying coefficient P-splines, (v) cubic smoothing splines, (vi) loess curve fitting, (vii) fractional polynomials, (viii) random effects, (ix) ridge regression and (x) nonlinear parametric fits. In addition, through appropriate interfaces installed automatically with package \pkg{gamlss.util}, the software allows fitting of (i) neural networks, via package \pkg{nnet}, (ii) decision trees, via \pkg{rpar}, (iii) random effects, via \pkg{nlme} and (iv) multidimensional smoothers, via \pkg{mgcv}.
+
+-   **Fitting methods and algorithms** A parametric GAMLSS model without smoothing functions) is fitted by maximum likelihood estimation. Note that the fact that $Y   \stackrel{\hbox{\tiny{ind}}}{\sim} \mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})$ implies that the \textit{likelihood function} which is defined as the likelihood of observing the sample is $L\left(\boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau}\right)=\prod_{i=1}^n f(y_i |  \mu_i, \sigma_i, \nu_i, \tau_i)$. Therefore the log-likelihood function is $\ell = \sum_{i=1}^n \log f(y_i| \mu_i, \sigma_i, \nu_i, \tau_i).$ The more general model (\ref{GAMLSS_Model}) is generally fitted by maximum penalized likelihood estimation. Chapter \ref{Additive Smoothing Terms} shows that most of the smoothers used within GAMLSS can be written as ${\textbf s}(\textbf{x})={\textbf Z}{\boldsymbol \gamma}$, where ${\textbf Z}$ is a basis matrix depending on values of $\textbf{x}$, and ${\boldsymbol \gamma}$ is a set of coefficients subject to the quadratic penalty ${\boldsymbol \gamma}^\top{\textbf G}({\boldsymbol \lambda}) {\boldsymbol \gamma}$ where ${\boldsymbol \lambda}$ is a vector or scalar of hyperparameter(s). \cite{RigbyStasinopoulos05} have shown that the algorithm used for fitting the GAMLSS model for fixed values of the hyperparameters ${\boldsymbol \lambda}_{kj}$ maximizes a penalized likelihood function $\ell_{p}$ given by \index{penalized log-likelihood}
+
+$$
+    \begin{split}
+    \ell_{p}=\ell-\frac{1}{2}\sum_{k=1}^{4}\sum_{j=1}^{J_k}
+    {\boldsymbol \gamma}_{kj}^\top{\textbf G}_{kj}\left( {\boldsymbol \lambda}_{kj} \right) {\boldsymbol  \gamma}_{kj}
+    \end{split}
+$$ where $\ell=\sum_{i=1}^{n}\log  f(y_i | \mu_i,\sigma_i, \nu_i, \tau_i)$ is the log-likelihood function. \index{log-likelihood!penalized} \cite{RigbyStasinopoulos05} suggested two basic algorithms for fitting GAMLSS model (\ref{GAMLSS_Model}). \index{algorithm} \index{algorithm!RS} \index{algorithm!CG} The first, the CG algorithm, is a generalization of the \cite{ColeGreen92} algorithm and uses the first derivatives and the (exact or approximate) expected values of the second and cross derivatives of the likelihood function with respect to ${\boldsymbol \theta}=(\mu,\sigma,\nu,\tau)$. However for many probability (density) functions $f(y_i | \mu_i,\sigma_i, \nu_i, \tau_i)$, the parameters are information orthogonal (where the expected values of the cross derivatives of the likelihood function are zero), for example location and scale models and dispersion family models. In this case the second, the RS algorithm, which is a generalization of the algorithm used by \cite{RigbyStasinopoulos96a, RigbyStasinopoulos96b} for fitting the MADAM models, is more suited as it does not use the expected values of the cross derivatives.
+
+We now return to the Munich data to see if we can improve the model by fitting a three-parameter distribution. We use the Box-Cox Cole and Green (BCCGo) distribution, which is based on @ColeGreen92 who were the first to fit a single smoothing term to each of the three parameters of the distribution. They called their model the \`\`LMS method" and it is widely used for centile estimation. The first model (\texttt{r6}) fits a constant $\nu$ while the second (\texttt{r7}) fits the same model for $\nu$ as was fitted for $\mu$ and $\sigma$. \index{distribution!BCCG} \index{gamlss.family!BCCG} \index{model!LMS}
+
+```{r}
+r6 <-  gamlss2(R ~s(Fl)+s(A)+H+loc|s(Fl)+s(A)+H+loc,
+             family=BCCGo,  data=rent, trace=FALSE)
+
+r7 <-  gamlss2(R ~ s(Fl)+s(A)+H+loc|s(Fl)+s(A)+H+loc|s(Fl)+s(A)+H+loc, 
+               family=BCCGo,  data=rent, 
+              trace=FALSE)
+
+AIC(r4, r6, r7)
+```
+
+Noting the smaller AIC values, the BCCG distribution provides a superior fit compared to the gamma, and modelling the $\nu$ parameter as a function of the explanatory variables improves the fit. To check the adequacy of the fitted distribution we use worm plots:
+
+```{r}
+model_wp(r6, r7) 
+
+```
+
+Both worm plots show adequate fits, so we finish our demonstration here.
+
+We have used the Munich rent data to demonstrate how GAMLSS can be used, and we arrived at a more sophisticated model than using only GLM or GAM. In particular, modelling both $\mu$ and $\sigma$ of a gamma ($\texttt{GA}(\mu, \sigma)$) distribution in model \texttt{r4} provides a a substantially improved fit to the rent response variable as compared to the GAM model \texttt{r3}. Also a three-parameter distribution model using the $\texttt{BCCGo}(\mu, \sigma, \nu)$ distribution marginally improves the fit. GAMLSS provides greater flexibility in regression modelling, but with this flexibility comes more responsibility for the statistician. This is not a bad thing. The philosophy of GAMLSS is to allow the practitioner to have a wide choice of regression models.
+
+We conclude this practical with a summary of some of the basic properties of GAMLSS:
+
+-   GAMLSS is a very flexible unifying framework for univariate regression models.
+-   It allows \textit{any} distribution for the response variable. \textit{All} the parameters of the distribution can be modelled as functions of explanatory variables.
+-   It allows a variety of (penalized) additive terms in the models for the distribution parameters.
+-   The fitted algorithm is modular, where different components can be added easily.
+-   It extends basic statistical models allowing flexible modelling of overdispersion, excess of zeros, skewness and kurtosis in the data.
