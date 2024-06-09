@@ -1,0 +1,623 @@
+---
+title: "Continuous Distributions"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf 
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    css: styles.css
+    theme: sky
+---
+
+## Types
+
+-   $(-\infty, \infty)$ real line $\Re$ \[Chapter 4 of Rigby *et al* (2019)\]
+
+-   $(0, \infty )$ positive real line $\Re^{+}$ \[Chapter 5\]
+
+-   $(0,1)$ real line on interval $\Re_{(0,1)}$ (not containing zero or one) \[Chapter 6\]
+
+# Explicit distributions in real line, $\Re$.
+
+## `Location` and `Scale` family
+
+if $$Y\sim {D}(\mu,\sigma,\nu,\tau)$$ then $$\varepsilon=(Y-\mu)/\sigma\sim {D}(0,1,\nu,\tau),$$
+
+i.e. $Y=\mu+\sigma\varepsilon$, so $Y$ is a scaled and shifted version of the random variable $\varepsilon$.
+
+::: aside
+All $(-\infty, \infty)$ distributions in GAMLSS except $\texttt{exGAUS}(\mu, \sigma, \tau)$ are \textit{location-scale} families
+:::
+
+## location
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(GU, mu=c(-1,0, 1), sigma=1, from=-6, to=4)
+```
+
+## scale
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(GU, mu=c(0), sigma=c(.5,1,1.5), from=-6, to=4)
+```
+
+## 2 parameter in $\Re$
+
+-   `Gumbel`, GU($\mu$, $\sigma$), left skew
+
+-   `Logistic`, LO($\mu$, $\sigma$), lepto
+
+-   `Normal`, NO($\mu$, $\sigma$), NO($\mu$, $\sigma^2$)
+
+-   `Reverse Gumbel` RG($\mu$, $\sigma$), right skew
+
+## 2 parameter in $\Re$ (con.)
+
+-   `Normal` against `Logistic`
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+x <- seq(-5,5, length=101)
+f1 <- dNO(x, mu=0, sigma=1)
+f2 <- dLO(x, mu=0, sigma=1)
+ da <- data.frame(f=f1, x=x, fam=rep("NO", 101))
+da1 <-  data.frame(f=f2, x=x, fam=rep("LO",101)) 
+da <- rbind(da, da1)
+da$fam <- factor(da$fam)
+p9 <- ggplot(data=da, aes(x = x, y=f, group=fam)) +
+      ggplot2::geom_line(lwd=1, aes(colour = fam))
+p9
+```
+
+## 2 parameter in $\Re$ (con.)
+
+-   `Normal` against `Gumbel` and `reverse Gumbel`
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+x <- seq(-5,5, length=101)
+f1 <- dNO(x, mu=0, sigma=1)
+f2 <- dGU(x, mu=0, sigma=1)
+f3 <- dRG(x, mu=0, sigma=1)
+da1 <-  data.frame(f=f1, x=x, fam=rep("NO", 101))
+da2 <-  data.frame(f=f2, x=x, fam=rep("GU",101)) 
+da3 <-  data.frame(f=f3, x=x, fam=rep("RG",101)) 
+da <- rbind(da1, da2, da3)
+da$fam <- factor(da$fam)
+p9 <- ggplot(data=da, aes(x = x, y=f, group=fam)) +
+      ggplot2::geom_line(lwd=1, aes(colour = fam))
+p9
+```
+
+## 3 parameter in $\Re$
+
+-   `exponential Gaussian`: exGAUS$(\mu, \sigma, \nu)$ for modelling right skew data,
+
+-   `normal family:` NOF$(\mu, \sigma, \nu)$ for modelling mean and variance relationships following the power law;
+
+-   `power exponential:` PE$(\mu, \sigma, \nu)$ and PE2$(\mu, \sigma, \nu)$ for modelling lepto and platy kurtotic data;
+
+-   `t family`: TF$(\mu, \sigma, \nu)$ and TF2$(\mu, \sigma, \nu)$ for modelling lepro kurtotic data;
+
+-   `skew normal`: SN1$(\mu, \sigma, \nu)$ and SK2$(\mu, \sigma, \nu)$ for modellinng skewness in data.
+
+## 3 parameter in $\Re$ (con.)
+
+-   `Skew Normal type 1`
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+library(gamlss.dist)
+x <- seq(-4,4, length=101)
+f1 <- dSN1(x, mu=0, sigma=1, nu=-100)
+f2 <- dSN1(x, mu=0, sigma=1, nu=-3)
+f3 <- dSN1(x, mu=0, sigma=1, nu=-1)
+f4 <- dSN1(x, mu=0, sigma=1, nu=0)
+da1 <-  data.frame(f=f1, x=x, fam=rep("nu=-100", 101))
+da2 <-  data.frame(f=f2, x=x, fam=rep("nu=-3",101)) 
+da3 <-  data.frame(f=f3, x=x, fam=rep("nu=-1",101)) 
+da4 <-  data.frame(f=f3, x=x, fam=rep("nu=0",101)) 
+da <- rbind(da1, da2, da3, da4)
+da$fam <- factor(da$fam)
+p9 <- ggplot(data=da, aes(x = x, y=f, group=fam)) +
+      ggplot2::geom_line(lwd=1, aes(colour = fam))
+p9
+```
+
+## 3 parameter in $\Re$ (con.)
+
+-   `Skew Normal type 1`
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+library(gamlss.dist)
+x <- seq(-4,4, length=101)
+f1 <- dSN1(x, mu=0, sigma=1, nu=100)
+f2 <- dSN1(x, mu=0, sigma=1, nu=3)
+f3 <- dSN1(x, mu=0, sigma=1, nu=1)
+f4 <- dSN1(x, mu=0, sigma=1, nu=0)
+da1 <-  data.frame(f=f1, x=x, fam=rep("nu=100", 101))
+da2 <-  data.frame(f=f2, x=x, fam=rep("nu=3",101)) 
+da3 <-  data.frame(f=f3, x=x, fam=rep("nu=1",101)) 
+da4 <-  data.frame(f=f3, x=x, fam=rep("nu=0",101)) 
+da <- rbind(da1, da2, da3, da4)
+da$fam <- factor(da$fam)
+p9 <- ggplot(data=da, aes(x = x, y=f, group=fam)) +
+      ggplot2::geom_line(lwd=1, aes(colour = fam))
+p9
+```
+
+## 3 parameter in $\Re$ (TEST 1)
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+library(gamlss.dist)
+family_pdf(SN1, mu=0, sigma=1, nu=c(100,3,1,0), from=-5, to=5)
+```
+
+## 3 parameter in $\Re$ PE
+
+-   `Power Exponential`
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+library(gamlss.dist)
+x <- seq(-4,4, length=101)
+f1 <- dPE(x, mu=0, sigma=1, nu=1)
+f2 <- dPE(x, mu=0, sigma=1, nu=2)
+f3 <- dPE(x, mu=0, sigma=1, nu=10)
+f4 <- dPE(x, mu=0, sigma=1, nu=100)
+da1 <-  data.frame(f=f1, x=x, fam=rep("nu=1", 101))
+da2 <-  data.frame(f=f2, x=x, fam=rep("nu=2",101)) 
+da3 <-  data.frame(f=f3, x=x, fam=rep("nu=10",101)) 
+da4 <-  data.frame(f=f3, x=x, fam=rep("nu=100",101)) 
+da <- rbind(da1, da2, da3, da4)
+da$fam <- factor(da$fam)
+p9 <- ggplot(data=da, aes(x = x, y=f, group=fam)) +
+      ggplot2::geom_line(lwd=1, aes(colour = fam))
+p9
+```
+
+## 3 parameter in $\Re$ PE (test)
+
+```{r}
+family_pdf(PE, mu=0, sigma=1, nu=c(1,2,10,100), from=-4, to=4)
+```
+
+## 3 parameter in $\Re$ TF
+
+-   `t family`
+
+```{r}
+library(gamlss.ggplots)
+library(ggplot2)
+library(gamlss.dist)
+x <- seq(-5,5, length=101)
+f1 <- dTF(x, mu=0, sigma=1, nu=100)
+f2 <- dTF(x, mu=0, sigma=1, nu=2)
+f3 <- dTF(x, mu=0, sigma=1, nu=1)
+da1 <-  data.frame(f=f1, x=x, fam=rep("nu=100", 101))
+da2 <-  data.frame(f=f2, x=x, fam=rep("nu=2",101)) 
+da3 <-  data.frame(f=f3, x=x, fam=rep("nu=1",101)) 
+da <- rbind(da1, da2, da3)
+da$fam <- factor(da$fam)
+p9 <- ggplot(data=da, aes(x = x, y=f, group=fam)) +
+      ggplot2::geom_line(lwd=1, aes(colour = fam))
+p9
+```
+
+## 3 parameter in $\Re$ TF (test)
+
+```{r}
+family_pdf(TF, mu=0, sigma=1, nu=c(1,2,100), from=-5, to=5)
+```
+
+## 4 parameter in $\Re$
+
+-   `exponential generalised beta type 2`,\
+    $EGB2(\mu,\sigma,\nu,\tau)$ skewness and leptokurtosis;
+
+-   `generalised t`, GT$(\mu,\sigma, \nu, \tau)$ kurtosis;
+
+-   `Johnson's SU`, JSU$(\mu,\sigma, \nu, \tau)$ and $\texttt{JSUo}(\mu,\sigma, \nu, \tau)$ skewness and leptokurtosis;
+
+-   `normal-exponential-t` $\texttt{NET}(\mu,\sigma, \nu, \tau)$, robustly location and scale
+
+-   `skew exponential power` $\texttt{SEP1}(\mu,\sigma, \nu, \tau)$, $\texttt{SEP2}(\mu,\sigma, \nu, \tau)$, $\texttt{SEP3}(\mu,\sigma, \nu, \tau)$ and $\texttt{SEP4}(\mu,\sigma, \nu, \tau)$ skewness and lepto-platy;
+
+## 4 parameter in $\Re$ (con.)
+
+-   `sinh-arcsinh`, $\texttt{SHASH}(\mu,\sigma, \nu, \tau)$, $\texttt{SHASHo}(\mu,\sigma, \nu, \tau)$ and $\texttt{SHASHo2}(\mu,\sigma, \nu, \tau)$ skewness and lepto-platy;
+
+-   `skew t`, $\texttt{ST1}(\mu,\sigma, \nu, \tau)$, $\texttt{ST2}(\mu,\sigma, \nu, \tau)$, $\texttt{ST3}(\mu,\sigma, \nu, \tau)$, $\texttt{ST4}(\mu,\sigma, \nu, \tau)$, $\texttt{ST5}(\mu,\sigma, \nu, \tau)$ and $\texttt{SST}(\mu,\sigma, \nu, \tau)$ skewness and leptokurtosis.
+
+## 4 parameter in $\Re$ SEP1
+
+-   SEP1$\mu=0, \sigma=1, \nu=0,1,2, \tau=1$
+
+```{r}
+family_pdf(SEP1, mu=0, sigma=1, nu=c(0,1,2), tau=1, from=-4, to=4)
+```
+
+## 4 parameter in $\Re$ SEP1
+
+-   SEP1$\mu=0, \sigma=1, \nu=0,1,2, \tau=2$
+
+```{r}
+family_pdf(SEP1, mu=0, sigma=1, nu=c(0,1,2), tau=2, from=-4, to=4)
+```
+
+## 4 parameter in $\Re$ SEP1
+
+-   SEP1$\mu=0, \sigma=1, \nu=0,1,2, \tau=5$
+
+```{r}
+family_pdf(SEP1, mu=0, sigma=1, nu=c(0,1,2), tau=5, from=-2.5, to=2.5)
+```
+
+## 4 parameter in $\Re$ SEP1
+
+```{r}
+family_pdf(SEP1, mu=0, sigma=1, nu=c(0,-1,-2), tau=100, from=-2, to=2)
+```
+
+::: aside
+SEP1($(\mu=0, \sigma=1, \nu=0,1,2, \tau=10)$)
+:::
+
+## 4 parameter in $\Re$ NET
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+library(gamlss)
+x <- seq(-5, 5, length=201)
+zero <- rep(0,201) 
+plot(dNET(x, mu=0, sigma=1.5, nu=2, tau=3)~x,  xlab="Y", ylab=expression(f[Y](y)), type="l")
+title("The NET distribution")
+polygon(c(-2,seq(-2,2, length=100),2), c(0, dNET(seq(-2,2, length=100), mu=0, sigma=1.5, nu=2, tau=3),0), col="grey90", lty=0)
+polygon(c(-3,seq(-3,-2, length=50),-2), c(0, dNET(seq(-3,-2, length=50), mu=0, sigma=1.5, nu=2, tau=3),0), col="grey60", lty=0)
+polygon(c(2,seq(2,3, length=50),3), c(0, dNET(seq(2,3, length=50), mu=0, sigma=1.5, nu=2, tau=3),0), col="grey60", lty=0)
+polygon(c(-5,seq(-5,-3, length=50),-3), c(0, dNET(seq(-5,-3, length=50), mu=0, sigma=1.5, nu=2, tau=3),0), col="grey30", lty=0)
+polygon(c(3,seq(3,5, length=50),5), c(0, dNET(seq(3,5, length=50), mu=0, sigma=1.5, nu=2, tau=3),0), col="grey30", lty=0)
+lines(zero~x)
+text(1.3,0.24, "normal")
+text(3.5, 0.06, "exponential")
+text(4.4, 0.026, "t-distribution")
+```
+
+## Summary {.smaller}
+
+| Distributions   | family       | no par. | skewness          | kurtosis |
+|-----------------|--------------|---------|-------------------|----------|
+| Exp. Gaussian   | exGAUS       | 3       | positive          | \-       |
+| Exp.G. beta 2   | EGB2         | 4       | both              | lepto    |
+| Gen. t          | GT           | 4       | (symmetric)       | lepto    |
+| Gumbel          | GU           | 2       | (negative)        | \-       |
+| Johnson's SU    | JSU, JSUo    | 4       | both              | lepto    |
+| Logistic        | LO           | 2       | (symmetric)       | (lepto)  |
+| Normal-Expon.-t | NET          | 2,(2)   | (symmetric)       | lepto    |
+| Normal          | NO-NO2       | 2       | (symmetric)       | (meso)   |
+| Normal Family   | NOF          | 3       | (symmetric)       | (meso)   |
+| Power Expon.    | PE-PE2       | 3       | (symmetric)       | both     |
+| Reverse Gumbel  | RG           | 2       | positive          |          |
+| Sinh Arcsinh    | SHASH,       | 4       | both              | both     |
+| Skew Exp. Power | SEP1-SEP4    | 4       | both              | both     |
+| Skew t          | ST1-ST5, SST | 4       | both              | lepto    |
+| t Family        | TF           | 3       | (symmetric) lepto |          |
+
+# Explicit Distributions in positive real line $\Re^+$
+
+## the scale family
+
+If a random variable is distributed as $$Y\sim D(\mu,\sigma,\nu,\tau)$$
+
+and\
+$$\varepsilon=(Y/\mu) \sim D(1,\sigma,\nu,\tau)$$ then $Y$ has a scale family
+
+::: aside
+$Y=\mu\varepsilon$ is a scaled version of the random variable $\varepsilon$, and $\mu$ does not effect the shape.
+:::
+
+## the weibull 3
+
+```{r}
+family_pdf(WEI3, mu=1, sigma=c(0.5, 1, 6), from=0.01, to=4)
+```
+
+::: aside
+WEI3($(\mu=1, \sigma=0.5,1,10, \tau=10)$)
+:::
+
+## the weibull 3 (con.)
+
+```{r}
+family_pdf(WEI3, mu=2, sigma=c(0.5, 1, 6), from=0.01, to=4)
+```
+
+::: aside
+WEI3($(\mu=2, \sigma=0.5,1,10, \tau=10)$)
+:::
+
+## 1 and 2 parameter positive real line, $\Re^+$. {.smaller}
+
+-   `exponencial`, $\texttt{EXP}(\mu,\sigma)$
+
+-   `gamma` $\texttt{GA}(\mu,\sigma)$ member of the exponential family;
+
+-   `inverse gamma` $\texttt{IGAMMA}(\mu,\sigma)$;
+
+-   `inverse Gaussian`, $\texttt{IG}(\mu,\sigma)$ a member of the exponential family;
+
+-   `log-normal` $\texttt{LOGNO}(\mu,\sigma)$ and $\texttt{LOGNO2}(\mu,\sigma)$.
+
+-   `Pareto` $\texttt{PARETO}(\mu,\sigma)$, $\texttt{PARETO2o}(\mu,\sigma)$ and $\texttt{GP}(\mu,\sigma)$ for heavy tail;
+
+-   `Weibull` $\texttt{WEI}(\mu,\sigma)$, $\texttt{WEI2}(\mu,\sigma)$ and $\texttt{WEI3}(\mu,\sigma)$ used in survival analysis.
+
+## Weibull survival and hazard
+
+## 3 parameter positive real line $\Re^+$
+
+-   `Box-Cox Cole and Green`, $\texttt{BCCG}(\mu, \sigma, \nu)$ known also as the `LMS` method in centile estimation.
+
+-   `generalised gamma`, $\texttt{GG}(\mu, \sigma, \nu)$
+
+-   `generalised inverse Gaussian`, $\texttt{GIG}(\mu, \sigma, \nu)$
+
+-   `log-normal family`, $\texttt{LNO}(\mu, \sigma, \nu)$ based on the standard Box-Cox transformation
+
+# the BCCG
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(BCCG, mu=1, sigma=c(0.1,0.3, 0.5), nu=-1, from=0.001, to=3)
+```
+
+::: aside
+BCCG($\mu=1, \sigma=0.1,.3,0.5, \nu=-1$)
+:::
+
+# the BCCG (con.)
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(BCCG, mu=1, sigma=0.4, nu=c(-1, 1, 2),  from=0.001, to=3)
+```
+
+::: aside
+BCCG($\mu=1, \sigma=0.4, \nu=-1,1,2)$)
+:::
+
+## 4 parameter positive real line $\Re^+$
+
+-   `Box-Cox power exponential`, $\texttt{BCPE}(\mu,\sigma,\nu,\tau)$ and $\texttt{BCPEo}(\mu,\sigma,\nu,\tau)$ skewness and platy-lepto;
+
+-   `Box-Cox t`, $\texttt{BCT}(\mu,\sigma,\nu,\tau)$ and $\texttt{BCTo}(\mu,\sigma,\nu,\tau)$ skewness and leptokurtosis;
+
+-   `generalised beta type 2`, $\texttt{GB2}(\mu,\sigma,\nu,\tau)$ skewness and platy-lepto.
+
+# the BCT
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(BCT, mu=1, sigma=0.2, nu=c(-1, 1, 2),  tau=10, from=0.001, to=3)
+```
+
+::: aside
+BCT($\mu=1, \sigma=0.2, \nu=-1,1,2, \tau=10$)
+:::
+
+# the BCT (con.)
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(BCT, mu=1, sigma=0.2, nu=1,  tau=c(1,3,10), from=0.001, to=3)
+```
+
+::: aside
+BCT($\mu=1, \sigma=0.2, \nu=1,, \tau=1,3,10$)
+:::
+
+## the BCPE
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(BCPE, mu=1, sigma=0.2, nu=2,  tau=c(1,2,10), from=0.001, to=2)
+```
+
+::: aside
+BCPE($\mu=1, \sigma=0.2, \nu=2, \tau=1,3,10$)
+:::
+
+## Summary {.smaller}
+
+| Distributions        | family                | no par. | skewness   | kurtosis |
+|----------------------|-----------------------|---------|------------|----------|
+| BCCG                 | `BCCG`                | 3       | both       |          |
+| BCPE                 | `BCPE`                | 4       | both       | both     |
+| BCT                  | `BCT`                 | 4       | both       | lepto    |
+| Exponential          | `EXP`                 | 1       | (positive) | \-       |
+| Gamma                | `GA`                  | 2       | (positive) | \-       |
+| Gen. Beta type 2     | `GB2`                 | 4       | both       | both     |
+| Gen. Gamma           | `GG`-GG2              | 3       | positive   | \-       |
+| Gen. Inv. Gaussian   | `GIG`                 | 3       | positive   | \-       |
+| Inv. Gaussian        | `IG`                  | 2       | (positive) | \-       |
+| Log Normal           | `LOGNO`               | 2       | (positive) | \-       |
+| Log Normal family    | `LNO`                 | 2,(1)   | positive   |          |
+| Reverse Gen. Extreme | `RGE`                 | 3       | positive   | \-       |
+| Weibull              | `WEI`, `WEI2`, `WEI3` | 2       | (positive) |          |
+
+{.striped .hover}
+
+# Explicit Distributions on $\Re_{(0,1)}$
+
+## Distributions on $\Re_{(0,1)}$
+
+| Distributions           | family    | no par. | skewness/kurtosis |
+|-------------------------|-----------|---------|-------------------|
+| beta                    | `BE`      | 2       | (both)            |
+| beta original           | `BEo`     | 2       | (both)            |
+| generalized beta type 1 | `GB1`     | 4       | both              |
+| logit normal            | `LOGITNO` | 2       | (both)            |
+| simplex                 | `SIMPEX`  | 2       | (both)            |
+
+## the BE
+
+```{r}
+library(gamlss.ggplots)
+family_pdf(BE, mu=.5, sigma=c(0.2,.5,.7), from=0.001, to=.999)
+```
+
+::: aside
+BE($\mu=.5$, $\sigma=0.2,.5,.7$)
+:::
+
+# Choosing distributions
+
+## Choosing distribution {.smaller}
+
+`global deviance`
+
+$$
+\begin{split}
+GDEV=& -2\ell(\boldsymbol{\hat{\theta}})   
+     =& -2 \sum_{i=1}^n \log f(y_i |\boldsymbol{\hat{\theta}})  
+\end{split}$$
+
+`generalized Akaike information criterion` $$
+GAIC(k) = GDEV + k \cdot df
+$$ `special cases` $$\begin{split}
+{\rm AIC}   &= \texttt{GDEV}+2 \, df\\
+{\rm SBC} &= \texttt{GDEV}+ \log n \cdot df\ .
+\end{split}$$
+
+## Choosing distribution {.smaller}
+
+`prediction global deviance`
+
+```{=tex}
+\begin{split}
+TDEV=& -2, \ell (\boldsymbol{\widetilde{\theta}}) \\
+ =& -2\sum_{i=1}^{n_P} \log f( \widetilde{y}_i | \widetilde{\boldsymbol{\theta}})
+\end{split}
+```
+${\widetilde{ y}}$ indicates the response variable values at the validation (or test) sample,
+
+## How to fit distributions in **R** {.smaller}
+
+-   `optim()` or `mle()` **R** functions requiring initial parameter values
+
+-   `gamlsssML()` fits a distribution (using MLE) on the response with no explanatory variables
+
+-   `gamlss()` fits a distribution on the response using RS or CG or mixed algorithms,
+
+-   `histDist()` fits a distribution using `gamlsssML()`, and plots a histogram of the response with the fitted distribution
+
+-   `fitDist()` fits a set of distributions to the response and chooses the one with the smallest GAIC
+
+-   `chooseDist()` fits a set of distributions on a fitted model and chooses the one with the smallest GAIC
+
+## Example: DAX returns data
+
+```{r}
+#| echo: true
+data(EuStockMarkets)
+dax <-EuStockMarkets[,"DAX"]
+Rdax <- diff(log(dax))
+plot(Rdax)
+```
+
+## Example: DAX returns data (con.)
+
+```{r}
+#| echo: true
+library(gamlss.ggplots)
+y_hist(Rdax)
+```
+
+## `fitDist()`
+
+```{r}
+#| eval: false
+#| echo: true 
+f1 <- fitDist(Rdax)
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| output: false
+f1 <- fitDist(Rdax)
+```
+
+```{r}
+#| echo: true
+f1$fits
+```
+
+## `chooseDist()`
+
+```{r}
+library(gamlss2)
+#| warning: false
+#| cache: true
+#| echo: true
+m1 <-gamlss2(Rdax~1)
+t1 <- chooseDist(m1)
+getOrder(t1,1)[1:6]
+```
+
+## `chooseDist()`(con.)
+
+```{r}
+#| echo: true
+m2 <- gamlss2(Rdax~1, family=GT, trace=FALSE)
+fitted(m2, parameter="mu", type="parameter")[1,1]
+fitted(m2, parameter="sigma", type="parameter")[1,2]
+fitted(m2, parameter="nu", type="parameter")[1,3]
+fitted(m2, parameter="tau", type="parameter")[1,4]
+```
+
+## `histDist()`
+
+```{r}
+#| echo: true
+m3 <- histDist(Rdax, family=GT, nbins=30, line.col="black")
+```
+
+# practical 2
+
+## END
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
