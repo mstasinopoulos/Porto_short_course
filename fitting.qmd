@@ -1,0 +1,370 @@
+---
+title: "Fitting models"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Fernanda De Bastiani
+  - Gillian Heller 
+  - Niki  Umlauf 
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    theme: sky
+---
+
+## Introduction
+
+`questions`
+
+-   do my data support a GAMLSS model?
+
+-   do I need GAMLSS to answer my questions?
+
+-   size of the data
+
+-   questions of interest
+
+## this talk
+
+-   `the basic GAMLSS algorithm`
+-   `different statistical approaches for fitting a GAMLSS model`
+-   `different machine learning techniques for fitting a GAMLSS model`.
+
+# Algorithms
+
+## GAMLSS
+
+$$\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim }&  {D}( \theta_{1i}, \ldots, \theta_{ki}) \nonumber \\
+g(\theta_{1i})  &=& b_{10} + s_1({x}_{1i})  +  \ldots,  s_p({x}_{pi}) \nonumber\\
+ \ldots &=& \ldots \nonumber\\
+g({\theta}_{ki})  &=& b_0 + s_1({x}_{1i})  +   \ldots,  s_p({x}_{pi})
+\end{split} 
+$$ {#eq-GAMLSS}
+
+::: aside
+for $i=1,2,\ldots,n$.
+:::
+
+## GAMLSS + ML
+
+$$\begin{split}
+y_i     &  \stackrel{\small{ind}}{\sim }&  {D}( \theta_{1i}, \ldots, \theta_{ki}) \nonumber \\
+g({\theta}_{1i}) &=& {ML}_1({x}_{1i},{x}_{2i}, \ldots,  {x}_{pi}) \nonumber \\
+ \ldots &=& \ldots \nonumber\\
+g({\theta}_{ki}) &=& {ML}_1({x}_{1i},{x}_{2i}, \ldots,  {x}_{pi}) 
+ \end{split} 
+ $$ {#eq-GAMLSS_ML} <!--  --> <!--  \ldots &=& \ldots \nonumber\\ --> <!-- g(\boldsymbol{\theta}_k) &=& {ML}_k(\textbf{x}_{1i},\textbf{x}_{2i}, \ldots,  \textbf{x}_{pi})  -->
+
+## Parameters for Estimation
+
+-   **distribution parameters**
+
+-   **coefficient parameters**
+
+    ```         
+      - **coefficients**
+
+      - **random effects**
+    ```
+
+-   **hyper-parameters**
+
+## flowchart
+
+```{mermaid}
+%%| label: fig-fitting
+%%| fig-cap: "Different ways to estimate the parameters in a GAMLSS model."
+%%| fig-width: 6
+flowchart LR
+  A[GAMLSS] --> L[Parametric]
+  A --> N[Smooth]
+  L --> B(Likelihood)
+  L --> D(Bayesian)
+  L --> E(Boosting)
+  N --> C(Penalised Likelihood)
+  N --> D(Bayesian)
+  N --> E(Boosting)
+  B --> G[beta's]
+  C --> F[beta's, gamma's, & lambda's]
+  E --> F
+  D --> F
+  D --> G
+  E --> G
+```
+
+## The Basic Algorithm for GAMLSS {.smaller}
+
+-   For specified distribution **family**, **data** and **machine learning** (ML) model.
+
+**Initialize**: set starting values for all distribution parameters $(\hat{\boldsymbol{\mu}}^{(0)}, \hat{\boldsymbol{\sigma}}^{(0)}, \hat{\boldsymbol{\nu}}^{(0)}, \hat{\boldsymbol{\tau}}^{(0)} )$.
+
+**For** i in $1,2,\ldots$
+
+-   fix $\hat{\boldsymbol{\sigma}}^{(i-1)}$,$\hat{\boldsymbol{\nu}}^{(i-1)}$, and $\hat{\boldsymbol{\tau}}^{(i-1)}$ and fit a ML model to iterative response $\textbf{y}_{\mu}$ using iterative weights $\textbf{w}_{\mu}$ to obtain the new $\hat{\boldsymbol{\mu}}^{(i)}$
+
+-   fix $\hat{\boldsymbol{\mu}}^{(i)}$,$\hat{\boldsymbol{\nu}}^{(i-1)}$, and $\hat{\boldsymbol{\tau}}^{(i-1)}$ and fit a ML model to iterative response $\textbf{y}_{\sigma}$ using iterative weights $\textbf{w}_{\sigma}$ to obtain the new $\hat{\boldsymbol{\sigma}}^{(i)}$
+
+-   fix $\hat{\boldsymbol{\mu}}^{(i)}$,$\hat{\boldsymbol{\sigma}}^{(i)}$, and $\hat{\boldsymbol{\tau}}^{(i-1)}$ and fit a ML model to iterative response $\textbf{y}_{\nu}$ using iterative weights $\textbf{w}_{\nu}$ to obtain the new $\hat{\boldsymbol{\nu}}^{(i)}$
+
+-   fix $\hat{\boldsymbol{\mu}}^{(i)}$,$\hat{\boldsymbol{\sigma}}^{(i)}$, and $\hat{\boldsymbol{\nu}}^{(i)}$ and fit a ML model to iterative response $\textbf{y}_{\tau}$ using iterative weights $\textbf{w}_{\tau}$ to obtain the new $\hat{\boldsymbol{\nu}}^{(i)}$
+
+-   **check** if the global deviance, $-2(\textit{log-likelihood})$ does not change **repeat** otherwise **exit**
+
+## Important
+
+-   assumed **distribution** (the log-likelihood is needed and the first and second derivatives)
+
+-   **hierarchy** of the paramerers (i.e. a good location model is required before model the scale)
+
+-   **orthogonality** of the parameters (leads to better convergence)
+
+## Checking orthogonality
+
+-   Specify a distribution **family**, and select values for all the parameters.
+
+-   generate a sample of of N observations (default $N=10000$)
+
+-   fit the distribution to the generated sample.
+
+-   display the correlation coefficients of the estimated predictors, $\eta_{\theta}$.
+
+## Checking orthogonality (con.)
+
+```{r}
+#| echo: true 
+#| warning: false
+#| message: false
+#| label: fig-familycor
+#| fig-cap: "Paramater orthogonality for BCTo distribution"
+source("~/Dropbox/GAMLSS-development/ggplot/family_cor.R")
+library(gamlss)
+library(ggplot2)
+family_cor("BCTo", mu=1, sigma=0.11, nu=1, tau=5, no.sim=10000)
+```
+
+# Machine Learning Models
+
+## properties
+
+-   are the **standard errors** available?
+
+-   do the x's need **standardization**.
+
+-   about the **algorithm**
+
+    ```         
+     - stability
+     - speed 
+     - convergence    
+    ```
+
+-   **nonlinear** terms
+
+-   **interactions**
+
+-   **dataset** type
+
+-   is the **selection** of x's automatic?
+
+-   **interpretation**
+
+## Linear Models
+
+```{R}
+#| echo: false
+#| warning: false
+#| message: false
+#| output: false
+library(gamlss2)
+library(gamlss.ggplots)
+library(gamlss.prepdata)
+rent99 |> data_rm( c(2,9)) |>
+ data_few2fac() -> da
+```
+
+```{R}
+#| echo: true
+#| warning: false
+#| message: false
+#| output: true
+#| output-location: slide
+mlinear <- gamlss2(rent~area+poly(yearc,2)+location+bath+kitchen+
+              cheating|area+yearc+location+bath+kitchen+cheating, 
+              family=BCTo, trace=FALSE, data=da)
+summary(mlinear)
+```
+
+## Additive Models
+
+```{R}
+#| echo: true
+#| warning: false
+#| message: false
+#| output: true
+madditive <- gamlss2(rent~s(area)+s(yearc)+location+bath+kitchen+
+                cheating|s(area)+s(yearc)+location+bath+kitchen+cheating, 
+              family=BCTo, data=da, trace=F)
+GAIC(mlinear, madditive)
+```
+
+## Additive Models (con.)
+
+```{R}
+#| message: false
+#| warning: false
+#| echo: true
+summary(madditive)
+```
+
+## Additive Models (con.)
+
+```{R}
+#| message: false
+#| warning: false
+#| echo: true
+plot(madditive)
+```
+
+## Regression Trees {#sec-RegressionTrees}
+
+```{R}
+#| message: false 
+#| cache: false
+#| warning: false 
+#| echo: true 
+source("~/Dropbox/GAMLSS-development/nnet/reg.tree.R")
+mregtree <- gamlss2(rent~tree(~area+yearc+location+bath+kitchen+cheating)|
+                       tree(~area+yearc+location+bath+kitchen+cheating),
+                  family=BCTo, data=da, trace=FALSE) 
+
+GAIC(mlinear, madditive, mregtree)
+
+```
+
+## Regression Trees (con.)
+
+```{R}
+#| echo: true 
+pp<- specials(mregtree, model = "mu", elements = "model")
+plot(pp)
+text(pp)
+```
+
+## Regression Trees (continue)
+
+```{R}
+#| echo: true 
+pp<-specials(mregtree, model = "sigma", elements = "model")
+plot(pp)
+text(pp)
+```
+
+```{R}
+source("~/Dropbox/github/gamlss.prepdata/R/data_stand.R")
+library(gamlss.prepdata)
+library(gamlss2)
+library(gamlss.ggplots)
+data("rent99", package = "gamlss.data") 
+da <- rent99[,-c(2,9)]
+```
+
+## Neural Networks (fit)
+
+```{R}
+#| echo: true 
+#| cache: true 
+f <- rent ~ n(~area+yearc+location+bath+kitchen, size=10)|      n(~area+yearc+location+bath+kitchen, size=3)
+mneural <- gamlss2(f,family=BCTo, data=da)
+gamlss2::GAIC(mlinear, madditive, mneural, mregtree, k=2)
+```
+
+## Neural Networks (plot)
+
+```{r}
+#| echo: true 
+source("~/Dropbox/GAMLSS-development/nnet/plot_NN.R")
+ plot(specials(mneural, model = "mu", elements = "model"))
+```
+
+## Neural Networks (plot)
+
+```{r}
+#| echo: true 
+source("~/Dropbox/GAMLSS-development/nnet/plot_NN.R")
+plot(specials(mneural, model = "sigma", elements = "model"))
+```
+
+## random forest
+
+```{R}
+#| echo: true 
+#| cache: true 
+f <- rent ~ cf(~area+yearc+location+bath+kitchen)|    cf(~area+yearc+location+bath+kitchen)
+mcf <- gamlss2(f,family=BCTo, data=da)
+gamlss2::GAIC(mlinear, madditive, mneural, mregtree, mcf, k=2)
+```
+
+## LASSO-RIDGE
+
+-   there is function `ri()` in `gamlss` using P-splines
+
+-   there is also package `gamlss.lasso` for `gamlss` connecting with package `glmnet`
+
+-   but LASSO is non implemented for `gamlss2` yet
+
+## Principal Componet Regression
+
+-   functions `pc()` and `pcr()` in `gamlss.foreach` package for `gamlss`
+
+-   PCR is non implemented for `gamlss2` yet
+
+## summary {.smaller}
+
+| ML Models | coef. s.e. | stand. of x's | algo. stab., speed, conv. | non-linear terms | inter- actions | data type | auto sele-ction | interpre- tation |
+|-----------|-----------:|--------------:|---------------------------|------------------|----------------|-----------|-----------------|------------------|
+| linear    |        yes |            no | yes, fast, v.good         | poly             | declare        | $n>r$     | no              | v\. easy         |
+| additive  |         no |            no | yes, slow, good           | smooth           | declare        | $n>r$     | no              | easy             |
+| RT        |         no |            no | no, slow, bad             | trees            | auto           | $n>r$??   | yes             | easy             |
+
+: Summary of properties of the machine learning algorithms {#tbl-Summary .striped .hover}
+
+## summary (continue) {.smaller}
+
+| ML Models | coef. s.e. | stand. of x's | algo. stab., speed, conv. | non-linear terms | inter- actions | data type | auto sele-ction | interpre- tation |
+|-----------|-----------:|--------------:|---------------------------|------------------|----------------|-----------|-----------------|------------------|
+| NN        |         no |        0 to 1 | no, $\,\,$ ok, $\,\,$ ok  | auto             | auto           | both?     | yes             | v\. hard         |
+| RF        |         no |            no | no, slow, slow            | YES              | no             | both      | auto            | hard             |
+| LASSO     |         no |           yes | yes, fast, good           | poly             | declare        | both      | auto            | easy             |
+
+: Summary of properties of the machine learning algorithms {#tbl-Summary .striped .hover}
+
+## summary (continue) {.smaller}
+
+| ML Models | coef. s.e. | stand. of x's | algo. stab., speed, conv. | non-linear terms | inter- actions | data type | auto sele-ction | interpre- tation |
+|-----------|-----------:|--------------:|---------------------------|------------------|----------------|-----------|-----------------|------------------|
+| Boost     |         no |            no | yes, fast, good           | smooth trees     | declare        | $n<<r$    | yes             | easy             |
+| MCMC      |        yes |            no | good, ok, $\,\,$ ok       | smooth           | declare        | $n>r$     | no              | easy             |
+| PCR       |        yes |           yes | yes, fast, good           | poly             | declare        | both      | auto            | hard             |
+
+: Summary of properties of the machine learning algorithms {#tbl-Summary .striped .hover}
+
+## end
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
