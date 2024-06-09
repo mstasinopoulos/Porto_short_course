@@ -1,0 +1,27 @@
+---
+title: "GAMLSS short course slides for Port 2024"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller
+  - Fernanda De Bistiani  
+  - Niki Umlauf  
+---
+
+This website contains slides from the short course on GAMLSS given in June 2024 at Porto - Portugal.
+
+-   [Why GAMLSS](Why_GAMLSS.qmd)
+-   [The R shoftware](TheRsoftware.qmd)
+-   [Practical 1](Practical_1.qmd)
+-   [Distributions](Distributions.qmd)
+-   [Continuous Distributions](Continuous_Distributions.qmd)
+-   [Practical 2](Practical_2.qmd)
+-   [Discrete Distributions](Discrete_Distributions.qmd)
+-   [Mixed Distributions](Mixed_Distributions.qmd)
+-   [Practical 3](Practical_3.qmd)
+-   [Model Fitting](fitting.qmd)
+-   [Model Selection](select.qmd)
+-   [Centile Estimation](Centiles.qmd)
+-   [Diagnostics](diagnostics.qmd)
+-   [Comparison of Models](comparison.qmd)
+-   [Interpretation of Models](Interpret.qmd)
