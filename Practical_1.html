@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.4.549" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="Mikis Stasinopoulos" />
+<meta name="author" content="Bob Rigby" />
+<meta name="author" content="Gillian Heller" />
+<meta name="author" content="Fernanda De Bastiani" />
+<meta name="author" content="Niki Umlauf" />
+
+<title>GAMLSS Short Course – Practical 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="/index.html">
+    <span class="navbar-title">GAMLSS Short Course</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <div id="quarto-toc-target"></div>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Practical 1</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mikis Stasinopoulos </p>
+             <p>Bob Rigby </p>
+             <p>Gillian Heller </p>
+             <p>Fernanda De Bastiani </p>
+             <p>Niki Umlauf </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-1980s-munich-rent-data" id="toc-the-1980s-munich-rent-data">The 1980s Munich rent data</a></li>
+  <li><a href="#sec-Thelinearregressionmodel" id="toc-sec-Thelinearregressionmodel">The linear regression model</a></li>
+  <li><a href="#the-generalized-linear-model-glm" id="toc-the-generalized-linear-model-glm">The generalized linear model (GLM)</a></li>
+  <li><a href="#the-generalized-additive-model-gam" id="toc-the-generalized-additive-model-gam">The generalized additive model (GAM)</a></li>
+  <li><a href="#modelling-the-scale-parameter" id="toc-modelling-the-scale-parameter">Modelling the scale parameter</a></li>
+  <li><a href="#the-generalized-additive-model-for-location-scale-and-shape" id="toc-the-generalized-additive-model-for-location-scale-and-shape">The generalized additive model for location, scale and shape</a></li>
+  </ul>
+</nav>
+<section id="the-1980s-munich-rent-data" class="level2">
+<h2>The 1980s Munich rent data</h2>
+<p>The <code>rent</code> data come from a survey conducted in April 1993 by Infratest Sozialforschung, where a random sample of accommodation with new tenancy agreements or increases of rents within the last four years in Munich was selected, including single rooms, small apartments, flats and two-family houses. The data were analysed by <span class="citation" data-cites="StasinopoulosetalModelling">Stasinopoulos, Rigby, and Fahrmeir (<a href="#ref-StasinopoulosetalModelling" role="doc-biblioref">2000</a>)</span> and they are in the package <code>gamlss.data</code> (which is automatically loaded when <code>gamlss</code> is loaded). There are 1,969 observations on nine variables in the data set but, for the purpose of demonstrating GAMLSS, we will use only the following five variables:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.ggplots)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove two variables</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> rent[, <span class="sc">-</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>)]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>da  <span class="sc">|&gt;</span> <span class="fu">head</span>() <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">digits =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">format=</span><span class="st">&quot;pipe&quot;</span>)</span></code></pre></div>
+<div id="tbl-stats" class="cell quarto-float">
+<figure class="quarto-float quarto-float-tbl">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 1: Variables in Munich rent data
+</figcaption>
+<div aria-describedby="tbl-stats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell">
+<thead>
+<tr class="header">
+<th style="text-align: right;">R</th>
+<th style="text-align: right;">Fl</th>
+<th style="text-align: right;">A</th>
+<th style="text-align: left;">H</th>
+<th style="text-align: left;">loc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">693.3</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">422.0</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">736.6</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">732.2</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1295.1</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">1893</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1195.9</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">1893</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.prepdata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data_xyplot</span>(da, <span class="at">response=</span>R)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>100 % of data are ploted, 
+that is, 1969 observations. </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = &#39;gam&#39; and formula = &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;
+`geom_smooth()` using method = &#39;gam&#39; and formula = &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-1plots" class="quarto-figure quarto-figure-center quarto-float">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-1plots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Practical_1_files/figure-html/fig-1plots-1.png" class="img-fluid" width="672" />
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1plots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 1: Plot of the rent <code>R</code> against explanatory variables <code>Fl</code>, <code>A</code>, <code>H</code> and <code>loc</code>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-1plots" class="quarto-xref">Figure 1</a> shows plots of the rent, <code>R</code>, against each of the explanatory variables. Although these are bivariate exploratory plots and take no account of the interplay between the explanatory variables, they give an indication of the complexity of these data. The first two explanatory variables, <code>Fl</code> and <code>A</code>, are continuous. %the plots also show exploratory univariate</p>
+<p>The plot of rent, <code>R</code>, against floor space, <code>Fl</code>, suggests a positive relationship, with increased variation for larger floor spaces, with the result that an assumption of homogeneity of variance would be violated here. There is also some indication of positive skewness in the distribution of rent, <code>R</code>. The peculiarity of the plot of <code>R</code> against year of construction, <code>A</code>, is due to the method of data collection. Many of the observations of <code>A</code> were collected on an interval scale and assigned the value of the interval midpoint, while for the rest the actual year of construction was recorded. The plot suggests that for flats up to 1960 the median rent is roughly constant but, for those constructed after that year, there is an increasing trend in the median rent. The two boxplots display how the rent varies according to the explanatory factors. The median rent increases if the flat has central heating, and increases as the location changes from below average to average and then to above average. There are no surprises in the plots here but again the problem of skewness is prominent, with asymmetrical boxes about the median and longer upper than lower whiskers.</p>
+<p>In summary, any statistical model used for the analysis of the rent data should be able to deal with the following statistical problems:</p>
+<ul>
+<li><p><strong>Complexity of the relationship between rent and the explanatory variables</strong>. The dependence of the median of the response variable rent on floor space and age of construction is nonlinear, and nonparametric smoothing functions may be needed. Median rent may also depend on linear or nonlinear interactions between the explanatory variables.</p></li>
+<li><p><strong>Non-homogeneity of variance of rent.</strong> There is clear indication of non-homogeneity of the variance of rent. The variance of rent may depend on its mean and/or explanatory variables. A statistical model in which this dependence can be modelled explicitly, is needed.</p></li>
+<li><p><strong>Skewness in the distribution of rent.</strong> There is clear indication of positive skewness in the distribution of rent which may depend on explanatory variables and this has to be accounted for within the statistical model.</p></li>
+</ul>
+</section>
+<section id="sec-Thelinearregressionmodel" class="level2">
+<h2>The linear regression model</h2>
+<p>Linear regression is a simple but effective model, which served the statistical community well for most of the last century. With response variable <span class="math inline">Y</span>, <span class="math inline">r</span> covariates <span class="math inline">x_1,\ldots,x_r</span> and sample size <span class="math inline">n</span>, it is defined as <span class="math display">\begin{align*}
+Y_i&amp;=\beta_0+\beta_1 x_{i1}+\ldots+\beta_r x_{ir} +\epsilon_i\\
+\text{where }\qquad\epsilon_i &amp;\stackrel{\hbox{\tiny{ind}}}{\sim}\mathcal{N}(0,\sigma^2)\ ,\qquad \text{for }i=1,2,\ldots,n
+\end{align*}</span> i.e. <span class="math inline">\epsilon_i</span> for <span class="math inline">i=1,2,\ldots,n</span> are independently distributed each with a normal distribution with mean zero and variance <span class="math inline">\sigma^2</span>. This specification is equivalent to <span id="eq-regression_2"><span class="math display">
+\begin{split}
+   Y_i        &amp;  \stackrel{\hbox{\tiny{ind}}}{\sim }\mathcal{N}(\mu_i,\sigma^2)\nonumber\\
+\text{where }\qquad\mu_i &amp;=\beta_0+\beta_1 x_{i1}+\ldots+\beta_r x_{ir}\ ,\qquad \text{for }i=1,2,\ldots,n\ .     
+\end{split}  \tag{1}</span></span> We rewrite model (<a href="#eq-regression_2" class="quarto-xref">Equation 1</a>) in matrix form as: <span class="math display">\begin{split}
+\textbf{Y} &amp; \stackrel{\hbox{\tiny{ind}}}{\sim}   \mathcal{N}( \boldsymbol{\mu},\sigma^2 {\textbf I}) \\
+\boldsymbol{\mu} &amp;= \textbf{X} \boldsymbol{\beta} \nonumber
+\end{split}</span> where <span class="math inline">\textbf{Y}=(Y_1,\ldots,Y_n)^\top</span> is the response vector, <span class="math inline">\textbf{X}</span> is the <span class="math inline">n \times p</span> design matrix (<span class="math inline">p=r+1</span>) containing the <span class="math inline">r</span> covariate columns, plus a column of ones (if the constant is required), <span class="math inline">\boldsymbol{\beta}=(\beta_0,\ldots,\beta_r)^\top</span> is the coefficient vector, and <span class="math inline">{\boldsymbol{\mu}}=(\mu_1,\ldots,\mu_n)^\top</span> is the mean vector. Note that in order for the model to be fitted, both <span class="math inline">\boldsymbol{\beta}</span> and <span class="math inline">\sigma^2</span> have to be estimated from the data. The usual practice is to estimate <span class="math inline">\boldsymbol{\beta}</span> using the least squares estimator, obtained by minimizing the sum of squared differences between the observations <span class="math inline">y_i</span> and the fitted means <span class="math inline">\hat\mu_i=\hat\beta_0+\hat\beta_1 x_{i1}+\ldots+\hat\beta_r x_{ir}</span>, with respect to the <span class="math inline">\hat\beta</span>’s . In matrix form this is written as In matrix form this is written as <span class="math display">
+\boldsymbol{\hat\beta}=\text{argmin}_{\hat\beta}\,(\textbf{y}-\textbf{X}\boldsymbol{\hat\beta})^\top(\textbf{y}-\textbf{X}\boldsymbol{\hat\beta})
+</span> which has solution</p>
+<p><span class="math display">\begin{split}
+\hat{\boldsymbol{\beta}} = (\textbf{X}^ \top \textbf{X})^{-1} \textbf{X}^\top \textbf{Y}\ .
+\end{split} </span> It can be shown that <span class="math inline">\hat{\boldsymbol{\beta}}</span> is also the maximum likelihood estimator (MLE) of <span class="math inline">\boldsymbol{\beta}</span>. Let<br />
+<span class="math display"> \hat{\boldsymbol{\mu}}= \textbf{X} \hat{\boldsymbol{\beta}}</span> be the fitted values of the model and <span class="math inline">\hat{\boldsymbol{\epsilon }}= \textbf{Y}-\hat{\boldsymbol{\mu}}</span> the standard residuals (i.e. fitted errors). Then the MLE for <span class="math inline">\sigma^2</span> is <span class="math display">\begin{split}
+\hat{\sigma}^{2}=\frac{ \hat{\boldsymbol{\epsilon}}^\top \hat{\boldsymbol{\epsilon}}}{n}\ ,
+\end{split}</span> which is a biased estimator, i.e. <span class="math inline">E \left(\hat{\sigma}^2 \right) \neq \sigma^2</span>. An unbiased estimator of <span class="math inline">\sigma^{2}</span> is given by <span class="math display">\begin{split}
+s^{2}=\frac{\hat{\boldsymbol{\epsilon}}^\top \hat{\boldsymbol{\epsilon}}}{n-p}\ .
+\end{split}</span> Sometimes <span class="math inline">s^2</span> is referred as the REML (Restricted Maximum Likelihood) estimator of <span class="math inline">\sigma^2</span>.</p>
+<p>A linear regression model can be fitted in <code>R</code> using the function <code>lm()</code>. Here we compare the results from <code>lm()</code> to the ones obtained by <code>gamlss2()</code>. The notation</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>R <span class="sc">~</span> Fl<span class="sc">+</span>A<span class="sc">+</span>H<span class="sc">+</span>loc</span></code></pre></div>
+</div>
+<p>refers to a formula in <code>R</code> for more information type <code>?formula</code>. <!-- is explained in Section @LinearAdditiveterms. --></p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss2)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>r1 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> Fl<span class="sc">+</span>A<span class="sc">+</span>H<span class="sc">+</span>loc, <span class="at">family=</span>NO,  <span class="at">data=</span>rent, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>l1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(R <span class="sc">~</span> Fl<span class="sc">+</span>A<span class="sc">+</span>H<span class="sc">+</span>loc,<span class="at">data=</span>rent)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(r1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mu.p.(Intercept)             mu.p.Fl              mu.p.A             mu.p.H1 
+       -2775.038803            8.839445            1.480755         -204.759562 
+          mu.p.loc2           mu.p.loc3 sigma.p.(Intercept) 
+         134.052349          209.581472            5.731647 </code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(l1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)           Fl            A           H1         loc2         loc3 
+-2775.038803     8.839445     1.480755  -204.759562   134.052349   209.581472 </code></pre>
+</div>
+</div>
+<p>The coefficient estimates for the <span class="math inline">\mu</span> parameter of the two fits are identical. Note the <code>gamlss2</code> produce an extra coefficient from the variance model which is a constant. Note that the two factors of the <code>rent</code> data, <code>H</code> and <code>loc</code>, are fitted as dummy variables as explained in more detail in later section Section.</p>
+<p>The fitted objects <code>r1</code> and <code>l1</code> use the methods <code>fitted()</code> and <code>resid()</code> to obtain fitted values and residuals respectively. Note that the <code>gamlss2</code> object residuals are the normalized (randomized) quantile residuals as explained in <!-- Section @Normalized_randomized_quantile_residuals,  --> the lecture and not the usual residuals <span class="math inline">\hat{\boldsymbol{\epsilon }}</span> that might be expected.</p>
+<p>The MLE of <span class="math inline">\sigma</span> can be obtained from a <code>gamlss2</code> fitted object using the command <code>fitted(r1, type="parameter", what="sigma")[1]</code>. (Here <code>[1]</code> shows the first element of the fitted vector for <span class="math inline">\sigma</span>) since it is constant for all observations. <code>summary()</code> will show the standard errors and t-tests of the estimated coefficients. The method used to calculate standard errors in the <code>summary()</code> function of a <code>gamlss2</code> model are the standard methods based on the second derivative of the likelihood function.</p>
+<!-- is explained in Section @Functions_to_obtain_standard_errors.  -->
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">fitted</span>(r1, <span class="at">type=</span><span class="st">&quot;parameter&quot;</span>),<span class="dv">5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        mu    sigma
+1 721.0349 308.4768
+2 756.3927 308.4768
+3 897.8238 308.4768
+4 721.0349 308.4768
+5 648.2525 308.4768</code></pre>
+</div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(r1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+gamlss2(formula = R ~ Fl + A + H + loc, data = rent, family = NO, 
+    ... = pairlist(trace = FALSE))
+---
+Family: NO 
+Link function: mu = identity, sigma = log
+*--------
+Parameter: mu 
+---
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -2775.0388   526.8431  -5.267 1.54e-07 ***
+Fl              8.8394     0.3386  26.108  &lt; 2e-16 ***
+A               1.4808     0.2673   5.540 3.43e-08 ***
+H1           -204.7596    19.3784 -10.566  &lt; 2e-16 ***
+loc2          134.0523    25.1343   5.333 1.07e-07 ***
+loc3          209.5815    27.1218   7.727 1.74e-14 ***
+*--------
+Parameter: sigma 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  5.73165    0.01594   359.7   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+*--------
+n = 1969 df =  7 res.df =  1962
+Deviance = 28159.0039 Null Dev. Red. = 2.8%
+AIC = 28173.0039 elapsed =  0.01sec</code></pre>
+</div>
+</div>
+<p>The fitted model is given by <span class="math display">
+y \sim \mathcal{N}(\hat\mu,\hat\sigma^2)
+</span> where</p>
+<p><span class="math display">
+\begin{split}
+\hat\mu &amp;= -2775.03
++ 8.83 \, Fl
++ 1.48 \, A
+-204.75 \texttt{if H=1)} + \\
+&amp; + 134.0 \texttt{if loc=2)} \quad + 209.5 \texttt{(if loc=3)}\\
+\log(\hat\sigma) &amp;=  5.73
+\end{split}
+</span> Note that <span class="math inline">\sigma</span> is fitted on the log scale (indicated by the log link function, so its fitted value is computed from its intercept as <span class="math display">\hat{\sigma}= \exp(5.73).</span><br />
+<span class="math inline">R^2</span> is obtained from the <code>gamlss</code> fitted object as</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Rsq</span>(r1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3372029</code></pre>
+</div>
+</div>
+<p>One way of checking the adequacy of a model is to examine the residuals.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_plots</span>(r1)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- More about the interpretation of the four plots in Figure \ref{fig:LM_residual_plot} can be found in Section \ref{The plot() function}. -->
+<p>The important issue here is that the distributional assumption of normality is easily rejected by looking at the normal Q-Q plot (bottom right panel, Figure ). There is a systematic departure from a linear relationship between the observed (normalized quantile) residuals and their approximate expected values, indicating that the residuals are positively skewed. Note also that the plot of residuals against fitted values (top left panel, Figure ) is not randomly scattered about a horizontal line at 0, but fans out, indicating variance heterogeneity, in particular that the variance increases with the mean.</p>
+<p>Given that the normal (or Gaussian) assumption is violated because of the positive skewness, we consider the generalized linear model next.</p>
+</section>
+<section id="the-generalized-linear-model-glm" class="level2">
+<h2>The generalized linear model (GLM)</h2>
+<p>The generalized linear model (GLM) was introduced by <span class="citation" data-cites="NelderWeddeburn72">Nelder and Wedderburn (<a href="#ref-NelderWeddeburn72" role="doc-biblioref">1972</a>)</span> and further developed in <span class="citation" data-cites="McCullaghNelder89">McCullagh and Nelder (<a href="#ref-McCullaghNelder89" role="doc-biblioref">1989</a>)</span>. There are three major innovations in their approach: (i) the normal distribution for the response variable is replaced by the exponential family of distributions (denoted here as <span class="math inline">\mathcal{E}</span>), (ii) a monotonic function <span class="math inline">g(\cdot)</span> is used in modelling the relationship between <span class="math inline">E(Y)</span> and the explanatory variables, and finally (iii) in order to find the MLE for the parameters <span class="math inline">\boldsymbol{\beta}</span> it uses an iteratively reweighted least squares algorithm, which can be implemented easily in any statistical package having a good weighted least squares algorithm.</p>
+<p>The GLM can be written as: <span class="math display">\begin{align*}
+   Y_i        &amp;  \stackrel{\hbox{\tiny{ind}}}{\sim }\mathcal{E}(\mu_i,\phi)\nonumber\\
+\text{where }\qquad g(\mu_i) &amp;=\beta_0+\beta_1 x_{i1}+\ldots+\beta_r x_{ir}\ ,\qquad \text{for }i=1,2,\ldots,n\ ,     
+\end{align*}</span> and <span class="math inline">\phi</span> is the parameter. This is written in matrix form as</p>
+<p><span class="math display">
+\begin{split}
+\textbf{Y} &amp; \stackrel{\hbox{\tiny{ind}}}{\sim} \mathcal{E}( \boldsymbol{\mu},\phi) \\
+{\boldsymbol \eta} &amp;=g(\boldsymbol{\mu}) = \textbf{X} \boldsymbol{\beta}\ . \nonumber
+\end{split}
+</span> where <span class="math inline">{\boldsymbol \eta}</span> is called the <strong>linear predictor</strong>.</p>
+<p>The exponential family distribution <span class="math inline">\mathcal{E}(\mu, \phi)</span> is defined by the probability (density) function <span class="math inline">f(y | \mu,\phi)</span> having the form: </p>
+<span class="math display">\begin{split}
+f(y | \mu, \phi)=\exp\left\{ \frac{y\theta- b(\theta)}{\phi} +c(y,\phi) \right\}
+\end{split}</span>
+<p>where <span class="math inline">E(Y)=\mu=b&#39;(\theta)</span> and <span class="math inline">V(Y)=\phi\, V(\mu)</span>, where <span class="math inline">V(\mu)=b&#39;&#39;\left[\theta(\mu)\right]</span>. (<span class="math inline">V(\mu)</span> is called the .) The form of () includes many important distributions including the normal, Poisson, gamma, inverse Gaussian and Tweedie distributions having variance functions <span class="math inline">V(\mu)=1,\mu, \mu^2, \mu^3</span> and <span class="math inline">\mu^p</span> for <span class="math inline">p&lt;0</span> or <span class="math inline">p&gt;1</span>, respectively, and also the binomial with variance function <span class="math inline">V(\mu)=\frac{\mu (1-\mu)}{N}</span>, where <span class="math inline">N</span> is the binomial denominator.</p>
+<p>Within the GLM framework the Gaussian distribution, used in the previous section to fit the <code>rent</code> data, might be replaced by the gamma distribution with probability density function (pdf) given by</p>
+<p><span class="math display">
+\begin{split}
+f(y;\mu,\phi)&amp;=\frac{y^{1/\phi-1}\exp(-\frac{y}{\phi\mu})}{(\phi\mu)^{(1/\phi)}\Gamma(1/\phi)}\ ,\qquad y&gt;0,\; \mu&gt;0,\; \phi&gt;0.
+\end{split}
+</span> (In package <code>gamlss</code> the gamma distribution is parametrized with scale parameter <span class="math inline">\sigma</span>, where <span class="math inline">\sigma=\sqrt{\phi}</span>.)</p>
+<p>Link functions were introduced by <span class="citation" data-cites="NelderWeddeburn72">Nelder and Wedderburn (<a href="#ref-NelderWeddeburn72" role="doc-biblioref">1972</a>)</span> for GLMs, but are appropriate for all regression models since they guarantee that parameter estimates remain within the appropriate range.<br />
+For example if a parameter <span class="math inline">\theta</span> has range <span class="math inline">0&lt;\theta&lt;\infty</span>, the logarithmic transformation <span class="math display">\eta=\log(\theta)</span> produces <span class="math inline">-\infty&lt;\eta&lt;\infty</span>. In parameter estimation, if the logarithmic link is used, <span class="math inline">\eta</span> is estimated and transformed back to <span class="math inline">\theta</span> as <span class="math display">e^\eta=\theta\ ,</span> which is guaranteed to be in the range <span class="math inline">(0,\infty)</span>. For the logarithmic link, <span class="math inline">\log(\theta)</span> is the link function and <span class="math inline">e^\eta</span> is the inverse link function. In general, the link function is denoted as <span class="math inline">\eta=g(\theta)</span>, and the inverse link as <span class="math inline">g^{-1}(\eta)=\theta</span>. Generally, for a distribution, each model parameter has its own link function, appropriate to its range. For the gamma distribution we have two model parameters <span class="math inline">\mu</span> and <span class="math inline">\sigma</span>. GAMLSS uses the log link function as default for both parameters, since the range of both is <span class="math inline">(0, \infty)</span>. Their link functions are denoted as</p>
+<p><span class="math display">
+\begin{split}
+\eta_1=g_1(\mu)&amp;=\log(\mu)\\
+\eta_2=g_2(\sigma)&amp;=\log(\sigma)\ .
+\end{split}
+</span> (Note that a log link assumes that the relationship between the parameter and the predictor variables is multiplicative.) The <code>glm()</code> function has as default the <code>canonical</code> link function for <span class="math inline">\mu</span>, which is different for each distribution. For the <code>Gamma</code> is the <code>inverse</code>, i.e. <span class="math inline">g(\mu)=1/\mu</span>.</p>
+<p><strong>Important</strong>: The GAMLSS model as implemented in the package does not use canonical links as default for <span class="math inline">\mu</span> as in the function, but generally uses links reflecting the range of the parameter values, i.e. <code>identity" for $(-\infty, \infty)$,</code>log” for <span class="math inline">(0, \infty)</span>, ``logit” for <span class="math inline">(0, 1)</span>, etc.</p>
+<p>We fit the gamma distribution, using both the and functions. For , the gamma distribution is specified as the argument , whereas for it is specified as . We use the log link for <span class="math inline">\mu</span>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>r2 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> Fl<span class="sc">+</span>A<span class="sc">+</span>H<span class="sc">+</span>loc, <span class="at">family=</span>GA,  <span class="at">data=</span>rent)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GAMLSS-RS iteration  1: Global Deviance = 27764.5899 eps = 0.084320     
+GAMLSS-RS iteration  2: Global Deviance = 27764.5898 eps = 0.000000     </code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(r2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mu.p.(Intercept)             mu.p.Fl              mu.p.A             mu.p.H1 
+        2.865260332         0.010623142         0.001509908        -0.300078521 
+          mu.p.loc2           mu.p.loc3 sigma.p.(Intercept) 
+        0.190759557         0.264078345        -0.982199103 </code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(r2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27764.59</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">### using glm </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>l2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(R <span class="sc">~</span> Fl<span class="sc">+</span>A<span class="sc">+</span>H<span class="sc">+</span>loc, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>),  <span class="at">data=</span>rent)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(l2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)           Fl            A           H1         loc2         loc3 
+ 2.864943806  0.010623194  0.001510066 -0.300074001  0.190764594  0.264083376 </code></pre>
+</div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(l2)<span class="sc">$</span>dispersion  <span class="do">### extract phi</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1377881</code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(l2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 282.5747</code></pre>
+</div>
+</div>
+<p>The fitted coefficients for <span class="math inline">\log(\mu)</span> from the two models are essentially the same, as are the estimates of dispersion. From <code>gamlss2</code> we have <span class="math inline">\hat{\sigma}=\exp\{-0.982199103\}=0.382</span> and hence <span class="math inline">\hat{\phi}=\hat{\sigma}^2=0.14</span>. From we have <span class="math inline">\hat{\phi}=0.1402403</span>. Note that for estimation of <span class="math inline">\phi</span>, <code>gamlss2</code> uses maximum likelihood estimation whereas <code>glm</code> uses the method of moments.</p>
+<p>The deviances for models <code>r2</code> and <code>l2</code> are different because they are defined differently. The GLM deviance is defined as<br />
+<span class="math display">\text{D}_{\text{GLM}}= -2 \log\left(\frac{\hat{L}_c}{\hat{L}_s}\right)</span> where <span class="math inline">\hat{L}_c</span> is the fitted likelihood of the current fitted model, and <span class="math inline">\hat{L}_s</span> that of the model (the model where in modelling <span class="math inline">\mu</span> a parameter is fitted for each observation.) The GAMLSS deviance is defined as <span class="math display">\text{D}_{\text{GAMLSS}}=-2 \log \hat{L}_c\ ,</span> which we refer to as the <strong>global deviance</strong> or <span class="math inline">\text{GDEV}</span>.<br />
+<br />
+To compare models one can used the generalized Akaike information criterion (GAIC) given by <span class="math display">GAIC(\kappa)=-2 \log \hat{L}_c +\left(\kappa \times df\right),</span> where <code>df</code> denotes the total effective degrees of freedom of the model and <span class="math inline">{\kappa}</span> is the penalty for each extra degree of freedom used. Hence <span class="math inline">GAIC(\kappa=2)</span> gives the Akaike information criterion (AIC) and <span class="math inline">GAIC(\kappa=\log(n))</span> gives the Schwarz Bayesian Criterion (SBC) or Bayesian Information Criterion (BIC). The model with the lowest value of <span class="math inline">GAIC(\kappa)</span> for a chosen value of <span class="math inline">\kappa</span> is selected as `best’.</p>
+<p>To get the coefficients with their standard errors use: <code>function!summary()</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(r2)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+gamlss2(formula = R ~ Fl + A + H + loc, data = rent, family = GA)
+---
+Family: GA 
+Link function: mu = log, sigma = log
+*--------
+Parameter: mu 
+---
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.865e+00  3.974e-02  72.093  &lt; 2e-16 ***
+Fl           1.062e-02  4.084e-04  26.013  &lt; 2e-16 ***
+A            1.510e-03  2.961e-06 509.976  &lt; 2e-16 ***
+H1          -3.001e-01  2.137e-02 -14.041  &lt; 2e-16 ***
+loc2         1.908e-01  3.050e-02   6.255 4.87e-10 ***
+loc3         2.641e-01  3.289e-02   8.029 1.68e-15 ***
+*--------
+Parameter: sigma 
+---
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.982199   0.004065  -241.6   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+*--------
+n = 1969 df =  7 res.df =  1962
+Deviance = 27764.5898 Null Dev. Red. = 2.96%
+AIC = 27778.5898 elapsed =  0.02sec</code></pre>
+</div>
+</div>
+<p>The fitted model os given by</p>
+<p><span class="math display">
+\begin{split}
+y &amp; \sim GA(\hat\mu,\hat\sigma)\\
+\text{where}\qquad\qquad&amp;\\
+\log(\hat\mu)&amp;= 2.864+0.0106 \, FL+ 0.0015 \, A+
+-0.3 \, \texttt{(if H=1)} \\
+&amp;+ 0.1907 \, \texttt{(if loc=2)}+ 0.264 \texttt{(if loc=3)}\\
+\log(\hat\sigma)&amp;= -.9822 .
+\end{split}
+</span> To check which of the normal, gamma and inverse Gaussian distributions is best for the data, compare the three models using the GAIC. In this case, because all three models have the same number of parameters we could just compare the global deviance, i.e. <span class="math inline">GAIC(\kappa)</span> with <span class="math inline">\kappa=0</span>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>r22 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> Fl<span class="sc">+</span>A<span class="sc">+</span>H<span class="sc">+</span>loc, <span class="at">family=</span>IG,  <span class="at">data=</span>rent, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">GAIC</span>(r1, r2, r22, <span class="at">k=</span><span class="dv">0</span>) <span class="co"># GD</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         AIC df
+r2  27764.59  7
+r22 27991.56  7
+r1  28159.00  7</code></pre>
+</div>
+</div>
+<p>The conclusion is that the gamma provides the best fit. Now we check the residuals:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_plots</span>(r2)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The residuals at this stage look a lot better than the residuals of the linear model in that at least some of the heterogeneity in the residuals, in the plot of residuals against fitted values, has disappeared. Also the curvature in the normal Q-Q plot has been substantially reduced.</p>
+<p>Even though presence of heterogeneity and skewness in the residuals has been (partially) addressed, we next introduce the generalized additive model (GAM), which allows more flexible modelling of the relationship between the distribution parameter <span class="math inline">\mu</span> and the continuous explanatory variables. This extra flexibility might be needed to improve the residuals of the GLM.</p>
+</section>
+<section id="the-generalized-additive-model-gam" class="level2">
+<h2>The generalized additive model (GAM)</h2>
+<p>Smoothing techniques became popular in the late 1980s. <span class="citation" data-cites="HastieTibshirani90">Hastie and Tibshirani (<a href="#ref-HastieTibshirani90" role="doc-biblioref">1990</a>)</span> introduced them within the GLM framework, coining the term generalized additive models (GAM). <span class="citation" data-cites="Wood06">Wood (<a href="#ref-Wood06" role="doc-biblioref">2006</a>)</span> has contributed extensively to GAM theory and popularity by allowing, in his implementation of GAM in <strong>R</strong> (package <code>mgcv</code>), the automatic selection of the smoothing parameters in the model. (In the original implementation of GAM in S-plus and <strong>R</strong> the smoothing parameters $ $ or equivalently the effective degrees of freedom have to be fixed.) The GAM can be written as: </p>
+<p><span class="math display">
+\begin{split}
+Y &amp; \stackrel{\hbox{\tiny{ind}}}{\sim} \mathcal{E}( \boldsymbol{\mu},\phi) \nonumber\\
+{\boldsymbol \eta}&amp;=g\left( \boldsymbol{\mu} \right)=\textbf{X}\boldsymbol{\beta} + s_1(x_{1})+\ldots+ s_J(x_{J})
+\end{split}
+</span> where the <span class="math inline">s_j</span> are smoothing nonparametric functions applied to covariates <span class="math inline">x_j</span>, <span class="math inline">j=1,\ldots,J</span>. The idea is to let the data determine the relationship between the <strong>predictor</strong> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="math inline">\eta=g(\mu)</span> and the explanatory variables, rather than enforcing a linear (or polynomial) relationship. More detail about smoothers within the ‘gamlss2’ package can be found in the manual. Here we will use the smoothing function <code>s()</code>, which is an implementation of the thin-plate smoother in <code>gamlss2</code> @ <span class="citation" data-cites="Wood06">Wood (<a href="#ref-Wood06" role="doc-biblioref">2006</a>)</span>.</p>
+<p>We now model the <code>rent</code> parameter <span class="math inline">\mu</span> using smooth functions for <code>Fl</code> and <code>A</code>, and compare this model with the simple GLM fitted using <code>gamlss2</code>, (<code>r2</code>) in the previous section.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>r3 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> <span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc, <span class="at">family=</span>GA,  <span class="at">data=</span>rent)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>GAMLSS-RS iteration  1: Global Deviance = 27692.7973 eps = 0.086688     
+GAMLSS-RS iteration  2: Global Deviance = 27683.9424 eps = 0.000319     
+GAMLSS-RS iteration  3: Global Deviance = 27683.9424 eps = 0.000000     </code></pre>
+</div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(r2,r3)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        AIC       df
+r3 27705.66 10.85749
+r2 27778.59  7.00000</code></pre>
+</div>
+</div>
+<p>According to the AIC, the GAM model with smoothers is better than the simple GLM with linear terms for <code>Fl</code> and age <code>A</code>. The summary of the fit is shown below:</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(r3)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+gamlss2(formula = R ~ s(Fl) + s(A) + H + loc, data = rent, family = GA)
+---
+Family: GA 
+Link function: mu = log, sigma = log
+*--------
+Parameter: mu 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.52299    0.02820 231.285  &lt; 2e-16 ***
+H1          -0.29990    0.02115 -14.183  &lt; 2e-16 ***
+loc2         0.18885    0.02947   6.408 1.84e-10 ***
+loc3         0.27188    0.03171   8.574  &lt; 2e-16 ***
+---
+Smooth terms:
+     s(Fl)   s(A)
+edf 1.8366 4.0209
+*--------
+Parameter: sigma 
+---
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -1.00178    0.01333  -75.14   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+*--------
+n = 1969 df =  10.86 res.df =  1958.14
+Deviance = 27683.9424 Null Dev. Red. = 3.24%
+AIC = 27705.6574 elapsed =  0.04sec</code></pre>
+</div>
+</div>
+<p>Note that the summary gives a table for the linear fitted terms only and reports the effective degrees of freedom for the smoothers.</p>
+<p>Now we use <code>drop1()</code> to check for the significance of the contribution of the smoothers (including the linear terms).</p>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">source</span>(<span class="st">&quot;~/Dropbox/GAMLSS-development/stepWise/ExtractAIC.gamlss2.R&quot;</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(r3)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions for
+mu
+
+Model:
+R ~ s(Fl) + s(A) + H + loc | 1
+           Df   AIC     LRT   Pr(Chi)    
+&lt;none&gt;        27706                      
+H      1.6771 27862 160.079 &lt; 2.2e-16 ***
+loc    2.4501 27770  68.958 2.599e-15 ***
+Fl     0.0000 27706   0.000              
+A      0.0000 27706   0.000              
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<p>All terms contribute significantly to modelling the predictor <span class="math inline">\log (\mu)</span>. Note that <code>drop1()</code> can be very slow for large data sets and for models with many smoother terms.</p>
+<p>One of the properties of the fitted nonparametric smooth functions is that they cannot be described simply in a mathematical form. However they can be displayed. Here we plot them using the the function <code>plot()</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r3)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plot shows that the predictor <span class="math inline">\eta=\log(\mu)</span> for the mean rises almost linearly with floor space <code>Fl</code>, but nonlinearly with age <code>A</code>, remaining stable if the flat was built before the 1960’s and rising after that. <!-- The contribution of the two factors \texttt{H} and \texttt{loc} are what we would expect, i.e. lower rent if the flat does not have central heating (\texttt{H=1}) and increasing rent as the location of the flat changes  from below average to average and then to above average (\texttt{loc}=1, 2 and 3 respectively).  The shaded areas are the pointwise 95\% confidence bands for the smoothing curves and factor levels. --> The GAMs in general allow for a flexible specification of the dependence of the parameter predictors on different explanatory terms. To check the adequacy of the fitted GAM we use a <code>worm plot</code> <span class="citation" data-cites="vanBuurenFredriks01">Buuren and Fredriks (<a href="#ref-vanBuurenFredriks01" role="doc-biblioref">2001</a>)</span>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_wp</span>(r3)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Diagnostics explains in detail later and how to interpret a worm plot. Here it is sufficient to say that for an adequate fitted model we would expect the dots (which appear like a worm) to be close to the middle horizontal line and 95% of them to lie between the upper and lower dotted curves, which act as 95% pointwise confidence intervals, with no systematic departure. This does not appear to be the case for the fitted GAM, where the worm is well below the lower curve on the left of the figure. Multiple worm plots allow investigation of the adequacy of the model within ranges of the explanatory variables, and are often used in centile estimation.</p>
+</section>
+<section id="modelling-the-scale-parameter" class="level2">
+<h2>Modelling the scale parameter</h2>
+<p>The gamma distribution has two parameters: <span class="math inline">\mu</span>, the mean of the distribution and <span class="math inline">\sigma</span>, a <code>scale</code> parameter which is related to the variance by <span class="math inline">\V(Y)=\sigma^2 \mu^2</span>. Hence <span class="math inline">\sigma</span> is the coefficient of variation of the gamma distribution. Up to now we have modelled only <span class="math inline">\mu</span> as a function of explanatory variables, but there are occasions (as for the Munich rent data) in which the assumption of a constant scale parameter is not appropriate. On these occasions modelling <span class="math inline">\sigma</span> as a function of explanatory variables could solve the problem. Modelling <span class="math inline">\sigma</span> started in the 1970’s: <span class="citation" data-cites="Harvey76">Harvey (<a href="#ref-Harvey76" role="doc-biblioref">1976</a>)</span> and <span class="citation" data-cites="Aitkin87">Aitkin (<a href="#ref-Aitkin87" role="doc-biblioref">1987</a>)</span>, were the first to model the variance of the normal distribution. As a solution to the problem of heteroscedasticity, <span class="citation" data-cites="engle1982autoregressive">Engle (<a href="#ref-engle1982autoregressive" role="doc-biblioref">1982</a>)</span> proposed a time series model for <span class="math inline">\sigma</span> (volatility) for financial data. Engle’s ARCH (Autoregressive Conditional Heteroscedastic) model has created a whole industry of related models in finance. Modelling the dispersion parameter within the GLM was done by <span class="citation" data-cites="Nelder&amp;Pregibon87">Nelder and Pregibon (<a href="#ref-Nelder&amp;Pregibon87" role="doc-biblioref">1987</a>)</span>, <span class="citation" data-cites="Smyth89">Smyth (<a href="#ref-Smyth89" role="doc-biblioref">1989</a>)</span> and <span class="citation" data-cites="Verbyla93">Verbyla (<a href="#ref-Verbyla93" role="doc-biblioref">1993</a>)</span>. <span class="citation" data-cites="RigbyStasinopoulos96a">Rigby and Stasinopoulos (<a href="#ref-RigbyStasinopoulos96a" role="doc-biblioref">1996a</a>)</span>, <span class="citation" data-cites="RigbyStasinopoulos96b">Rigby and Stasinopoulos (<a href="#ref-RigbyStasinopoulos96b" role="doc-biblioref">1996b</a>)</span> introduced smooth functions for modelling both <span class="math inline">\mu</span> and <span class="math inline">\sigma</span>, which they called the mean and dispersion additive model (MADAM). In the original MADAM formulation the response distribution had to be in the exponential family, but the method of fitting was Quasi-likelihood rather than full maximum likelihood, which is used in GAMLSS.</p>
+<p>We now consider the following submodel of the GAMLSS model:</p>
+<p><span class="math display">
+\begin{split}
+Y &amp; \stackrel{\hbox{\tiny{ind}}}{\sim}  \mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}) \nonumber\\
+{\boldsymbol \eta}_1 &amp;= g_1\left( \boldsymbol{\mu} \right)=X_{1}\boldsymbol{\beta}_{1} + s_{11}(x_{1 1})+\ldots+ s_{1 J_1}(x_{1 J_1}) \nonumber\\
+{\boldsymbol \eta}_2 &amp;= g_2\left( \boldsymbol{\sigma} \right)=X_{2}\boldsymbol{\beta}_{2} + s_{21}(x_{2 1})+\ldots+ s_{2 J_2}(x_{2 J_2})
+\end{split}
+</span> where <span class="math inline">\mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma})</span> denotes any two-parameter distribution and both <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> are linear and/or smooth functions of the explanatory variables. We model the Munich rent data using the gamma () and inverse Gaussian () distributions in model (). The following models for <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> are specified:</p>
+<p><span class="math display">
+\begin{split}
+\log(\mu)&amp;=\beta_{10}+s_{11}\texttt{(Fl)}+s_{12}\texttt{(A)}+\beta_{11}\texttt{(if H=1)}
++\beta_{12}\texttt{(if loc=2)}+ \\
+         &amp;  \; \quad \beta_{13}\texttt{(if loc=3)}\\
+\log(\sigma)&amp;=\beta_{20}+s_{21}\texttt{(Fl)}+s_{22}\texttt{(A)}+\beta_{21}\texttt{(if H=1)}
++\beta_{22}\texttt{(if loc=2)}+ \\
+&amp;  \; \quad \beta_{23}\texttt{(if loc=3)}\ .
+\end{split}
+</span> In the code, the model for <span class="math inline">\mu</span> is specified after \verb|R ~|, while the model for <span class="math inline">\sigma</span> is specified after \verb|sigma.fo=~| .</p>
+<div class="cell">
+<div class="sourceCode" id="cb44"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>r4 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> <span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc<span class="sc">|</span><span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc, </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">family=</span>GA, <span class="at">data=</span>rent, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>r5 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> <span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc<span class="sc">|</span><span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc, </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">family=</span>IG, <span class="at">data=</span>rent, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(r3, r4, r5)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        AIC       df
+r4 27613.93 23.43087
+r3 27705.66 10.85749
+r5 27714.63 23.49505</code></pre>
+</div>
+</div>
+<p>The smallest value of AIC for indicates that the gamma distribution fits better than the inverse Gaussian (model ). To plot the fitted terms for <span class="math inline">\sigma</span> use:</p>
+<div class="cell">
+<div class="sourceCode" id="cb46"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r4)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The significance of the terms for <span class="math inline">\sigma</span> can be tested using the function:</p>
+<div class="cell">
+<div class="sourceCode" id="cb47"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(r4, <span class="at">what=</span><span class="st">&quot;sigma&quot;</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions for
+sigma
+
+Model:
+R ~ s(Fl) + s(A) + H + loc | s(Fl) + s(A) + H + loc
+           Df   AIC    LRT Pr(Chi)  
+&lt;none&gt;        27614                 
+H      1.8370 27615 4.4291 0.09451 .
+loc    2.0072 27618 7.9831 0.01862 *
+Fl     0.0000 27614 0.0000          
+A      0.0000 27614 0.0000          
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<p>Every term apart from seems to contribute significantly to explaining the behaviour of the <span class="math inline">\sigma</span> parameter. To check the adequacy of the distribution use the worm plot:</p>
+<div class="cell">
+<div class="sourceCode" id="cb49"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid_wp</span>(r4)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There are a few points of the worm plot falling outside the 95% pointwise confidence intervals, indicating that the distribution may be inadequate. Furthermore, the inverted U-shape of the residuals indicates negative skewness in the residuals and suggests that the gamma distribution might not be flexible enough to capture the skewness in the data. Thus, we will fit a more general GAMLSS model because it allows for greater flexibility compared with the GLM and GAM models.</p>
+</section>
+<section id="the-generalized-additive-model-for-location-scale-and-shape" class="level2">
+<h2>The generalized additive model for location, scale and shape</h2>
+<p>One of the problems of a two-parameter distribution is the fact that the skewness and kurtosis of the distribution are fixed for fixed <span class="math inline">\mu</span> and <span class="math inline">\sigma</span>. With a relatively large set of data we would like to have the option of a model with more flexible skewness and/or kurtosis. The MADAM Model can be extended as follows:</p>
+<p><span class="math display">
+\begin{split}
+Y &amp; \stackrel{\hbox{\tiny{ind}}}{\sim}   \mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau}) \nonumber \\
+{\boldsymbol \eta}_1&amp;=g_1\left( \boldsymbol{\mu} \right)=\textbf{X}_{1}\boldsymbol{\beta}_{1} + s_{11}(\textbf{x}_{11})+\ldots+ s_{1J_1}(\textbf{X}_{1 J_1}) \nonumber\\
+{\boldsymbol \eta}_2&amp;= g_2\left( \boldsymbol{\sigma} \right)=\textbf{X}_{2}\boldsymbol{\beta}_{2} + s_{21}(\textbf{X}_{2 1})+\ldots+ s_{2J_2}(\textbf{X}_{2 J_2})  \\
+{\boldsymbol \eta}_3 &amp;=g_3\left( \boldsymbol{\nu} \right)=\textbf{X}_{3}\boldsymbol{\beta}_{3} + s_{31}(\textbf{X}_{3 1})+\ldots+ s_{3J_3}(\textbf{X}_{3 J_3})  \nonumber\\
+{\boldsymbol \eta}_4 &amp;=g_4\left( \boldsymbol{\tau} \right)=\textbf{X}_{4}\boldsymbol{\beta}_{4} + s_{41}(\textbf{X}_{4 1})+\ldots+ s_{4J_4}(\textbf{X}_{4 J_4}) \nonumber
+\end{split}
+</span> where <span class="math inline">\mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})</span> is a four-parameter distribution and where <span class="math inline">\boldsymbol{\nu}</span> and <span class="math inline">\boldsymbol{\tau}</span> are shape parameters which are often related to the skewness and kurtosis aspects of the distribution. Model () defines the generalized additive model for location, scale and shape (GAMLSS) first introduced by . GAMLSS, and in particular its implementation in , is the main subject of this book. The following comments related to model () are appropriate here:</p>
+<ul>
+<li><p><strong>Distributions</strong> The form of the distribution <span class="math inline">\mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})</span> is general and only implies that the distribution should be in parametric form. In the current implementation there are around 100 , and distributions implemented in , including some highly skew and kurtotic distributions. Chapter describes the available distributions, while more detail about individual distributions can be found in . In addition:</p>
+<ul>
+<li>Creating a distribution is relatively easy (Section );</li>
+<li>Any distribution in can be left-, right- or both sides- (Section );<br />
+</li>
+<li>A version of any distribution can be created, allowing modelling of censored and interval response variables (Section );</li>
+<li>Any distributions in can be mixed to create a new finite mixture distribution as described in Chapter ;</li>
+<li> continuous distributions can be created for modelling discrete response variables, for example Section ;</li>
+<li>Any continuous distribution on <span class="math inline">(-\infty, \infty)</span> can be transformed to a distribution in <span class="math inline">(0, \infty)</span> or <span class="math inline">(0,1)</span> using the arguments with options or respectively of the function (Section ). \end{itemize}</li>
+</ul></li>
+<li><p><strong>Additive terms</strong> Explanatory variables can affect the parameters of the specified distribution in different ways. GAMLSS models allow linear or nonlinear parametric functions, or nonparametric smoothing functions. The package allows the following smooth additive terms: (i) P-splines (Penalized B-splines), (ii) monotone P-splines, (iii) cycle P-splines, (iv) varying coefficient P-splines, (v) cubic smoothing splines, (vi) loess curve fitting, (vii) fractional polynomials, (viii) random effects, (ix) ridge regression and (x) nonlinear parametric fits. In addition, through appropriate interfaces installed automatically with package , the software allows fitting of (i) neural networks, via package , (ii) decision trees, via , (iii) random effects, via and (iv) multidimensional smoothers, via .</p></li>
+<li><p><strong>Fitting methods and algorithms</strong> A parametric GAMLSS model without smoothing functions) is fitted by maximum likelihood estimation. Note that the fact that <span class="math inline">Y   \stackrel{\hbox{\tiny{ind}}}{\sim} \mathcal{D}( \boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau})</span> implies that the which is defined as the likelihood of observing the sample is <span class="math inline">L\left(\boldsymbol{\mu},\boldsymbol{\sigma}, \boldsymbol{\nu}, \boldsymbol{\tau}\right)=\prod_{i=1}^n f(y_i |  \mu_i, \sigma_i, \nu_i, \tau_i)</span>. Therefore the log-likelihood function is <span class="math inline">\ell = \sum_{i=1}^n \log f(y_i| \mu_i, \sigma_i, \nu_i, \tau_i).</span> The more general model () is generally fitted by maximum penalized likelihood estimation. Chapter shows that most of the smoothers used within GAMLSS can be written as <span class="math inline">{\textbf s}(\textbf{x})={\textbf Z}{\boldsymbol \gamma}</span>, where <span class="math inline">{\textbf Z}</span> is a basis matrix depending on values of <span class="math inline">\textbf{x}</span>, and <span class="math inline">{\boldsymbol \gamma}</span> is a set of coefficients subject to the quadratic penalty <span class="math inline">{\boldsymbol \gamma}^\top{\textbf G}({\boldsymbol \lambda}) {\boldsymbol \gamma}</span> where <span class="math inline">{\boldsymbol \lambda}</span> is a vector or scalar of hyperparameter(s). have shown that the algorithm used for fitting the GAMLSS model for fixed values of the hyperparameters <span class="math inline">{\boldsymbol \lambda}_{kj}</span> maximizes a penalized likelihood function <span class="math inline">\ell_{p}</span> given by </p></li>
+</ul>
+<p><span class="math display">
+    \begin{split}
+    \ell_{p}=\ell-\frac{1}{2}\sum_{k=1}^{4}\sum_{j=1}^{J_k}
+    {\boldsymbol \gamma}_{kj}^\top{\textbf G}_{kj}\left( {\boldsymbol \lambda}_{kj} \right) {\boldsymbol  \gamma}_{kj}
+    \end{split}
+</span> where <span class="math inline">\ell=\sum_{i=1}^{n}\log  f(y_i | \mu_i,\sigma_i, \nu_i, \tau_i)</span> is the log-likelihood function. suggested two basic algorithms for fitting GAMLSS model (). The first, the CG algorithm, is a generalization of the algorithm and uses the first derivatives and the (exact or approximate) expected values of the second and cross derivatives of the likelihood function with respect to <span class="math inline">{\boldsymbol \theta}=(\mu,\sigma,\nu,\tau)</span>. However for many probability (density) functions <span class="math inline">f(y_i | \mu_i,\sigma_i, \nu_i, \tau_i)</span>, the parameters are information orthogonal (where the expected values of the cross derivatives of the likelihood function are zero), for example location and scale models and dispersion family models. In this case the second, the RS algorithm, which is a generalization of the algorithm used by for fitting the MADAM models, is more suited as it does not use the expected values of the cross derivatives.</p>
+<p>We now return to the Munich data to see if we can improve the model by fitting a three-parameter distribution. We use the Box-Cox Cole and Green (BCCGo) distribution, which is based on <span class="citation" data-cites="ColeGreen92">Cole and Green (<a href="#ref-ColeGreen92" role="doc-biblioref">1992</a>)</span> who were the first to fit a single smoothing term to each of the three parameters of the distribution. They called their model the ``LMS method” and it is widely used for centile estimation. The first model () fits a constant <span class="math inline">\nu</span> while the second () fits the same model for <span class="math inline">\nu</span> as was fitted for <span class="math inline">\mu</span> and <span class="math inline">\sigma</span>. </p>
+<div class="cell">
+<div class="sourceCode" id="cb50"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>r6 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span><span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc<span class="sc">|</span><span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc,</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">family=</span>BCCGo,  <span class="at">data=</span>rent, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>r7 <span class="ot">&lt;-</span>  <span class="fu">gamlss2</span>(R <span class="sc">~</span> <span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc<span class="sc">|</span><span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc<span class="sc">|</span><span class="fu">s</span>(Fl)<span class="sc">+</span><span class="fu">s</span>(A)<span class="sc">+</span>H<span class="sc">+</span>loc, </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">family=</span>BCCGo,  <span class="at">data=</span>rent, </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(r4, r6, r7)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        AIC       df
+r4 27613.93 23.43087
+r6 27640.26 31.32010
+r7 27641.46 38.99791</code></pre>
+</div>
+</div>
+<p>Noting the smaller AIC values, the BCCG distribution provides a superior fit compared to the gamma, and modelling the <span class="math inline">\nu</span> parameter as a function of the explanatory variables improves the fit. To check the adequacy of the fitted distribution we use worm plots:</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_wp</span>(r6, r7) </span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img src="Practical_1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672" /></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Both worm plots show adequate fits, so we finish our demonstration here.</p>
+<p>We have used the Munich rent data to demonstrate how GAMLSS can be used, and we arrived at a more sophisticated model than using only GLM or GAM. In particular, modelling both <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> of a gamma (<span class="math inline">\texttt{GA}(\mu, \sigma)</span>) distribution in model provides a a substantially improved fit to the rent response variable as compared to the GAM model . Also a three-parameter distribution model using the <span class="math inline">\texttt{BCCGo}(\mu, \sigma, \nu)</span> distribution marginally improves the fit. GAMLSS provides greater flexibility in regression modelling, but with this flexibility comes more responsibility for the statistician. This is not a bad thing. The philosophy of GAMLSS is to allow the practitioner to have a wide choice of regression models.</p>
+<p>We conclude this practical with a summary of some of the basic properties of GAMLSS:</p>
+<ul>
+<li>GAMLSS is a very flexible unifying framework for univariate regression models.</li>
+<li>It allows distribution for the response variable. the parameters of the distribution can be modelled as functions of explanatory variables.</li>
+<li>It allows a variety of (penalized) additive terms in the models for the distribution parameters.</li>
+<li>The fitted algorithm is modular, where different components can be added easily.</li>
+<li>It extends basic statistical models allowing flexible modelling of overdispersion, excess of zeros, skewness and kurtosis in the data.</li>
+</ul>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">GAMLSS Short Course</span> <span class="hidden" data-render-id="quarto-int-navbar-title">GAMLSS Short Course</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">GAMLSS Short Course - Practical 1</span> <span class="hidden" data-render-id="quarto-twittercardtitle">GAMLSS Short Course - Practical 1</span> <span class="hidden" data-render-id="quarto-ogcardtitle">GAMLSS Short Course - Practical 1</span> <span class="hidden" data-render-id="quarto-metasitename">GAMLSS Short Course</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Aitkin87" class="csl-entry" role="listitem">
+Aitkin, M. 1987. <span>“Modelling Variance Heterogeneity in Normal Regression Using <span>GLIM</span>.”</span> <em>Applied Statistics</em> 36: 332–39.
+</div>
+<div id="ref-vanBuurenFredriks01" class="csl-entry" role="listitem">
+Buuren, S. van, and M. Fredriks. 2001. <span>“Worm Plot: A Simple Diagnostic Device for Modelling Growth Reference Curves.”</span> <em>Statistics in Medicine</em> 20: 1259–77.
+</div>
+<div id="ref-ColeGreen92" class="csl-entry" role="listitem">
+Cole, T. J., and P. J. Green. 1992. <span>“Smoothing Reference Centile Curves: The <span>LMS</span> Method and Penalized Likelihood.”</span> <em>Statistics in Medicine</em> 11: 1305–19.
+</div>
+<div id="ref-engle1982autoregressive" class="csl-entry" role="listitem">
+Engle, R. F. 1982. <span>“Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of <span>U</span>nited <span>K</span>ingdom Inflation.”</span> <em>Econometrica: Journal of the Econometric Society</em>, 987–1007.
+</div>
+<div id="ref-Harvey76" class="csl-entry" role="listitem">
+Harvey, A. C. 1976. <span>“Estimating Regression Models with Multiplicative Heteroscedasticity.”</span> <em>Econometrica</em> 41: 461–65.
+</div>
+<div id="ref-HastieTibshirani90" class="csl-entry" role="listitem">
+Hastie, T. J., and R. J. Tibshirani. 1990. <em>Generalized Additive Models</em>. London: Chapman &amp; Hall.
+</div>
+<div id="ref-McCullaghNelder89" class="csl-entry" role="listitem">
+McCullagh, P., and J. A. Nelder. 1989. <em>Generalized Linear Models</em>. 2nd ed. London: Chapman &amp; Hall.
+</div>
+<div id="ref-Nelder&amp;Pregibon87" class="csl-entry" role="listitem">
+Nelder, J. A., and D. Pregibon. 1987. <span>“An Extended Quasi-Likelihood Function.”</span> <em>Biometrika</em> 74: 221–32.
+</div>
+<div id="ref-NelderWeddeburn72" class="csl-entry" role="listitem">
+Nelder, J. A., and R. W. M. Wedderburn. 1972. <span>“Generalized Linear Models.”</span> <em>Journal of the Royal Statistical Society: Series A</em> 135: 370–84.
+</div>
+<div id="ref-RigbyStasinopoulos96a" class="csl-entry" role="listitem">
+Rigby, R. A., and D. M. Stasinopoulos. 1996a. <span>“A Semi-Parametric Additive Model for Variance Heterogeneity.”</span> <em>Statististics and Computing</em> 6 (1996a): 57–65.
+</div>
+<div id="ref-RigbyStasinopoulos96b" class="csl-entry" role="listitem">
+———. 1996b. <span>“Mean and Dispersion Additive Models.”</span> In <em>Statistical Theory and Computational Aspects of Smoothing</em>, edited by W. Hardle and M. G. Schimek, 215–30. Heidelberg: Physica.
+</div>
+<div id="ref-Smyth89" class="csl-entry" role="listitem">
+Smyth, G. K. 1989. <span>“Generalized Linear Models with Varying Dispersion.”</span> <em>Journal of the Royal Statistical Society: Series B</em> 51: 47–60.
+</div>
+<div id="ref-StasinopoulosetalModelling" class="csl-entry" role="listitem">
+Stasinopoulos, D. M., R. A. Rigby, and L. Fahrmeir. 2000. <span>“Modelling Rental Guide Data Using Mean and Dispersion Additive Models.”</span> <em>Statistician</em> 49: 479–93.
+</div>
+<div id="ref-Verbyla93" class="csl-entry" role="listitem">
+Verbyla, A. P. 1993. <span>“Modelling Variance Heterogeneity: <span>R</span>esidual Maximum Likelihood and Diagnostics.”</span> <em>Journal of the Royal Statistical Society, Series B</em> 55: 493–508.
+</div>
+<div id="ref-Wood06" class="csl-entry" role="listitem">
+Wood, S. N. 2006. <em>Generalized Additive Models. An Introduction with <span>R</span></em>. Chapman &amp; Hall.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Note that we refer to <span class="math inline">{\boldsymbol \eta}</span> as the predictor rather than the linear predictor, since the smoothing terms introduce nonlinearities in the model.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+</body>
+
+</html>
