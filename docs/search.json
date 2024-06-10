@@ -2231,5 +2231,516 @@
     "title": "GAMLSS short course slides for Port 2024",
     "section": "",
     "text": "This website contains slides from the short course on GAMLSS given in June 2024 at Porto - Portugal.\n\nWhy GAMLSS\nThe R shoftware\nPractical 1\nDistributions\nContinuous Distributions\nPractical 2\nDiscrete Distributions\nMixed Distributions\nPractical 3\nModel Fitting\nModel Selection\nCentile Estimation\nDiagnostics\nComparison of Models\nInterpretation of Models"
+  },
+  {
+    "objectID": "Centiles.html#introduction",
+    "href": "Centiles.html#introduction",
+    "title": "Centile estimation",
+    "section": "Introduction",
+    "text": "Introduction\n\nThe data\nthe problem\nthe methods\nthe LMS and GAMLSS\nthe procedure"
+  },
+  {
+    "objectID": "Centiles.html#the-data",
+    "href": "Centiles.html#the-data",
+    "title": "Centile estimation",
+    "section": "the data",
+    "text": "the data\nThe Dutch boys data Source: Buuren and Fredriks (2001)\n\nhead: the head head circumference of 7040 boys\nage: the age in years"
+  },
+  {
+    "objectID": "Centiles.html#the-data-plot",
+    "href": "Centiles.html#the-data-plot",
+    "title": "Centile estimation",
+    "section": "the data plot",
+    "text": "the data plot"
+  },
+  {
+    "objectID": "Centiles.html#estimate-the-curves",
+    "href": "Centiles.html#estimate-the-curves",
+    "title": "Centile estimation",
+    "section": "estimate the curves",
+    "text": "estimate the curves\n\nlibrary(gamlss2)\nlibrary(gamlss.ggplots)\n gBCTo &lt;- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), \n                  data=db, family=BCTo, trace=FALSE)\nfitted_centiles(gBCTo)"
+  },
+  {
+    "objectID": "Centiles.html#the-target",
+    "href": "Centiles.html#the-target",
+    "title": "Centile estimation",
+    "section": "the target",
+    "text": "the target"
+  },
+  {
+    "objectID": "Centiles.html#the-methods",
+    "href": "Centiles.html#the-methods",
+    "title": "Centile estimation",
+    "section": "the methods",
+    "text": "the methods\n\nthe non parametric approach of quantile regression (Koenker, 2005; Koenker and Bassett, 1978)\nthe parametric LMS approach of Cole (1988), Cole and Green (1992) and its extensions Rigby and Stasinopoulos (2004, 2006, 2007)."
+  },
+  {
+    "objectID": "Centiles.html#the-lms-method",
+    "href": "Centiles.html#the-lms-method",
+    "title": "Centile estimation",
+    "section": "the LMS method",
+    "text": "the LMS method\n\\[Y \\sim f_Y(y| \\mu, \\sigma, \\nu, \\tau )\\] where \\(f_Y()\\) is theoretical distribution,\n\n\\(y\\) = head circumference and\n\n\\(x\\) = age \\(^\\xi\\)\n\\(\\mu\\) = s(x, \\(df_\\mu\\))\n\\(\\sigma\\) = s(x, \\(df_\\sigma\\))\n\\(\\nu\\) = s(x, \\(df_\\nu\\))\n\\(\\tau\\) = s(x, \\(df_\\tau\\))"
+  },
+  {
+    "objectID": "Centiles.html#the-lms-method-1",
+    "href": "Centiles.html#the-lms-method-1",
+    "title": "Centile estimation",
+    "section": "the LMS method",
+    "text": "the LMS method\n\\(y\\) is defined through \\(z\\)\n\\[\\begin{eqnarray}\nz = \\frac{1}{\\sigma \\nu} \\left[\\left( \\frac{y}{\\mu}\\right)^{\\nu}-1 \\right], &  \\ \\textrm{if} \\  \\nu  \\neq 0 \\nonumber \\\\\n=  \\frac{1}{\\sigma}\\log\\left(\\frac{y}{\\mu}\\right),                         &  \\ \\textrm{if} \\ \\nu\n=0. \\nonumber\n\\end{eqnarray}\\]\n\nif \\(Z \\sim N(0,1)\\) then \\(Y \\sim BCCG(\\mu, \\sigma, \\nu) =\\) LMS method"
+  },
+  {
+    "objectID": "Centiles.html#lms-extentions",
+    "href": "Centiles.html#lms-extentions",
+    "title": "Centile estimation",
+    "section": "LMS extentions",
+    "text": "LMS extentions\n\nif \\(Z \\sim N(0,1)\\) then \\(Y \\sim BCCG(\\mu, \\sigma, \\nu) =\\) LMS method\nif \\(Z \\sim t_{\\tau}\\) then \\(Y \\sim BCT(\\mu, \\sigma, \\nu, \\tau)=\\) LMST method\nif \\(Z \\sim PE(0,1,\\tau)\\) then \\(Y \\sim BCPE(\\mu, \\sigma, \\nu, \\tau)=\\) LMSP method adopted by WHO}"
+  },
+  {
+    "objectID": "Centiles.html#box-cox-cole-green-transformation",
+    "href": "Centiles.html#box-cox-cole-green-transformation",
+    "title": "Centile estimation",
+    "section": "Box-Cox & Cole-Green transformation",
+    "text": "Box-Cox & Cole-Green transformation\n\n\n\nBox-Cox& Cole-Green"
+  },
+  {
+    "objectID": "Centiles.html#estimation-of-smoothing-parameters",
+    "href": "Centiles.html#estimation-of-smoothing-parameters",
+    "title": "Centile estimation",
+    "section": "estimation of smoothing parameters",
+    "text": "estimation of smoothing parameters\n\nby trial and error\nminimize the generalized Akaike information criterion, GAIC()\nminimize the the validation global deviance VGD\nusing local selection criteria, i.e. CV, ML\n\n\n\nDiagnostics should be used in all above cases"
+  },
+  {
+    "objectID": "Centiles.html#procedure",
+    "href": "Centiles.html#procedure",
+    "title": "Centile estimation",
+    "section": "procedure",
+    "text": "procedure\n\nselect the transformation parameter \\(\\xi\\)\nfit different model and choose the minimim GAIC()\nuse diagnostic tools\nget the centiles"
+  },
+  {
+    "objectID": "Centiles.html#transformation-parameter-xi",
+    "href": "Centiles.html#transformation-parameter-xi",
+    "title": "Centile estimation",
+    "section": "transformation parameter \\(\\xi\\)",
+    "text": "transformation parameter \\(\\xi\\)\n\nlibrary(gamlss2)\nlibrary(gamlss.ggplots)\ngamlss.ggplots:::find_power(y=db$head, x=db$age, profile=TRUE, from=0, to=1, step=0.01)\n\n*** Checking for transformation for x *** \n\n\n\n*** power parameters  0.24 ***  \n\n\n[1] 0.24"
+  },
+  {
+    "objectID": "Centiles.html#transformation-parameter-xi-con.",
+    "href": "Centiles.html#transformation-parameter-xi-con.",
+    "title": "Centile estimation",
+    "section": "transformation parameter \\(\\xi\\) (con.)",
+    "text": "transformation parameter \\(\\xi\\) (con.)\n\n\n\n\n\n\n\n\n\n\n\n\\(\\xi=0.24\\)"
+  },
+  {
+    "objectID": "Centiles.html#transformation-parameter-xi-con.-1",
+    "href": "Centiles.html#transformation-parameter-xi-con.-1",
+    "title": "Centile estimation",
+    "section": "transformation parameter \\(\\xi\\) (con.)",
+    "text": "transformation parameter \\(\\xi\\) (con.)\n\n\n\n\n\n\n\n\n\n\n\n\\(\\xi=0.33\\) cubic root"
+  },
+  {
+    "objectID": "Centiles.html#transformation-parameter-xi-con.-2",
+    "href": "Centiles.html#transformation-parameter-xi-con.-2",
+    "title": "Centile estimation",
+    "section": "transformation parameter \\(\\xi\\) (con.)",
+    "text": "transformation parameter \\(\\xi\\) (con.)\n\n\n\n\n\n\n\n\n\n\n\n\\(\\xi=0.5\\) square root"
+  },
+  {
+    "objectID": "Centiles.html#transformation-parameter-xi-summary.",
+    "href": "Centiles.html#transformation-parameter-xi-summary.",
+    "title": "Centile estimation",
+    "section": "transformation parameter \\(\\xi\\) (summary.)",
+    "text": "transformation parameter \\(\\xi\\) (summary.)\n\nsmoothing techniques can not cope with sudden changes\nif the sudden change is in the end of the data transforming using \\(\\xi\\) could help\nif the sudden change is in the middle a different transormation is required\nalternatively using adapting smoothing parameter can help"
+  },
+  {
+    "objectID": "Centiles.html#fit-different-models",
+    "href": "Centiles.html#fit-different-models",
+    "title": "Centile estimation",
+    "section": "fit different models",
+    "text": "fit different models\n\n   gNO &lt;- gamlss2(head~s(I(age^.33))|s(I(age^.33)), data=db, family=NO)\n\nGAMLSS-RS iteration  1: Global Deviance = 27047.653 eps = 0.384661     \nGAMLSS-RS iteration  2: Global Deviance = 27005.107 eps = 0.001573     \nGAMLSS-RS iteration  3: Global Deviance = 27005.0941 eps = 0.000000     \n\n gBCCGo &lt;- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), data=db, family=BCCGo)\n\nGAMLSS-RS iteration  1: Global Deviance = 27134.2939 eps = 0.389668     \nGAMLSS-RS iteration  2: Global Deviance = 26944.0924 eps = 0.007009     \nGAMLSS-RS iteration  3: Global Deviance = 26941.8838 eps = 0.000081     \nGAMLSS-RS iteration  4: Global Deviance = 26941.8334 eps = 0.000001     \n\n gBCPEo &lt;- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), data=db, family=BCPEo)\n\nGAMLSS-RS iteration  1: Global Deviance = 27412.103 eps = 0.377203     \nGAMLSS-RS iteration  2: Global Deviance = 26825.7069 eps = 0.021391     \nGAMLSS-RS iteration  3: Global Deviance = 26822.0093 eps = 0.000137     \nGAMLSS-RS iteration  4: Global Deviance = 26821.9891 eps = 0.000000     \n\n gBCTo &lt;- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), data=db, family=BCTo)\n\nGAMLSS-RS iteration  1: Global Deviance = 26940.9697 eps = 0.390731     \nGAMLSS-RS iteration  2: Global Deviance = 26749.7364 eps = 0.007098     \nGAMLSS-RS iteration  3: Global Deviance = 26747.984 eps = 0.000065     \nGAMLSS-RS iteration  4: Global Deviance = 26747.8873 eps = 0.000003"
+  },
+  {
+    "objectID": "Centiles.html#select-models",
+    "href": "Centiles.html#select-models",
+    "title": "Centile estimation",
+    "section": "select models",
+    "text": "select models\n\ngamlss2::GAIC(gNO, gBCTo, gBCPEo, gBCCGo)\n\n            AIC       df\ngBCTo  26792.07 22.08936\ngBCPEo 26871.06 24.53565\ngBCCGo 26998.12 28.14446\ngNO    27042.92 18.91385\n\nmodel_GAIC_lollipop(gNO, gBCTo, gBCPEo, gBCCGo)"
+  },
+  {
+    "objectID": "Centiles.html#diagnostic-tools-residuals",
+    "href": "Centiles.html#diagnostic-tools-residuals",
+    "title": "Centile estimation",
+    "section": "diagnostic tools: residuals",
+    "text": "diagnostic tools: residuals\n\nresid_plots(gBCTo)"
+  },
+  {
+    "objectID": "Centiles.html#qqplot",
+    "href": "Centiles.html#qqplot",
+    "title": "Centile estimation",
+    "section": "QQplot",
+    "text": "QQplot\n\nresid_qqplot(gBCTo)"
+  },
+  {
+    "objectID": "Centiles.html#worm-plots",
+    "href": "Centiles.html#worm-plots",
+    "title": "Centile estimation",
+    "section": "worm plots",
+    "text": "worm plots\n\nresid_wp(gBCTo)"
+  },
+  {
+    "objectID": "Centiles.html#different-models-worm-plots",
+    "href": "Centiles.html#different-models-worm-plots",
+    "title": "Centile estimation",
+    "section": "different models worm plots",
+    "text": "different models worm plots\n\nmodel_wp(gBCTo, gNO)"
+  },
+  {
+    "objectID": "Centiles.html#different-x-values-worm-plots",
+    "href": "Centiles.html#different-x-values-worm-plots",
+    "title": "Centile estimation",
+    "section": "different x-values worm plots",
+    "text": "different x-values worm plots\n\nresid_wp_wrap(gBCTo, xvar=db$age)"
+  },
+  {
+    "objectID": "Centiles.html#centiles",
+    "href": "Centiles.html#centiles",
+    "title": "Centile estimation",
+    "section": "centiles",
+    "text": "centiles\n\nfitted_centiles(gBCTo)"
+  },
+  {
+    "objectID": "Centiles.html#centiles-just-curves",
+    "href": "Centiles.html#centiles-just-curves",
+    "title": "Centile estimation",
+    "section": "centiles just curves",
+    "text": "centiles just curves\n\nfitted_centiles(gBCTo, points=FALSE)"
+  },
+  {
+    "objectID": "Centiles.html#centiles-with-legend",
+    "href": "Centiles.html#centiles-with-legend",
+    "title": "Centile estimation",
+    "section": "centiles with legend",
+    "text": "centiles with legend\n\nfitted_centiles_legend(gBCTo)"
+  },
+  {
+    "objectID": "Centiles.html#centiles-different-models",
+    "href": "Centiles.html#centiles-different-models",
+    "title": "Centile estimation",
+    "section": "centiles different models",
+    "text": "centiles different models\n\nmodel_centiles(gBCTo, gNO)"
+  },
+  {
+    "objectID": "Centiles.html#centiles-different-models-in-one-plot",
+    "href": "Centiles.html#centiles-different-models-in-one-plot",
+    "title": "Centile estimation",
+    "section": "centiles different models in one plot",
+    "text": "centiles different models in one plot\n\nmodel_centiles(gBCTo, gNO, in.one=TRUE)"
+  },
+  {
+    "objectID": "Centiles.html#centiles-different-models-in-one-plot-1",
+    "href": "Centiles.html#centiles-different-models-in-one-plot-1",
+    "title": "Centile estimation",
+    "section": "centiles different models in one plot",
+    "text": "centiles different models in one plot\n\nmodel_centiles(gBCTo, gNO, in.one=TRUE)"
+  },
+  {
+    "objectID": "Centiles.html#centiles-different-models-different-x-valus-in-one-plot",
+    "href": "Centiles.html#centiles-different-models-different-x-valus-in-one-plot",
+    "title": "Centile estimation",
+    "section": "centiles different models different x-valus in one plot",
+    "text": "centiles different models different x-valus in one plot"
+  },
+  {
+    "objectID": "Centiles.html#fitted-parameters",
+    "href": "Centiles.html#fitted-parameters",
+    "title": "Centile estimation",
+    "section": "fitted parameters",
+    "text": "fitted parameters"
+  },
+  {
+    "objectID": "Centiles.html#bucket-plots",
+    "href": "Centiles.html#bucket-plots",
+    "title": "Centile estimation",
+    "section": "bucket plots",
+    "text": "bucket plots"
+  },
+  {
+    "objectID": "Centiles.html#q-stats",
+    "href": "Centiles.html#q-stats",
+    "title": "Centile estimation",
+    "section": "Q-stats",
+    "text": "Q-stats"
+  },
+  {
+    "objectID": "Centiles.html#predict",
+    "href": "Centiles.html#predict",
+    "title": "Centile estimation",
+    "section": "predict",
+    "text": "predict\n\nlibrary(broom)\nlibrary(knitr)\nda &lt;- predict(gBCTo, newdata=db[c(1, 1000, 2000, 3000, 6000,7000),])\nda  |&gt; head() |&gt; kable(digits = c(2, 4, 4, 4), format=\"pipe\")\n\n\n\n\n\nmu\nsigma\nnu\ntau\n\n\n\n\n1\n35.34\n0.0317\n3.0297\n4.8899\n\n\n1042\n46.10\n0.0253\n3.1266\n6.8850\n\n\n2091\n49.50\n0.0286\n3.0847\n8.3999\n\n\n3118\n52.27\n0.0304\n2.2706\n12.3616\n\n\n6327\n56.82\n0.0290\n0.8780\n17.5648\n\n\n7422\n57.57\n0.0283\n0.4968\n19.3337"
+  },
+  {
+    "objectID": "Centiles.html#end",
+    "href": "Centiles.html#end",
+    "title": "Centile estimation",
+    "section": "end",
+    "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
+  },
+  {
+    "objectID": "diagnostics.html#graphical-diagnostic-tools",
+    "href": "diagnostics.html#graphical-diagnostic-tools",
+    "title": "Diagnostics and ggplots",
+    "section": "Graphical Diagnostic tools",
+    "text": "Graphical Diagnostic tools\n\nindividual variable/data information\nmodels dianostics\n\nwithin model\nbetween models\n\n\n\n\nSee packages gamlss.ggplots and gamlssprepdata"
+  },
+  {
+    "objectID": "diagnostics.html#data-and-models",
+    "href": "diagnostics.html#data-and-models",
+    "title": "Diagnostics and ggplots",
+    "section": "data and models",
+    "text": "data and models\n\nlibrary(gamlss2)\nlibrary(gamlss.ggplots)\nda &lt;- rent99[,-c(2,9)]\ng1 &lt;- gamlss2(rent~s(area)+s(yearc)+bath+location+kitchen+cheating|\ns(area)+s(yearc)+bath+location+kitchen+cheating, data=da, family=GA )\n\nGAMLSS-RS iteration  1: Global Deviance = 38249.9521 eps = 0.129707     \nGAMLSS-RS iteration  2: Global Deviance = 38205.9938 eps = 0.001149     \nGAMLSS-RS iteration  3: Global Deviance = 38205.9065 eps = 0.000002     \n\ng2 &lt;- gamlss2(rent~s(area)+s(yearc)+bath+location+kitchen+cheating|\ns(area)+s(yearc)+bath+location+kitchen+cheating, data=da, family=BCTo )\n\nGAMLSS-RS iteration  1: Global Deviance = 38170.7368 eps = 0.290582     \nGAMLSS-RS iteration  2: Global Deviance = 38135.3004 eps = 0.000928     \nGAMLSS-RS iteration  3: Global Deviance = 38133.3037 eps = 0.000052     \nGAMLSS-RS iteration  4: Global Deviance = 38132.6789 eps = 0.000016     \nGAMLSS-RS iteration  5: Global Deviance = 38132.4637 eps = 0.000005     \n\ngamlss2::GAIC(g1,g2)\n\n        AIC       df\ng2 38196.95 32.24370\ng1 38267.22 30.65513"
+  },
+  {
+    "objectID": "diagnostics.html#y_hist",
+    "href": "diagnostics.html#y_hist",
+    "title": "Diagnostics and ggplots",
+    "section": "y_hist()",
+    "text": "y_hist()\n\ny_hist(da$rent)"
+  },
+  {
+    "objectID": "diagnostics.html#y_dots",
+    "href": "diagnostics.html#y_dots",
+    "title": "Diagnostics and ggplots",
+    "section": "y_dots()",
+    "text": "y_dots()\n\ny_dots(da$rent)"
+  },
+  {
+    "objectID": "diagnostics.html#y_symmetry",
+    "href": "diagnostics.html#y_symmetry",
+    "title": "Diagnostics and ggplots",
+    "section": "y_symmetry()",
+    "text": "y_symmetry()\n\ny_symmetry(da$rent)"
+  },
+  {
+    "objectID": "diagnostics.html#y_acf-time-series",
+    "href": "diagnostics.html#y_acf-time-series",
+    "title": "Diagnostics and ggplots",
+    "section": "y_acf() time series",
+    "text": "y_acf() time series\n\ny_acf(da$rent)"
+  },
+  {
+    "objectID": "diagnostics.html#y_pacf-time-series",
+    "href": "diagnostics.html#y_pacf-time-series",
+    "title": "Diagnostics and ggplots",
+    "section": "y_pacf() time series",
+    "text": "y_pacf() time series\n\ny_pacf(da$rent)"
+  },
+  {
+    "objectID": "diagnostics.html#moment_bucket",
+    "href": "diagnostics.html#moment_bucket",
+    "title": "Diagnostics and ggplots",
+    "section": "moment_bucket()",
+    "text": "moment_bucket()\n\nmoment_bucket(da$rent)"
+  },
+  {
+    "objectID": "diagnostics.html#data_plot",
+    "href": "diagnostics.html#data_plot",
+    "title": "Diagnostics and ggplots",
+    "section": "data_plot()",
+    "text": "data_plot()\n\nlibrary(gamlss.prepdata)\ndata_plot(da)\n\nonly 100 % of data are ploted, \nthat is, 3082 observations."
+  },
+  {
+    "objectID": "diagnostics.html#data_xyplot",
+    "href": "diagnostics.html#data_xyplot",
+    "title": "Diagnostics and ggplots",
+    "section": "data_xyplot()",
+    "text": "data_xyplot()\n\nlibrary(gamlss.prepdata)\ndata_xyplot(da, response=rent)\n\n100 % of data are ploted, \nthat is, 3082 observations."
+  },
+  {
+    "objectID": "diagnostics.html#sec-variables1",
+    "href": "diagnostics.html#sec-variables1",
+    "title": "Diagnostics and ggplots",
+    "section": "residuals against index",
+    "text": "residuals against index\n\nresid_index(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-variables2",
+    "href": "diagnostics.html#sec-variables2",
+    "title": "Diagnostics and ggplots",
+    "section": "residuals against \\(\\mu\\)",
+    "text": "residuals against \\(\\mu\\)\n\nresid_mu(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-variables3",
+    "href": "diagnostics.html#sec-variables3",
+    "title": "Diagnostics and ggplots",
+    "section": "residuals against quantile value",
+    "text": "residuals against quantile value\n\nresid_quantile(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-variables4",
+    "href": "diagnostics.html#sec-variables4",
+    "title": "Diagnostics and ggplots",
+    "section": "residuals against x-var (factor)",
+    "text": "residuals against x-var (factor)\n\nresid_xvar(g2, xvar=location)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-density",
+    "href": "diagnostics.html#sec-density",
+    "title": "Diagnostics and ggplots",
+    "section": "residual density",
+    "text": "residual density\n\nresid_density(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-ecdf",
+    "href": "diagnostics.html#sec-ecdf",
+    "title": "Diagnostics and ggplots",
+    "section": "ECDF residual plot",
+    "text": "ECDF residual plot\n\nresid_ecdf(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-both",
+    "href": "diagnostics.html#sec-both",
+    "title": "Diagnostics and ggplots",
+    "section": "both ECDF",
+    "text": "both ECDF\n\n\n\n\n\n\n\n\n\n\n\n(a) ecdf\n\n\n\n\n\n\n\n\n\n\n\n(b) Own’s detrened plot\n\n\n\n\n\n\n\nFigure 1: the ECDF and DTOP give the same information"
+  },
+  {
+    "objectID": "diagnostics.html#sec-QQ",
+    "href": "diagnostics.html#sec-QQ",
+    "title": "Diagnostics and ggplots",
+    "section": "QQ-plot",
+    "text": "QQ-plot\n\nresid_qqplot(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-worm",
+    "href": "diagnostics.html#sec-worm",
+    "title": "Diagnostics and ggplots",
+    "section": "worm plot",
+    "text": "worm plot\n\nresid_wp(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-QQworm",
+    "href": "diagnostics.html#sec-QQworm",
+    "title": "Diagnostics and ggplots",
+    "section": "QQ and worm plots",
+    "text": "QQ and worm plots\n\n\n\n\n\n\n\n\n\n\n\n(a) QQ-plot\n\n\n\n\n\n\n\n\n\n\n\n(b) worm-plot\n\n\n\n\n\n\n\nFigure 2: QQ and worm plots (same infrmation)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-worm2",
+    "href": "diagnostics.html#sec-worm2",
+    "title": "Diagnostics and ggplots",
+    "section": "worm plot for x-var",
+    "text": "worm plot for x-var\n\nresid_wp_wrap(g2, xvar=rent99$area)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-bucket",
+    "href": "diagnostics.html#sec-bucket",
+    "title": "Diagnostics and ggplots",
+    "section": "Bucket plots",
+    "text": "Bucket plots"
+  },
+  {
+    "objectID": "diagnostics.html#resid_plots-standard",
+    "href": "diagnostics.html#resid_plots-standard",
+    "title": "Diagnostics and ggplots",
+    "section": "resid_plots() standard",
+    "text": "resid_plots() standard\n\nresid_plots(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#resid_plots-new",
+    "href": "diagnostics.html#resid_plots-new",
+    "title": "Diagnostics and ggplots",
+    "section": "resid_plots() new",
+    "text": "resid_plots() new\n\nresid_plots(g2, theme=\"new\")"
+  },
+  {
+    "objectID": "diagnostics.html#resid_plots-ecdf",
+    "href": "diagnostics.html#resid_plots-ecdf",
+    "title": "Diagnostics and ggplots",
+    "section": "resid_plots() ECDF",
+    "text": "resid_plots() ECDF\n\nresid_plots(g2, theme=\"ecdf\")"
+  },
+  {
+    "objectID": "diagnostics.html#resid_plots-ts",
+    "href": "diagnostics.html#resid_plots-ts",
+    "title": "Diagnostics and ggplots",
+    "section": "resid_plots() TS",
+    "text": "resid_plots() TS\n\nresid_plots(g2, theme=\"ts\")"
+  },
+  {
+    "objectID": "diagnostics.html#deviance-increment",
+    "href": "diagnostics.html#deviance-increment",
+    "title": "Diagnostics and ggplots",
+    "section": "deviance increment",
+    "text": "deviance increment\n\nfitted_devianceIncr(g2)"
+  },
+  {
+    "objectID": "diagnostics.html#fitted-distributions-pdf",
+    "href": "diagnostics.html#fitted-distributions-pdf",
+    "title": "Diagnostics and ggplots",
+    "section": "fitted distributions (pdf)",
+    "text": "fitted distributions (pdf)\n\nfitted_pdf(g2, c(1, 100, 1000), from=0, to=1000)"
+  },
+  {
+    "objectID": "diagnostics.html#fitted-distributions-cdf",
+    "href": "diagnostics.html#fitted-distributions-cdf",
+    "title": "Diagnostics and ggplots",
+    "section": "fitted distributions (cdf)",
+    "text": "fitted distributions (cdf)\n\nfitted_cdf(g2, c(1, 100, 1000), from=0, to=1000)"
+  },
+  {
+    "objectID": "diagnostics.html#sec-modeldensity",
+    "href": "diagnostics.html#sec-modeldensity",
+    "title": "Diagnostics and ggplots",
+    "section": "model density",
+    "text": "model density\n\n\nFigure 3: The model density estimates of the residuals"
+  },
+  {
+    "objectID": "diagnostics.html#sec-modelQQplots",
+    "href": "diagnostics.html#sec-modelQQplots",
+    "title": "Diagnostics and ggplots",
+    "section": "model QQ-plots",
+    "text": "model QQ-plots\n\n\n(a) QQ-plots"
+  },
+  {
+    "objectID": "diagnostics.html#sec-modelwormplots",
+    "href": "diagnostics.html#sec-modelwormplots",
+    "title": "Diagnostics and ggplots",
+    "section": "model worm-plots",
+    "text": "model worm-plots\n\n\n(a) worm plots"
+  },
+  {
+    "objectID": "diagnostics.html#sec-modelbucketplot",
+    "href": "diagnostics.html#sec-modelbucketplot",
+    "title": "Diagnostics and ggplots",
+    "section": "model bucket plot",
+    "text": "model bucket plot\n\n\n(a) bucket plot"
+  },
+  {
+    "objectID": "diagnostics.html#sec-modelWPplotwrap1",
+    "href": "diagnostics.html#sec-modelWPplotwrap1",
+    "title": "Diagnostics and ggplots",
+    "section": "model wp wrap",
+    "text": "model wp wrap\n\n\nFigure 7: Worm plots for different fitted models at different values of the continuous variable area"
+  },
+  {
+    "objectID": "diagnostics.html#sec-modelWPplotwrap2",
+    "href": "diagnostics.html#sec-modelWPplotwrap2",
+    "title": "Diagnostics and ggplots",
+    "section": "model wp wrap (continue)",
+    "text": "model wp wrap (continue)\n\n\nFigure 8: Worm plots for different fitted models at different levels of the factor location"
+  },
+  {
+    "objectID": "diagnostics.html#model-deviance-increment-difference",
+    "href": "diagnostics.html#model-deviance-increment-difference",
+    "title": "Diagnostics and ggplots",
+    "section": "model deviance increment difference",
+    "text": "model deviance increment difference"
+  },
+  {
+    "objectID": "diagnostics.html#end",
+    "href": "diagnostics.html#end",
+    "title": "Diagnostics and ggplots",
+    "section": "END",
+    "text": "END\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   }
 ]

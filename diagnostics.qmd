@@ -1,0 +1,447 @@
+---
+title: "Diagnostics and ggplots"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Fernanda De Bastiani
+  - Gillian Heller 
+  - Niki  Umlauf 
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    css: styles.css
+    theme: sky
+---
+
+## Graphical Diagnostic tools
+
+-   individual variable/data information
+
+-   models dianostics
+
+    -   `within` model
+
+    -   `between` models
+
+::: aside
+See packages `gamlss.ggplots` and `gamlssprepdata`
+:::
+
+## data and models
+
+```{r}
+#| warning: false
+#| echo: true
+library(gamlss2)
+library(gamlss.ggplots)
+da <- rent99[,-c(2,9)]
+g1 <- gamlss2(rent~s(area)+s(yearc)+bath+location+kitchen+cheating|
+s(area)+s(yearc)+bath+location+kitchen+cheating, data=da, family=GA )
+g2 <- gamlss2(rent~s(area)+s(yearc)+bath+location+kitchen+cheating|
+s(area)+s(yearc)+bath+location+kitchen+cheating, data=da, family=BCTo )
+gamlss2::GAIC(g1,g2)
+```
+
+# individual variables
+
+## `y_hist()`
+
+```{r}
+#| echo: true
+y_hist(da$rent)
+```
+
+## `y_dots()`
+
+```{r}
+#| echo: true
+y_dots(da$rent)
+```
+
+## `y_symmetry()`
+
+```{r}
+#| echo: true
+y_symmetry(da$rent)
+```
+
+## `y_acf()` time series
+
+```{r}
+#| echo: true
+y_acf(da$rent)
+```
+
+## `y_pacf()` time series
+
+```{r}
+#| echo: true
+y_pacf(da$rent)
+```
+
+## `moment_bucket()`
+
+```{r}
+#| echo: true
+#| warning: false
+moment_bucket(da$rent)
+```
+
+## `data_plot()`
+
+```{r}
+#| echo: true
+library(gamlss.prepdata)
+data_plot(da)
+```
+
+## `data_xyplot()`
+
+```{r}
+#| echo: true
+library(gamlss.prepdata)
+data_xyplot(da, response=rent)
+
+```
+
+# model diagnostics
+
+# within model
+
+## residuals against index {#sec-variables1}
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_index(g2)
+```
+
+## residuals against $\mu$ {#sec-variables2}
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_mu(g2)
+```
+
+## residuals against quantile value {#sec-variables3}
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_quantile(g2)
+```
+
+## residuals against x-var (cont.) {#sec-variables4}
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_xvar(g2, xvar=area)
+```
+
+## residuals against x-var (factor) {#sec-variables4}
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_xvar(g2, xvar=location)
+```
+
+<!-- ## residuals against  coninuous x-var {#sec-variables4} -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- library(ggplot2) -->
+
+<!-- resid_xvar(g2, xvar=area)+ -->
+
+<!--    facet_wrap(~cut_number(rent99$area, 3))  -->
+
+<!-- ``` -->
+
+## residual density {#sec-density}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+resid_density(g2)
+```
+
+## `ECDF` residual plot {#sec-ecdf}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+resid_ecdf(g2)
+```
+
+# detrended `ECDF` plot {#sec-dtop}
+
+```{r}
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+resid_dtop(g2)
+```
+
+## both `ECDF` {#sec-both}
+
+```{r}
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-monoDiagnostics3
+#| fig-cap: "the ECDF and DTOP give the same information"
+#| fig-subcap: 
+#|     - "ecdf"
+#|     - "Own's detrened plot"
+#| layout-ncol: 2
+library(gamlss.ggplots)
+resid_ecdf(g2)
+resid_dtop(g2)
+```
+
+## `QQ`-plot {#sec-QQ}
+
+```{r}
+#| echo: true
+#| eval: true
+resid_qqplot(g2)
+```
+
+## `worm` plot {#sec-worm}
+
+```{r}
+#| echo: true
+resid_wp(g2)
+```
+
+## `QQ` and `worm` plots {#sec-QQworm}
+
+```{r}
+#| echo: false 
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-monoDiagnostics4
+#| fig-cap: "QQ and worm plots (same infrmation)"
+#| fig-subcap: 
+#|     - "QQ-plot"
+#|     - "worm-plot"
+#| layout-ncol: 2
+
+resid_qqplot(g2)
+resid_wp(g2)
+```
+
+## `worm` plot for x-var {#sec-worm2}
+
+```{r}
+#| echo: true
+resid_wp_wrap(g2, xvar=rent99$area)
+```
+
+## `Bucket` plots {#sec-bucket}
+
+```{r}
+#| eval: true
+#| warning: false
+#| message: false
+moment_bucket(g2)
+```
+
+<!-- ## Bucket plots  {#sec-bucket1} -->
+
+```{r}
+# #| echo: true 
+# #| eval: true
+# #| warning: false
+# #| message: false
+# moment_bucket(g2)
+```
+
+## `resid_plots()` standard
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_plots(g2)
+```
+
+## `resid_plots()` new
+
+```{r}
+#| echo: true
+resid_plots(g2, theme="new")
+```
+
+## `resid_plots()` ECDF
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_plots(g2, theme="ecdf")
+```
+
+## `resid_plots()` TS
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+resid_plots(g2, theme="ts")
+```
+
+## deviance increment
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+fitted_devianceIncr(g2)
+```
+
+## fitted distributions (pdf)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+fitted_pdf(g2, c(1, 100, 1000), from=0, to=1000)
+```
+
+## fitted distributions (cdf)
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+fitted_cdf(g2, c(1, 100, 1000), from=0, to=1000)
+```
+
+# between models diagnostics
+
+## model `density` {#sec-modeldensity}
+
+```{r}
+#| echo: false 
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-modelDiagnostics1
+#| fig-cap: "The model density estimates of the residuals"
+model_density(g1,g2)
+```
+
+------------------------------------------------------------------------
+
+## model `QQ-plots` {#sec-modelQQplots}
+
+```{r}
+#| echo: false 
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-modelDiagnostics2
+#| fig-cap: "The model QQ-plots of the residuals"
+#| fig-subcap: 
+#|     - "QQ-plots"
+ model_qqplot(g1,g2)
+```
+
+------------------------------------------------------------------------
+
+## model `worm`-plots {#sec-modelwormplots}
+
+```{r}
+#| echo: false 
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-modelDiagnostics3
+#| fig-cap: "The model worm plots  of the residuals"
+#| fig-subcap: 
+#|     - "worm plots"
+model_wp(g1, g2)
+```
+
+------------------------------------------------------------------------
+
+## model `bucket` plot {#sec-modelbucketplot}
+
+```{r}
+#| echo: false 
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-modelDiagnostics4
+#| fig-cap: "The model bucket plot  of the residuals"
+#| fig-subcap: 
+#|     - "bucket plot"
+moment_bucket(g1,g2)
+```
+
+## model `wp` wrap {#sec-modelWPplotwrap1}
+
+```{r}
+#| label: fig-modelDiagArea
+#| fig-cap: "Worm plots for different fitted models at different values of the continuous variable `area`"
+model_wp_wrap(g1,g2, xvar=rent99$area)
+```
+
+## model `wp` wrap (continue) {#sec-modelWPplotwrap2}
+
+```{r}
+#| label: fig-modelDiagLocation
+#| fig-cap: "Worm plots for different fitted models at different levels of the factor `location`"
+model_wp_wrap(g1,g2, xvar=rent99$location)
+```
+
+## model deviance increment difference
+
+```{r}
+model_devianceIncr_diff(g1,g2)
+```
+
+# Practical 5
+
+## END
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
