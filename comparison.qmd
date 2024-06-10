@@ -1,0 +1,573 @@
+---
+title: "Comparing Models"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Fernanda De Bastiani
+  - Gillian Heller 
+  - Niki  Umlauf 
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    number-sections: false
+    number-depth: 2
+    footnotes-hover: true
+    scrollable: true
+    df-print: kable
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    theme: sky
+---
+
+## Introduction
+
+-   what to compare
+
+    -   distributions
+    -   x-variables
+
+-   how ro compare
+
+    -   `graphical` diagnostic tools;
+    -   model summary `statistics`
+
+## summary `statistics`
+
+| Data                | Methods            |
+|---------------------|--------------------|
+| `all` data          | $\chi^2$, GAIC     |
+| `test` data         | LS, CRPS, MSE etc. |
+| `data partitioning` |                    |
+| K-fold              | LS, CRPS           |
+| bootstrap           | LS, CRPS           |
+|                     |                    |
+
+<!-- - the **purpose** should be always in our mind when we try to analyse data -->
+
+<!-- - the data are collected almost every 10 years  -->
+
+<!-- - guidance to judges on whether a **disputed rent** is a fair or not -->
+
+<!-- - identify very low or very hight rents by correcting for the explanatory variables -->
+
+<!-- - similar in detecting "outliers" -->
+
+<!-- - one solution: prediction "**z-scores**" -->
+
+## Summary Comparison Statistics {#sec-Model_Comparison}
+
+-   if `no partition` evaluation is done in the training dataset
+    -   Generalized AIC\
+        $$ GAIC = \hat{GD}+ k \times df $$
+    -   $\chi^2$ test: `likelihood ratio` test for **nested** models $$LR= GD_1/ GD_0 \sim \chi^2(df0- df_1) $$
+
+::: aside
+Note that degrees of freedom are required
+:::
+
+## Summary Comparison Statistics (con.) {#sec-Model_Comparison}
+
+-   `partition`: evaluation is done on `new` data
+
+    -   Likelihod score (`LS`) $\equiv$ Prediction Global Deviance (`PGD`)
+    -   Continuous Rank Probabily Score (`CRPS`)
+    -   Mean Absolute Prediction Error (`MAPE`)
+    -   e.t.c.
+
+# no partition
+
+## GAIC {#sec-GAIC}
+
+```{r}
+library(gamlss)
+library(broom)
+library(knitr)
+load("~/Dropbox/github/website/shortCourse/Porto-gamlss sort course/selecting.RData")
+# remove two variables
+```
+
+| models    |    df |      AIC | $\chi^2$ |      BIC |
+|-----------|------:|---------:|---------:|---------:|
+| mlinear   |    24 | 22808.89 | 22855.45 | 22953.69 |
+| madditive | 29.24 | 22814.33 | 22871.07 | 22990.77 |
+| mfneural  |   160 | 22930.36 | 23240.76 | 23895.69 |
+| mregtree  |    30 | 38754.64 | 38812.84 | 38935.64 |
+| mcf       |   404 | 38754.64 | 24481.28 | 26134.99 |
+
+## GAIC (continuous) {#sec-GAIC1}
+
+```{r}
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-modelGAIClollipop
+#| fig-cap: "A lollipop plot of AIC of the fitted models."
+library(gamlss.ggplots)
+model_GAIC_lollipop(mlinear, madditive, mneural, mregtree, mcf)
+```
+
+# partition
+
+## prediction measures
+
+-   $$LS= \sum_{i=1}^{n^*} \log \left[y^*_i | \hat{\theta}_i \left(\textbf{x}_i^*\right) \right] $$
+-   $$CRPS = -\sum_{i=1}^{n} \int \left(F(y| \hat{\theta}_i \left(\textbf{x}_i^*\right) -\textbf{I}\left(y \ge y^*_i\right)\right)^2 dy,$$
+-   $$MAPE= \texttt{med} \left(\left|100 \left(\frac{\hat{\mu}_i(\textbf{x}_i^*)-y^*}{y^*}\right)  \right|_{i=1,\ldots.n}\right)$$
+
+## prediction measures table
+
+| models    |      LS |    CRPS |     |
+|-----------|--------:|--------:|----:|
+| mlinear   |      \- |      \- |     |
+| madditive | -6.2288 | 73.8201 |     |
+| mfneural  | -6.5126 | 79.9394 |     |
+| mregtree  | -6.2930 | 78.6704 |     |
+| mcf       | -6.2966 | 79.0644 |     |
+
+::: aside
+Results would vary with different partitions of the data.
+:::
+
+## summary
+
+-   the GAIC is well established and tested (the df of freedom need to be known)
+
+-   the linear and additive model are good when there are not many explanatory variables (but somehow interactions have to be considered)
+
+-   more work has to be done to standardised all ML techniques so their partitioning of data are comparable to the conventional additive models
+
+## end
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
+
+<!-- ## Appendix {#sec-appendix-b} -->
+
+<!-- ### residuals against variables {#sec-variables} -->
+
+<!-- go back to @sec-withinDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-monoDiagnostics -->
+
+<!-- #| fig-cap: "Residuals against variables of interest" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "index" -->
+
+<!-- #|     - "mu" -->
+
+<!-- #|     - "median" -->
+
+<!-- #|     - "area" -->
+
+<!-- #| layout-ncol: 2 -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- resid_index(mfA) -->
+
+<!-- resid_mu(mfA) -->
+
+<!-- resid_quantile(mfA) -->
+
+<!-- resid_xvar(mfA, xvar=area) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### density  {#sec-density} -->
+
+<!-- go back to @sec-withinDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-monoDiagnostics2 -->
+
+<!-- #| fig-cap: "The density estimate of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "density" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- resid_density(mfA) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### ECDF plots  {#sec-ecdf} -->
+
+<!-- go back to @sec-withinDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-monoDiagnostics3 -->
+
+<!-- #| fig-cap: "Plots of the ECDF of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "ecdf" -->
+
+<!-- #|     - "Own's detrened plot" -->
+
+<!-- #| layout-ncol: 2 -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- resid_ecdf(mfA) -->
+
+<!-- resid_dtop(mfA) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### QQ and worm plots  {#sec-QQworm} -->
+
+<!-- go back to @sec-withinDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-monoDiagnostics4 -->
+
+<!-- #| fig-cap: "QQ and worm plots of of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "QQ-plot" -->
+
+<!-- #|     - "worm-plot" -->
+
+<!-- #| layout-ncol: 2 -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- resid_qqplot(mfA) -->
+
+<!-- resid_wp(mfA) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### Bucket plots  {#sec-bucket} -->
+
+<!-- go back to @sec-withinDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-monoDiagnostics5 -->
+
+<!-- #| fig-cap: "Bucket plot of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "bucket" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- moment_bucket(mfA) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### ACF ands PACF plots  {#sec-ACFPACF} -->
+
+<!-- go back to @sec-withinDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-monoDiagnostics6 -->
+
+<!-- #| fig-cap: "ACF and PACF of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "ACF" -->
+
+<!-- #|     - "PACF" -->
+
+<!-- #| layout-ncol: 2    -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- y_acf(resid(mfA)) -->
+
+<!-- y_pacf(resid(mfA)) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model density  {#sec-modeldensity} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-modelDiagnostics1 -->
+
+<!-- #| fig-cap: "The model density estimates of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "density" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- model_density(mfA,mfA1,mfLASSO,mfNN, mfPCR) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model qqplots  {#sec-modelQQplots} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-modelDiagnostics2 -->
+
+<!-- #| fig-cap: "The model QQ-plots of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "QQ-plots" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!--  model_qqplot(mfA,mfA1,mfLASSO,mfNN, mfPCR) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model worm-plots  {#sec-modelwormplots} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-modelDiagnostics3 -->
+
+<!-- #| fig-cap: "The model worm plots  of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "worm plots" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- model_wp(mfA,mfA1,mfLASSO,mfNN, mfPCR) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model bucket plot  {#sec-modelbucketplot} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-modelDiagnostics4 -->
+
+<!-- #| fig-cap: "The model bucket plot  of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "bucket plot" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- moment_bucket(mfA,mfA1,mfLASSO,mfNN, mfPCR) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model PC-plot  {#sec-modelPCplot} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| echo: false  -->
+
+<!-- #| eval: true -->
+
+<!-- #| warning: false -->
+
+<!-- #| message: false -->
+
+<!-- #| label: fig-modelDiagnostics5 -->
+
+<!-- #| fig-cap: "The PC  plot of the residuals" -->
+
+<!-- #| fig-subcap:  -->
+
+<!-- #|     - "PC plot" -->
+
+<!-- library(gamlss.ggplots) -->
+
+<!-- load("/Users/dimitriosstasinopoulos/Dropbox/Book4/R-code/selecting.RData") -->
+
+<!-- model_pca(mfA,mfA1,mfLASSO,mfNN, mfPCR) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model wp  wrap {#sec-modelWPplotwrap1} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| label: fig-modelDiagArea -->
+
+<!-- #| fig-cap: "Worm plots for different fitted models at different values of the continuous variable `area`" -->
+
+<!-- model_wp_wrap(mfA,mfA1,mfLASSO,mfNN, mfPCR, xvar=rent99$area) -->
+
+<!-- ``` -->
+
+<!-- ------------- -->
+
+<!-- ### model wp  wrap (continue) {#sec-modelWPplotwrap2} -->
+
+<!-- go back to @sec-betweenDiagnostics -->
+
+<!-- ```{r} -->
+
+<!-- #| label: fig-modelDiagLocation -->
+
+<!-- #| fig-cap: "Worm plots for different fitted models at different levels of the factor `location`" -->
+
+<!-- model_wp_wrap(mfA,mfA1,mfLASSO,mfNN, mfPCR, xvar=rent99$location) -->
+
+<!-- ``` -->
