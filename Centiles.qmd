@@ -1,0 +1,332 @@
+---
+title: "Centile estimation"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Gillian Heller 
+  - Fernanda De Bastiani
+  - Niki  Umlauf
+format:
+  revealjs:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    css: styles.css
+    theme: sky
+---
+
+## Introduction
+
+-   The data
+
+-   the problem
+
+-   the methods
+
+-   the LMS and GAMLSS
+
+-   the procedure
+
+## the data
+
+The Dutch boys data Source: Buuren and Fredriks (2001)
+
+-   `head`: the head head circumference of 7040 boys
+
+-   `age`: the age in years
+
+## the data plot
+
+```{r}
+#| warning: false
+library(ggplot2)
+library(gamlss)
+ggplot(data=db, aes(x=age, y=head))+
+  geom_point(col=gray(.5))
+```
+
+## estimate the curves
+
+```{r}
+#| warning: false
+#| echo: true
+library(gamlss2)
+library(gamlss.ggplots)
+ gBCTo <- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), 
+                  data=db, family=BCTo, trace=FALSE)
+fitted_centiles(gBCTo)
+```
+
+## the target
+
+```{r}
+fitted_centiles(gBCTo, points=FALSE)
+```
+
+## the methods
+
+-   the non parametric approach of `quantile regression` (Koenker, 2005; Koenker and Bassett, 1978)
+
+-   the parametric `LMS` approach of Cole (1988), Cole and Green (1992) and its extensions Rigby and Stasinopoulos (2004, 2006, 2007).
+
+## the LMS method
+
+$$Y \sim f_Y(y| \mu, \sigma, \nu, \tau )$$ where $f_Y()$ is theoretical distribution,
+
+-   $y$ = `head circumference` and\
+-   $x$ = `age` [$^\xi$]{style="color:red;"}
+-   $\mu$ = s(x, [$df_\mu$]{style="color:red;"})
+-   $\sigma$ = s(x, [$df_\sigma$]{style="color:red;"})
+-   $\nu$ = s(x, [$df_\nu$]{style="color:red;"})
+-   $\tau$ = s(x, [$df_\tau$]{style="color:red;"})
+
+## the LMS method
+
+$y$ is defined through $z$
+
+```{=tex}
+\begin{eqnarray}
+z = \frac{1}{\sigma \nu} \left[\left( \frac{y}{\mu}\right)^{\nu}-1 \right], &  \ \textrm{if} \  \nu  \neq 0 \nonumber \\
+ =  \frac{1}{\sigma}\log\left(\frac{y}{\mu}\right),                         &  \ \textrm{if} \ \nu
+ =0. \nonumber 
+\end{eqnarray}
+```
+-   if $Z \sim N(0,1)$ then $Y \sim BCCG(\mu, \sigma, \nu) =$ `LMS` method
+
+## LMS extentions
+
+-   if $Z \sim N(0,1)$ then $Y \sim BCCG(\mu, \sigma, \nu) =$ `LMS` method
+
+-   if $Z \sim t_{\tau}$ then $Y \sim BCT(\mu, \sigma, \nu, \tau)=$ `LMST` method
+
+-   if $Z \sim PE(0,1,\tau)$ then $Y \sim BCPE(\mu, \sigma, \nu, \tau)=$ `LMSP` method adopted by WHO}
+
+## Box-Cox & Cole-Green transformation
+
+![Box-Cox& Cole-Green](bccg-plot3.png){height="600"}
+
+## estimation of smoothing parameters
+
+-   by trial and error
+
+-   minimize the generalized Akaike information criterion, GAIC()
+
+-   minimize the the validation global deviance VGD
+
+-   using local selection criteria, i.e. CV, ML
+
+::: aside
+Diagnostics should be used in all above cases
+:::
+
+## procedure
+
+-   select the transformation parameter $\xi$
+
+-   fit different model and choose the minimim GAIC()
+
+-   use diagnostic tools
+
+-   get the centiles
+
+## transformation parameter $\xi$
+
+```{r}
+#| echo: true
+library(gamlss2)
+library(gamlss.ggplots)
+gamlss.ggplots:::find_power(y=db$head, x=db$age, profile=TRUE, from=0, to=1, step=0.01)
+```
+
+## transformation parameter $\xi$ (con.)
+
+```{r}
+ggplot(data=db, aes(x=age^.24, y=head))+
+  geom_point(col=gray(.5))
+```
+
+::: aside
+$\xi=0.24$
+:::
+
+## transformation parameter $\xi$ (con.)
+
+```{r}
+ggplot(data=db, aes(x=age^.33, y=head))+
+  geom_point(col=gray(.5))
+```
+
+::: aside
+$\xi=0.33$ cubic root
+:::
+
+## transformation parameter $\xi$ (con.)
+
+```{r}
+ggplot(data=db, aes(x=age^.5, y=head))+
+  geom_point(col=gray(.5))
+```
+
+::: aside
+$\xi=0.5$ square root
+:::
+
+## transformation parameter $\xi$ (summary.)
+
+-   smoothing techniques can not cope with sudden changes
+
+-   if the sudden change is in the end of the data transforming using $\xi$ could help
+
+-   if the sudden change is in the middle a different transormation is required
+
+-   alternatively using adapting smoothing parameter can help
+
+## fit different models
+
+```{r}
+#| echo: true
+   gNO <- gamlss2(head~s(I(age^.33))|s(I(age^.33)), data=db, family=NO)
+ gBCCGo <- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), data=db, family=BCCGo)
+ gBCPEo <- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), data=db, family=BCPEo)
+ gBCTo <- gamlss2(head~s(I(age^.33))|s(I(age^.33))|s(I(age^.33))|s(I(age^.33)), data=db, family=BCTo)
+```
+
+## select models
+
+```{r}
+#| echo: true    
+gamlss2::GAIC(gNO, gBCTo, gBCPEo, gBCCGo)
+model_GAIC_lollipop(gNO, gBCTo, gBCPEo, gBCCGo)
+```
+
+## diagnostic tools: residuals
+
+```{r}
+#| echo: true 
+resid_plots(gBCTo)
+```
+
+## QQplot
+
+```{r}
+#| echo: true 
+resid_qqplot(gBCTo)
+```
+
+## worm plots
+
+```{r}
+#| echo: true 
+resid_wp(gBCTo)
+```
+
+## different models worm plots
+
+```{r}
+#| echo: true 
+model_wp(gBCTo, gNO)
+```
+
+## different x-values worm plots
+
+```{r}
+#| echo: true 
+resid_wp_wrap(gBCTo, xvar=db$age)
+```
+
+## centiles
+
+```{r}
+#| echo: true 
+fitted_centiles(gBCTo)
+```
+
+## centiles just curves
+
+```{r}
+#| echo: true 
+fitted_centiles(gBCTo, points=FALSE)
+```
+
+## centiles with legend
+
+```{r}
+#| echo: true 
+fitted_centiles_legend(gBCTo)
+```
+
+## centiles different models
+
+```{r}
+#| echo: true 
+model_centiles(gBCTo, gNO)
+```
+
+## centiles different models in one plot
+
+```{r}
+#| echo: true 
+model_centiles(gBCTo, gNO, in.one=TRUE)
+```
+
+## centiles different models in one plot
+
+```{r}
+#| echo: true 
+model_centiles(gBCTo, gNO, in.one=TRUE)
+```
+
+## centiles different models different x-valus in one plot
+
+```{r}
+model_centiles(gBCTo, gNO, xvar=age, in.one=TRUE)+
+  facet_wrap(cut_number(db$age, 4), scales = "free_x")
+```
+
+## fitted parameters
+
+```{r}
+plot(gBCTo)
+```
+
+## bucket plots
+
+```{r}
+moment_bucket(gBCTo, gNO)
+```
+
+## Q-stats
+
+```{r}
+gamlss.ggplots:::resid_Qstats(gBCTo, xvar=db$age)
+```
+
+## predict
+
+```{r}
+#| echo: true
+library(broom)
+library(knitr)
+da <- predict(gBCTo, newdata=db[c(1, 1000, 2000, 3000, 6000,7000),])
+da  |> head() |> kable(digits = c(2, 4, 4, 4), format="pipe")
+```
+
+## end
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
