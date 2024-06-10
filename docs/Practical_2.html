@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.4.549" />
 
-<meta name="author" content="Mikis Stasinopoulos">
-<meta name="author" content="Bob Rigby">
-<meta name="author" content="Gillian Heller">
-<meta name="author" content="Fernanda De Bastiani">
-<meta name="author" content="Niki Umlauf">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
-<title>GAMLSS Short Course - Practical 2</title>
+<meta name="author" content="Mikis Stasinopoulos" />
+<meta name="author" content="Bob Rigby" />
+<meta name="author" content="Gillian Heller" />
+<meta name="author" content="Fernanda De Bastiani" />
+<meta name="author" content="Niki Umlauf" />
+
+<title>GAMLSS Short Course – Practical 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,23 +63,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<!-- htmldependencies:E3FAD763 -->
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,7 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -121,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -150,28 +136,30 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 </head>
 
-<body class="nav-fixed">
+<body>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="/index.html">
     <span class="navbar-title">GAMLSS Short Course</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.qmd"> 
+    <a class="nav-link" href="/index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -186,15 +174,7 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#using-the-gamlss.demo-to-plot-distributions" id="toc-using-the-gamlss.demo-to-plot-distributions" class="nav-link active" data-scroll-target="#using-the-gamlss.demo-to-plot-distributions">Using the <code>gamlss.demo</code> to plot distributions</a></li>
-  <li><a href="#plotting-different-distributions" id="toc-plotting-different-distributions" class="nav-link" data-scroll-target="#plotting-different-distributions">Plotting different distributions</a></li>
-  <li><a href="#turkish-stock-exchange-the-tse-data." id="toc-turkish-stock-exchange-the-tse-data." class="nav-link" data-scroll-target="#turkish-stock-exchange-the-tse-data.">Turkish stock exchange: the <code>tse</code> data.</a></li>
-  </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Practical_2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+        <div id="quarto-toc-target"></div>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -227,15 +207,23 @@ window.Quarto = {
 
 </header>
 
-
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#using-the-gamlss.demo-to-plot-distributions" id="toc-using-the-gamlss.demo-to-plot-distributions">Using the <code>gamlss.demo</code> to plot distributions</a></li>
+  <li><a href="#plotting-different-distributions" id="toc-plotting-different-distributions">Plotting different distributions</a></li>
+  <li><a href="#turkish-stock-exchange-the-tse-data." id="toc-turkish-stock-exchange-the-tse-data.">Turkish stock exchange: the <code>tse</code> data.</a></li>
+  </ul>
+</nav>
 <section id="using-the-gamlss.demo-to-plot-distributions" class="level2">
-<h2 class="anchored" data-anchor-id="using-the-gamlss.demo-to-plot-distributions">Using the <code>gamlss.demo</code> to plot distributions</h2>
+<h2>Using the <code>gamlss.demo</code> to plot distributions</h2>
 <ul>
 <li>Use the package <code>gamlss.demo</code> to plot distributions. First download the package <code>gamlss.demo</code>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.demo)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gamlss.demo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gamlss.demo)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gamlss.demo</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;Tcl&gt;  </code></pre>
 </div>
@@ -261,69 +249,69 @@ window.Quarto = {
 </ul>
 </section>
 <section id="plotting-different-distributions" class="level2">
-<h2 class="anchored" data-anchor-id="plotting-different-distributions">Plotting different distributions</h2>
+<h2>Plotting different distributions</h2>
 <p>The package <code>gamlss.dist</code> (which is downloaded automatically with <code>gamlss</code> contains many distributions. Typing</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>?gamlss.family</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>?gamlss.family</span></code></pre></div>
 </div>
 <p>will show all the available distributions in the <code>gamlss</code> packages. You can also explore the shape and other properties of the distributions. For example the following code will produce the pdf, cdf, inverse cdf and a histogram of a random sample generated from a gamma distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>PPP <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>PPP <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(y) <span class="fu">dGA</span>(y, <span class="at">mu=</span><span class="dv">10</span> ,<span class="at">sigma=</span><span class="fl">0.3</span>),<span class="fl">0.1</span>, <span class="dv">25</span>) <span class="co"># pdf</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(y) <span class="fu">pGA</span>(y, <span class="at">mu=</span><span class="dv">10</span> ,<span class="at">sigma=</span><span class="fl">0.3</span>), <span class="fl">0.1</span>, <span class="dv">25</span>) <span class="co">#cdf</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(y) <span class="fu">qGA</span>(y, <span class="at">mu=</span><span class="dv">10</span> ,<span class="at">sigma=</span><span class="fl">0.3</span>), <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># inverse cdf</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rGA</span>(<span class="dv">100</span>,<span class="at">mu=</span><span class="dv">10</span>,<span class="at">sigma=</span>.<span class="dv">3</span>)) <span class="co"># randomly generated values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rGA</span>(<span class="dv">100</span>,<span class="at">mu=</span><span class="dv">10</span>,<span class="at">sigma=</span>.<span class="dv">3</span>)) <span class="co"># randomly generated values</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Practical_2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="Practical_2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672" /></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(PPP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(PPP)</span></code></pre></div>
 </div>
 <p>Note that the first three plots above can also be produced by using the function <code>curve()</code>, for example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dGA</span>(<span class="at">x=</span>x, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span>.<span class="dv">3</span>),<span class="dv">0</span>, <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dGA</span>(<span class="at">x=</span>x, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span>.<span class="dv">3</span>),<span class="dv">0</span>, <span class="dv">25</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Practical_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="Practical_2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672" /></p>
 </figure>
 </div>
 </div>
 </div>
 <p>To explore discrete distributions use:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>PPP <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>PPP <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="cf">function</span>(y) <span class="fu">dNBI</span>(y, <span class="at">mu =</span> <span class="dv">10</span>, <span class="at">sigma =</span><span class="fl">0.5</span> ), <span class="at">from=</span><span class="dv">0</span>, <span class="at">to=</span><span class="dv">40</span>, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">n=</span><span class="dv">40</span><span class="sc">+</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"h"</span>, <span class="at">main=</span><span class="st">"pdf"</span>, <span class="at">ylab=</span><span class="st">"pdf(x)"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">n=</span><span class="dv">40</span><span class="sc">+</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">&quot;h&quot;</span>, <span class="at">main=</span><span class="st">&quot;pdf&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;pdf(x)&quot;</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">39</span>, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">pNBI</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">39</span>, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span><span class="fl">0.5</span> )), <span class="at">f =</span> <span class="dv">0</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cdf,<span class="at">main=</span><span class="st">"cdf"</span>, <span class="at">ylab=</span><span class="st">"cdf(x)"</span>, <span class="at">do.points=</span><span class="cn">FALSE</span> )</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cdf,<span class="at">main=</span><span class="st">&quot;cdf&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;cdf(x)&quot;</span>, <span class="at">do.points=</span><span class="cn">FALSE</span> )</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>invcdf <span class="ot">&lt;-</span><span class="fu">stepfun</span>(<span class="fu">seq</span>(<span class="fl">0.01</span>,.<span class="dv">99</span>,<span class="at">length=</span><span class="dv">39</span>), <span class="fu">qNBI</span>(<span class="fu">seq</span>(<span class="fl">0.01</span>,.<span class="dv">99</span>,</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">length=</span><span class="dv">40</span>), <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span><span class="fl">0.5</span> ), <span class="at">f =</span> <span class="dv">0</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(invcdf,<span class="at">main=</span><span class="st">"inverse cdf"</span>,<span class="at">ylab=</span><span class="st">"inv-cdf(x)"</span>,<span class="at">do.points=</span><span class="cn">FALSE</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(invcdf,<span class="at">main=</span><span class="st">&quot;inverse cdf&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;inv-cdf(x)&quot;</span>,<span class="at">do.points=</span><span class="cn">FALSE</span>)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>tN <span class="ot">&lt;-</span> <span class="fu">table</span>(Ni <span class="ot">&lt;-</span> <span class="fu">rNBI</span>(<span class="dv">1000</span>,<span class="at">mu=</span><span class="dv">5</span>, <span class="at">sigma=</span><span class="fl">0.5</span>))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">barplot</span>(tN, <span class="at">col=</span><span class="st">'lightblue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">barplot</span>(tN, <span class="at">col=</span><span class="st">&#39;lightblue&#39;</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Practical_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="Practical_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672" /></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(PPP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(PPP)</span></code></pre></div>
 </div>
 <p>Note that to find moments or to check if a distribution integrates or sums to one, the functions <code>integrate()</code> or <code>sum()</code> can be used. For example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(<span class="cf">function</span>(y) <span class="fu">dGA</span>(y, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span>.<span class="dv">1</span>),<span class="dv">0</span>, <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(<span class="cf">function</span>(y) <span class="fu">dGA</span>(y, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span>.<span class="dv">1</span>),<span class="dv">0</span>, <span class="cn">Inf</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1 with absolute error &lt; 2.8e-05</code></pre>
 </div>
 </div>
 <p>will check that the distribution integrates to one, and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(<span class="cf">function</span>(y) y<span class="sc">*</span><span class="fu">dGA</span>(y, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span>.<span class="dv">1</span>),<span class="dv">0</span>, <span class="cn">Inf</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(<span class="cf">function</span>(y) y<span class="sc">*</span><span class="fu">dGA</span>(y, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span>.<span class="dv">1</span>),<span class="dv">0</span>, <span class="cn">Inf</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>10 with absolute error &lt; 4e-04</code></pre>
 </div>
@@ -331,21 +319,21 @@ window.Quarto = {
 <p>will give the mean of the distribution.</p>
 <p>The pdf of a GAMLSS family distribution can also be plotted using the <code>gamlss</code> function <code>pdf.plot()</code>. For example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf.plot</span>(<span class="at">family=</span>GA, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span><span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">min=</span><span class="fl">0.01</span>,<span class="at">max=</span><span class="dv">20</span>, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">step=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf.plot</span>(<span class="at">family=</span>GA, <span class="at">mu=</span><span class="dv">10</span>, <span class="at">sigma=</span><span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">min=</span><span class="fl">0.01</span>,<span class="at">max=</span><span class="dv">20</span>, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">step=</span>.<span class="dv">5</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Practical_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="Practical_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672" /></p>
 </figure>
 </div>
 </div>
 </div>
 <p>will plot the pdf’s of four gamma distributions <span class="math inline">`GA`(\mu, \sigma)</span>, all with <span class="math inline">\mu=10</span>, but with <span class="math inline">\sigma=0.1, 0.5, 1</span> and <span class="math inline">2</span>, respectively.</p>
-<p>Try plotting other continuous distributions, e.g.&nbsp;<code>IG</code> (inverse Gaussian), <code>PE</code> (power exponential) and <code>BCT</code> (Box-Cox <em>t</em>); and discrete distributions, e.g.&nbsp;<code>NBI</code> (negative binomial type I) and <code>PIG</code> (Poisson inverse Gaussian). Make sure you define the values of all the parameters of the distribution.</p>
+<p>Try plotting other continuous distributions, e.g. <code>IG</code> (inverse Gaussian), <code>PE</code> (power exponential) and <code>BCT</code> (Box-Cox <em>t</em>); and discrete distributions, e.g. <code>NBI</code> (negative binomial type I) and <code>PIG</code> (Poisson inverse Gaussian). Make sure you define the values of all the parameters of the distribution.</p>
 </section>
 <section id="turkish-stock-exchange-the-tse-data." class="level2">
-<h2 class="anchored" data-anchor-id="turkish-stock-exchange-the-tse-data.">Turkish stock exchange: the <code>tse</code> data.</h2>
+<h2>Turkish stock exchange: the <code>tse</code> data.</h2>
 <p>The data are for the eleven-year period 1 January 1988 to 31 December 1998. Continuously compounded returns in domestic currency were calculated as the first difference of the natural logarithm of the series. The objective is to fit a distribution to the Turkish stock exchange index.</p>
 <ul>
 <li><p><strong>R</strong> data file: <code>tse</code> in package <code>gamlss.data</code> of dimensions <span class="math inline">2868 \times 6</span>.</p></li>
@@ -361,11 +349,11 @@ window.Quarto = {
 <li>Input the data and plot the returns sequentially using</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(tse, <span class="fu">plot</span>(ret,<span class="at">type=</span><span class="st">"l"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(tse, <span class="fu">plot</span>(ret,<span class="at">type=</span><span class="st">&quot;l&quot;</span>))</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Practical_2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="Practical_2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672" /></p>
 </figure>
 </div>
 </div>
@@ -374,10 +362,10 @@ window.Quarto = {
 <li>Fit continuous distributions on <span class="math inline">(-\infty &lt; y &lt; \infty)</span> to <code>ret</code>. Automatically choose the best fitting distribution according to AIC. Show the AIC for the different fitted distributions. Do any of the fits fail?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mbest<span class="ot">&lt;-</span><span class="fu">fitDist</span>(tse<span class="sc">$</span>ret,<span class="at">type=</span><span class="st">"realline"</span>,<span class="at">k=</span><span class="dv">2</span>)</span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mbest<span class="ot">&lt;-</span><span class="fu">fitDist</span>(tse<span class="sc">$</span>ret,<span class="at">type=</span><span class="st">&quot;realline&quot;</span>,<span class="at">k=</span><span class="dv">2</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mbest</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>mbest<span class="sc">$</span>fits</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>mbest<span class="sc">$</span>fails</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>mbest<span class="sc">$</span>fails</span></code></pre></div>
 </div>
 <p>(Note convergence problems!)</p>
 <p>Repeat with <code>k=3.84</code> and <code>k=log(length(tse\$ret))</code> (corresponding to criteria <span class="math inline">\chi^{2}_{1,0.05}</span> and SBC/BIC respectively).</p>
@@ -387,29 +375,33 @@ window.Quarto = {
 </ol>
 <pre><code> - two-parameter: normal $\texttt{NO}(\mu, \sigma)$,</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mNO<span class="ot">&lt;-</span><span class="fu">histDist</span>(tse<span class="sc">$</span>ret,<span class="st">"SEP1"</span>,<span class="at">nbins=</span><span class="dv">30</span>, <span class="at">n.cyc=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mNO<span class="ot">&lt;-</span><span class="fu">histDist</span>(tse<span class="sc">$</span>ret,<span class="st">&quot;SEP1&quot;</span>,<span class="at">nbins=</span><span class="dv">30</span>, <span class="at">n.cyc=</span><span class="dv">100</span>)</span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Practical_2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<figure>
+<p><img src="Practical_2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672" /></p>
 </figure>
 </div>
 </div>
 </div>
 <ul>
 <li><p>three-parameter: t family <code>TF</code><span class="math inline">(\mu, \sigma, \nu)</span> and power exponential <code>PE</code><span class="math inline">(\mu, \sigma, \nu)</span></p></li>
-<li><p>four-parameter: Johnson Su <code>JSU</code><span class="math inline">(\mu, \sigma, \nu, \tau)</span>, skew exponential power type 1 to 4, e.g.&nbsp;<code>SEP1</code><span class="math inline">(\mu, \sigma, \nu, \tau)</span>, skew t type 1 to 5, e.g.&nbsp;<code>ST1</code><span class="math inline">(\mu, \sigma, \nu, \tau)</span> and sinh arc-sinh `SHASH<span class="math inline">(\mu, \sigma, \nu, \tau)</span>.</p></li>
+<li><p>four-parameter: Johnson Su <code>JSU</code><span class="math inline">(\mu, \sigma, \nu, \tau)</span>, skew exponential power type 1 to 4, e.g. <code>SEP1</code><span class="math inline">(\mu, \sigma, \nu, \tau)</span>, skew t type 1 to 5, e.g. <code>ST1</code><span class="math inline">(\mu, \sigma, \nu, \tau)</span> and sinh arc-sinh `SHASH<span class="math inline">(\mu, \sigma, \nu, \tau)</span>.</p></li>
 </ul>
 <p>(Note that <code>histDist()</code> has as default <code>nbins=30</code>, to provide a detailed histogram.)</p>
 <ul>
 <li>Use <code>GAIC()</code> with each of the penalties <span class="math inline">k = 2, 3.84</span> and <span class="math inline">7.96=\log(2868)</span> (corresponding to criteria AIC, <span class="math inline">\chi^{2}_{1,0.05}</span> and BIC/SBC respectively), in order to select a distribution model. Output the parameter estimates for your chosen model using the function <code>summary()</code>.</li>
 </ul>
-
-
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden" data-render-id="quarto-int-sidebar-title">GAMLSS Short Course</span> <span class="hidden" data-render-id="quarto-int-navbar-title">GAMLSS Short Course</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden" data-render-id="quarto-metatitle">GAMLSS Short Course - Practical 2</span> <span class="hidden" data-render-id="quarto-twittercardtitle">GAMLSS Short Course - Practical 2</span> <span class="hidden" data-render-id="quarto-ogcardtitle">GAMLSS Short Course - Practical 2</span> <span class="hidden" data-render-id="quarto-metasitename">GAMLSS Short Course</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
+</div>
 </section>
 
 </main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -798,7 +790,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
+</body>
 
-
-
-</body></html>
+</html>

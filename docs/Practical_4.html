@@ -171,7 +171,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.qmd"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -346,7 +346,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 *--------
 n = 3082 df =  19 res.df =  3063
 Deviance = 38254.617 Null Dev. Red. = 5.95%
-AIC = 38292.617 elapsed =  0.31sec</code></pre>
+AIC = 38292.617 elapsed =  0.32sec</code></pre>
 </div>
 </div>
 </section>
@@ -418,7 +418,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 *--------
 n = 3082 df =  32.24 res.df =  3049.76
 Deviance = 38132.48 Null Dev. Red. = 6.25%
-AIC = 38196.9528 elapsed =  0.48sec</code></pre>
+AIC = 38196.9528 elapsed =  0.55sec</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(madditive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -477,21 +477,22 @@ mregtree  38754.64 30.0000</code></pre>
 <pre><code>Loading required namespace: nnet</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>GAMLSS-RS iteration  1: Global Deviance = 38207.0928 eps = 0.289906     
-GAMLSS-RS iteration  2: Global Deviance = 38173.117 eps = 0.000889     
-GAMLSS-RS iteration  3: Global Deviance = 38164.1525 eps = 0.000234     
-GAMLSS-RS iteration  4: Global Deviance = 38161.8465 eps = 0.000060     
-GAMLSS-RS iteration  5: Global Deviance = 38160.1274 eps = 0.000045     
-GAMLSS-RS iteration  6: Global Deviance = 38159.1637 eps = 0.000025     
-GAMLSS-RS iteration  7: Global Deviance = 38158.2825 eps = 0.000023     
-GAMLSS-RS iteration  8: Global Deviance = 38157.9348 eps = 0.000009     </code></pre>
+<pre><code>GAMLSS-RS iteration  1: Global Deviance = 38211.7103 eps = 0.289820     
+GAMLSS-RS iteration  2: Global Deviance = 38178.0766 eps = 0.000880     
+GAMLSS-RS iteration  3: Global Deviance = 38163.9005 eps = 0.000371     
+GAMLSS-RS iteration  4: Global Deviance = 38145.5738 eps = 0.000480     
+GAMLSS-RS iteration  5: Global Deviance = 38130.8695 eps = 0.000385     
+GAMLSS-RS iteration  6: Global Deviance = 38128.6269 eps = 0.000058     
+GAMLSS-RS iteration  7: Global Deviance = 38124.062 eps = 0.000119     
+GAMLSS-RS iteration  8: Global Deviance = 38123.52 eps = 0.000014     
+GAMLSS-RS iteration  9: Global Deviance = 38123.5144 eps = 0.000000     </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gamlss2<span class="sc">::</span><span class="fu">GAIC</span>(mlinear, madditive, mneural, mregtree, <span class="at">k=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               AIC       df
 madditive 38196.95  32.2364
 mlinear   38292.62  19.0000
-mneural   38377.93 110.0000
+mneural   38343.51 110.0000
 mregtree  38754.64  30.0000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"~/Dropbox/GAMLSS-development/nnet/plot_NN.R"</span>)</span>
@@ -522,12 +523,11 @@ mregtree  38754.64  30.0000</code></pre>
 <pre><code>Loading required namespace: partykit</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>GAMLSS-RS iteration  1: Global Deviance = 38472.7742 eps = 0.284968     
-GAMLSS-RS iteration  2: Global Deviance = 38318.7632 eps = 0.004003     
-GAMLSS-RS iteration  3: Global Deviance = 38313.3108 eps = 0.000142     
-GAMLSS-RS iteration  4: Global Deviance = 38311.9149 eps = 0.000036     
-GAMLSS-RS iteration  5: Global Deviance = 38311.2696 eps = 0.000016     
-GAMLSS-RS iteration  6: Global Deviance = 38311.2646 eps = 0.000000     </code></pre>
+<pre><code>GAMLSS-RS iteration  1: Global Deviance = 38471.4427 eps = 0.284993     
+GAMLSS-RS iteration  2: Global Deviance = 38305.7608 eps = 0.004306     
+GAMLSS-RS iteration  3: Global Deviance = 38299.5281 eps = 0.000162     
+GAMLSS-RS iteration  4: Global Deviance = 38297.6729 eps = 0.000048     
+GAMLSS-RS iteration  5: Global Deviance = 38297.3078 eps = 0.000009     </code></pre>
 </div>
 </div>
 </section>
@@ -540,8 +540,8 @@ GAMLSS-RS iteration  6: Global Deviance = 38311.2646 eps = 0.000000     </code><
 <pre><code>               AIC       df
 madditive 38196.95  32.2364
 mlinear   38292.62  19.0000
-mneural   38377.93 110.0000
-mcf       38719.26 204.0000
+mneural   38343.51 110.0000
+mcf       38705.31 204.0000
 mregtree  38754.64  30.0000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_GAIC_lollipop</span>(mlinear, madditive, mneural, mregtree, mcf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
