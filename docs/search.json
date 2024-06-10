@@ -2868,5 +2868,208 @@
     "title": "Comparing Models",
     "section": "end",
     "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nwww.gamlss.com"
+  },
+  {
+    "objectID": "Interpret.html#introduction",
+    "href": "Interpret.html#introduction",
+    "title": "Interpreting models",
+    "section": "Introduction",
+    "text": "Introduction\n\nhow to interpreted the effect of a single term into the distribution of the response;\nhow to use the GAMLSS model for prediction."
+  },
+  {
+    "objectID": "Interpret.html#interpretation",
+    "href": "Interpret.html#interpretation",
+    "title": "Interpreting models",
+    "section": "Interpretation",
+    "text": "Interpretation\n\nhow the information we obtain from the fitted model can be used\n\n\n\n\n\n\n\nflowchart TB\n  A[Features.] --&gt; B(Parameters) \n  B --&gt; D[Properties, \\n Characteristics]\n  D --&gt;  C(Distribution)\n  B --&gt; C\n\n\n\n\nFigure 1: How x-variables effecting the properties of the distribution."
+  },
+  {
+    "objectID": "Interpret.html#graphical-partial-effects",
+    "href": "Interpret.html#graphical-partial-effects",
+    "title": "Interpreting models",
+    "section": "graphical Partial effects",
+    "text": "graphical Partial effects\n\nceteris paribus (concentate in one term fixing the rest)\n\\(\\textbf{x}_j\\) denote a single (or maximum two terms)\n\\(\\textbf{x}_{-j}\\) all the rest so \\(\\{\\textbf{x}_j, \\textbf{x}_{-j} \\}\\) are all terms in the model\n\\(\\omega(D)\\) the characteristic of the distribution we are interested \\({D}(y | \\textbf{x}_j , \\textbf{x}_{-j}; \\boldsymbol{\\theta})\\) i.e. kurtosis\nunder scenario, \\(\\textbf{S}[g()]\\) ()\n\\[{PE}_{\\omega({D})}\\left( \\textbf{x}_{j} | \\textbf{S} \\left[ g(\\textbf{x}_{-j})\\right] \\right)\\]"
+  },
+  {
+    "objectID": "Interpret.html#scenarios",
+    "href": "Interpret.html#scenarios",
+    "title": "Interpreting models",
+    "section": "Scenarios",
+    "text": "Scenarios\n\nfixing values of \\(\\textbf{x}_{-j}\\) (mean or median for continuous, level with more number of observations for factors or other possible values of importance)\naverage over values of \\(\\textbf{x}_{-j}\\)\n\nPartial Dependence Plots (PDF), \\(\\textbf{S}\\left[ \\text{average}(\\textbf{x}_{-j})\\right]\\)\n\nAccumulated Local Effects, (ALE), accumulated average local differences\nMarginal Effects (ME) average over local neighbourhood"
+  },
+  {
+    "objectID": "Interpret.html#characteristics",
+    "href": "Interpret.html#characteristics",
+    "title": "Interpreting models",
+    "section": "Characteristics",
+    "text": "Characteristics\n\npredictors, \\(\\eta_{\\theta_i}\\)\nparameters, \\(\\theta_i\\)\nmoment, i.e. mean and variance\nquantiles i.e. median\ndistribution"
+  },
+  {
+    "objectID": "Interpret.html#pe-parameter-mu-additive",
+    "href": "Interpret.html#pe-parameter-mu-additive",
+    "title": "Interpreting models",
+    "section": "PE-parameter \\(\\mu\\) additive",
+    "text": "PE-parameter \\(\\mu\\) additive\nlibrary(gamlss.ggplots)\npe_param(madditive,\"area\")\npe_param(madditive,\"yearc\")"
+  },
+  {
+    "objectID": "Interpret.html#pe-parameter-mu-nn",
+    "href": "Interpret.html#pe-parameter-mu-nn",
+    "title": "Interpreting models",
+    "section": "PE-parameter \\(\\mu\\) NN",
+    "text": "PE-parameter \\(\\mu\\) NN\npe_param(mneural, \"area\" )\npe_param(mneural, \"yearc\" )"
+  },
+  {
+    "objectID": "Interpret.html#pe-parameter-sigma-additive",
+    "href": "Interpret.html#pe-parameter-sigma-additive",
+    "title": "Interpreting models",
+    "section": "PE; parameter \\(\\sigma\\); additive",
+    "text": "PE; parameter \\(\\sigma\\); additive\npe_param(madditive,\"area\", parameter=\"sigma\")\npe_param(madditive,\"yearc\", parameter=\"sigma\")"
+  },
+  {
+    "objectID": "Interpret.html#pe-parameter-sigma-nn",
+    "href": "Interpret.html#pe-parameter-sigma-nn",
+    "title": "Interpreting models",
+    "section": "PE; parameter \\(\\sigma\\); NN",
+    "text": "PE; parameter \\(\\sigma\\); NN\npe_param(mneural,\"area\", parameter=\"sigma\")\npe_param(mneural,\"yearc\", parameter=\"sigma\")"
+  },
+  {
+    "objectID": "Interpret.html#all-terms-additive",
+    "href": "Interpret.html#all-terms-additive",
+    "title": "Interpreting models",
+    "section": "all terms (additive)",
+    "text": "all terms (additive)\n\npe_param_grid(madditive,c(\"area\", \"yearc\",  \"location\", \"bath\", \"kitchen\"))"
+  },
+  {
+    "objectID": "Interpret.html#way-interactions-additive",
+    "href": "Interpret.html#way-interactions-additive",
+    "title": "Interpreting models",
+    "section": "2 way interactions (additive)",
+    "text": "2 way interactions (additive)\npe_param(madditive, c(\"area\", \"yearc\"))\npe_param( madditive, c(\"area\", \"yearc\"), filled=TRUE)"
+  },
+  {
+    "objectID": "Interpret.html#ale-parameters-mu-additive",
+    "href": "Interpret.html#ale-parameters-mu-additive",
+    "title": "Interpreting models",
+    "section": "ALE; parameters \\(\\mu\\); Additive",
+    "text": "ALE; parameters \\(\\mu\\); Additive\ngamlss.ggplots:::ale_param(madditive,\"area\")\ngamlss.ggplots:::ale_param(madditive,\"yearc\")"
+  },
+  {
+    "objectID": "Interpret.html#ale-parameters-mu-nn",
+    "href": "Interpret.html#ale-parameters-mu-nn",
+    "title": "Interpreting models",
+    "section": "ALE; parameters \\(\\mu\\); NN",
+    "text": "ALE; parameters \\(\\mu\\); NN\ngamlss.ggplots:::ale_param(mneural,\"area\")\ngamlss.ggplots:::ale_param(mneural,\"yearc\")"
+  },
+  {
+    "objectID": "Interpret.html#ale-interactions",
+    "href": "Interpret.html#ale-interactions",
+    "title": "Interpreting models",
+    "section": "ALE interactions",
+    "text": "ALE interactions\ngamlss.ggplots:::ale_param(madditive,c(\"area\", \"yearc\"))\ngamlss.ggplots:::ale_param(mneural,c(\"area\", \"yearc\"))"
+  },
+  {
+    "objectID": "Interpret.html#moments-mean",
+    "href": "Interpret.html#moments-mean",
+    "title": "Interpreting models",
+    "section": "moments (mean)",
+    "text": "moments (mean)\n\nNot implemented yet for gamlss2 objects\nNote that moments not always exist for example for the BCTo distribution\n\nfor \\(\\tau\\le2\\) the variance do not exist\nfor \\(\\tau\\le1\\) the mean do not exist"
+  },
+  {
+    "objectID": "Interpret.html#quantiles-additive",
+    "href": "Interpret.html#quantiles-additive",
+    "title": "Interpreting models",
+    "section": "quantiles, additive",
+    "text": "quantiles, additive\n\n gamlss.ggplots:::pe_quantile(madditive,c(\"area\"))"
+  },
+  {
+    "objectID": "Interpret.html#quantiles-additive-con.",
+    "href": "Interpret.html#quantiles-additive-con.",
+    "title": "Interpreting models",
+    "section": "quantiles, additive (con.)",
+    "text": "quantiles, additive (con.)"
+  },
+  {
+    "objectID": "Interpret.html#quantiles-interactions",
+    "href": "Interpret.html#quantiles-interactions",
+    "title": "Interpreting models",
+    "section": "quantiles interactions",
+    "text": "quantiles interactions\n\n gamlss.ggplots:::pe_quantile(madditive,c(\"area\", \"yearc\"))"
+  },
+  {
+    "objectID": "Interpret.html#quantiles-interactions-2",
+    "href": "Interpret.html#quantiles-interactions-2",
+    "title": "Interpreting models",
+    "section": "quantiles interactions 2",
+    "text": "quantiles interactions 2\n\ngamlss.ggplots:::pe_quantile(madditive,c(\"area\", \"location\"))"
+  },
+  {
+    "objectID": "Interpret.html#quantiles-interactions-2-1",
+    "href": "Interpret.html#quantiles-interactions-2-1",
+    "title": "Interpreting models",
+    "section": "quantiles interactions 2",
+    "text": "quantiles interactions 2\n\ngamlss.ggplots:::pe_quantile(madditive,c( \"location\", \"bath\"))"
+  },
+  {
+    "objectID": "Interpret.html#distributions-mu-additive",
+    "href": "Interpret.html#distributions-mu-additive",
+    "title": "Interpreting models",
+    "section": "distributions, \\(\\mu\\), additive",
+    "text": "distributions, \\(\\mu\\), additive\n\ngamlss.ggplots:::pe_pdf_grid(madditive, list(\"area\", \"yearc\", \"location\",\"bath\"))"
+  },
+  {
+    "objectID": "Interpret.html#distributions-mu-nn",
+    "href": "Interpret.html#distributions-mu-nn",
+    "title": "Interpreting models",
+    "section": "distributions, \\(\\mu\\), NN",
+    "text": "distributions, \\(\\mu\\), NN\n\ngamlss.ggplots:::pe_pdf_grid(mneural, list(\"area\", \"yearc\", \"location\",\"bath\"))"
+  },
+  {
+    "objectID": "Interpret.html#the-purpose-of-the-study",
+    "href": "Interpret.html#the-purpose-of-the-study",
+    "title": "Interpreting models",
+    "section": "the purpose of the study",
+    "text": "the purpose of the study\n\nthe purpose should be always in our mind when we try to analyse any data\nfor the Munich rent data are collected almost every 10 years\nguidance to judges on whether a disputed rent is a fair or not\npurpose is to identify very low or very hight rents by correcting for the explanatory variables\nsimilar in detecting “outliers”\na possible solution: prediction z-scores"
+  },
+  {
+    "objectID": "Interpret.html#prediction-z-scores",
+    "href": "Interpret.html#prediction-z-scores",
+    "title": "Interpreting models",
+    "section": "prediction z-scores",
+    "text": "prediction z-scores\nScenarios\n\n\n\nrent\narea\nyearc\nlocation\nbath\nkitchen\nheating\n\n\n\n\n1500\n140\n1983\n3\n1\n1\n1\n\n\n1000\n55\n1915\n1\n0\n0\n0\n\n\n800\n65\n1960\n1\n1\n1\n1"
+  },
+  {
+    "objectID": "Interpret.html#prediction-z-scores-con.",
+    "href": "Interpret.html#prediction-z-scores-con.",
+    "title": "Interpreting models",
+    "section": "prediction z-scores (con.)",
+    "text": "prediction z-scores (con.)\n\n    rent &lt;- c(1500, 1000,800)\n    area &lt;- c(140, 55, 65)\n   yearc &lt;- c(1983, 1915, 1960)\nlocation &lt;- factor(c(3,1,1))\n    bath &lt;- factor(c(1,0,1))\n kitchen &lt;- factor(c(1,0,1))\ncheating &lt;- factor(c(1,0,1))\nndat &lt;- data.frame(rent, area, yearc, location, bath, kitchen, cheating)\ncat(\"prediction z-scores\", \"\\n\")\n\nprediction z-scores \n\npp &lt;-predict(madditive, newdata=ndat, type=\"parameter\")\n qNO(madditive$family$p(q=ndat$rent, par=pp))\n\n[1] 0.2589106 4.7675783 2.1005927"
+  },
+  {
+    "objectID": "Interpret.html#summary",
+    "href": "Interpret.html#summary",
+    "title": "Interpreting models",
+    "section": "summary",
+    "text": "summary\nGAMLSS can tackle problems where the interest of the investigation lies not only in the center but other parts of the distribution.\nPersonal view for the future of GAMLSS development;\n\ntheoretical contributions\nsoftware and\nknowledge exchange"
+  },
+  {
+    "objectID": "Interpret.html#summary-continue",
+    "href": "Interpret.html#summary-continue",
+    "title": "Interpreting models",
+    "section": "Summary (continue)",
+    "text": "Summary (continue)\n\ntheoretical contributions\n\ninterpretable tools\nmodel average for prediction\n\nsoftware\n\ngamlss2\n\nbooks and knowledge exchange\n\nthere is need for applied and elementary books\nmore application public health and environment"
+  },
+  {
+    "objectID": "Interpret.html#the-team",
+    "href": "Interpret.html#the-team",
+    "title": "Interpreting models",
+    "section": "the team",
+    "text": "the team\n\n\n\n\n\n\n\n\nworking party\ncurrent\npast\n\n\n\n\nGillian Heller\nKonstantinos Pateras\nPopi Akantziliotou\n\n\nFernanda De Bastiani\nPaul Eilers\nVlasios Voudouris\n\n\nThomas Kneib\nNikos Kametas\nNicoleta Mortan\n\n\nAchim Zaileis\nTim Cole\nDaniil Kiose\n\n\nAndreas Mayr\nNikos Georgikopoulos\nDea-Jin Lee\n\n\nNicolaus Umlauf\nLuiz Nakamura\nMaría Xosé Rodríguez-Álvarez\n\n\nReto Stauffer\nNadja Klein\nMajid Djennad\n\n\nRobert Rigby\nJulian Merder\nFiona McElduff\n\n\nMikis Stasinopoulos\nAbu Hossain\nRaydonal Ospina"
+  },
+  {
+    "objectID": "Interpret.html#end",
+    "href": "Interpret.html#end",
+    "title": "Interpreting models",
+    "section": "end",
+    "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   }
 ]

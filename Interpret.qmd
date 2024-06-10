@@ -1,0 +1,339 @@
+---
+title: "Interpreting models"
+title-slide-attributes:
+    data-background-image: Uni_greenwich.png
+    data-background-size: contain
+    data-background-opacity: "0.05"
+author:
+  - Mikis Stasinopoulos
+  - Bob Rigby
+  - Fernanda De Bastiani
+  - Gillian Heller 
+  - Niki  Umlauf 
+format:
+  revealjs:
+    format:
+    multiplex: true
+    slide-number: true
+    show-slide-number: print
+    chalkboard: 
+      buttons: true
+    incremental: false 
+    menu:
+      side: left
+      width: wide
+    logo: gamlss-trans.png
+    footer: "www.gamlss.com"
+    theme: sky
+---
+
+## Introduction
+
+-   how to interpreted `the effect of a single term` into the distribution of the response;
+-   how to use the GAMLSS model for `prediction`.
+
+## Interpretation
+
+-   how the information we obtain from the fitted model can be used
+
+```{mermaid}
+%%| label: fig-fitting
+%%| fig-cap: "How x-variables effecting the properties of the distribution."
+%%| fig-width: 10
+%%| fig-heigh: 10
+%%| fig-box: 10
+%%| echo: false
+%%| format: gfm
+flowchart TB
+  A[Features.] --> B(Parameters) 
+  B --> D[Properties, \n Characteristics]
+  D -->  C(Distribution)
+  B --> C
+```
+
+## graphical Partial effects {.smaller}
+
+-   `ceteris paribus` (concentate in one term fixing the rest)
+
+-   $\textbf{x}_j$ denote a **single** (or maximum two terms)
+
+-   $\textbf{x}_{-j}$ all the **rest** so $\{\textbf{x}_j, \textbf{x}_{-j} \}$ are all terms in the model
+
+-   $\omega(D)$ the **characteristic** of the distribution we are interested ${D}(y | \textbf{x}_j , \textbf{x}_{-j}; \boldsymbol{\theta})$ i.e. kurtosis
+
+-   under **scenario**, $\textbf{S}[g()]$ ()
+
+-   $${PE}_{\omega({D})}\left( \textbf{x}_{j} | \textbf{S} \left[ g(\textbf{x}_{-j})\right] \right)$$
+
+## Scenarios {.smaller}
+
+-   `fixing` values of $\textbf{x}_{-j}$ (mean or median for continuous, level with more number of observations for factors or other possible values of importance)
+
+-   `average` over values of $\textbf{x}_{-j}$
+
+    -   `Partial Dependence Plots` (PDF), $\textbf{S}\left[ \text{average}(\textbf{x}_{-j})\right]$\
+    -   `Accumulated Local Effects`, (ALE), accumulated average local differences
+    -   `Marginal Effects` (ME) average over local neighbourhood
+
+## Characteristics
+
+-   `predictors`, $\eta_{\theta_i}$
+
+-   `parameters`, $\theta_i$
+
+-   `moment`, i.e. mean and variance
+
+-   `quantiles` i.e. median
+
+-   `distribution`
+
+```{R}
+#| echo: false
+#| warning: false
+#| message: false
+#| output: false
+#| cache: false
+library(gamlss2)
+library(gamlss.ggplots)
+library(gamlss.prepdata)
+rent99 |> data_rm( c(2,9)) |>
+ data_few2fac() -> da
+madditive <- gamlss2(rent~s(area)+s(yearc)+location+bath+kitchen+
+                cheating|s(area)+s(yearc)+location+bath+kitchen+cheating, 
+              family=BCTo, data=da, trace=F)
+m1 <- gamlss(rent~pb(area)+pb(yearc)+location+bath+kitchen+
+                cheating,~pb(area)+pb(yearc)+location+bath+kitchen+cheating, 
+              family=BCTo, data=da, trace=F)
+f <- rent ~ n(~area+yearc+location+bath+kitchen, size=10)|    n(~area+yearc+location+bath+kitchen, size=3)
+mneural <- gamlss2(f,family=BCTo, data=da)
+```
+
+## PE-parameter $\mu$ additive
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+library(gamlss.ggplots)
+pe_param(madditive,"area")
+pe_param(madditive,"yearc")
+```
+
+## PE-parameter $\mu$ NN
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+pe_param(mneural, "area" )
+pe_param(mneural, "yearc" )
+```
+
+## PE; parameter $\sigma$; additive
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+pe_param(madditive,"area", parameter="sigma")
+pe_param(madditive,"yearc", parameter="sigma")
+```
+
+## PE; parameter $\sigma$; NN
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+pe_param(mneural,"area", parameter="sigma")
+pe_param(mneural,"yearc", parameter="sigma")
+```
+
+## all terms (additive)
+
+```{R}
+#| echo: true
+pe_param_grid(madditive,c("area", "yearc",  "location", "bath", "kitchen"))
+```
+
+## 2 way interactions (additive)
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+pe_param(madditive, c("area", "yearc"))
+pe_param( madditive, c("area", "yearc"), filled=TRUE)
+```
+
+## ALE; parameters $\mu$; Additive
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+gamlss.ggplots:::ale_param(madditive,"area")
+gamlss.ggplots:::ale_param(madditive,"yearc")
+```
+
+## ALE; parameters $\mu$; NN
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+gamlss.ggplots:::ale_param(mneural,"area")
+gamlss.ggplots:::ale_param(mneural,"yearc")
+```
+
+## ALE interactions
+
+```{R}
+#| echo: true
+#| layout-ncol: 2
+gamlss.ggplots:::ale_param(madditive,c("area", "yearc"))
+gamlss.ggplots:::ale_param(mneural,c("area", "yearc"))
+```
+
+## moments (mean)
+
+-   Not implemented yet for `gamlss2` objects
+
+-   Note that moments not always exist for example for the `BCTo` distribution
+
+    -   for $\tau\le2$ the variance do not exist
+
+    -   for $\tau\le1$ the mean do not exist
+
+## quantiles, additive
+
+```{R}
+#| echo: true
+ gamlss.ggplots:::pe_quantile(madditive,c("area"))
+```
+
+## quantiles, additive (con.)
+
+```{R}
+gamlss.ggplots:::pe_quantile(madditive,c("location"))
+```
+
+## quantiles interactions
+
+```{R}
+#| echo: true
+ gamlss.ggplots:::pe_quantile(madditive,c("area", "yearc"))
+```
+
+## quantiles interactions 2
+
+```{R}
+#| echo: true
+gamlss.ggplots:::pe_quantile(madditive,c("area", "location"))
+```
+
+## quantiles interactions 2
+
+```{R}
+#| echo: true
+gamlss.ggplots:::pe_quantile(madditive,c( "location", "bath"))
+```
+
+## distributions, $\mu$, additive
+
+```{R}
+#| echo: true
+gamlss.ggplots:::pe_pdf_grid(madditive, list("area", "yearc", "location","bath"))
+```
+
+## distributions, $\mu$, NN
+
+```{R}
+#| echo: true
+gamlss.ggplots:::pe_pdf_grid(mneural, list("area", "yearc", "location","bath"))
+```
+
+## the purpose of the study {.smaller}
+
+-   the `purpose` should be always in our mind when we try to analyse any data
+
+-   for the Munich rent data are collected almost every 10 years
+
+-   guidance to judges on whether a **disputed rent** is a fair or not
+
+-   `purpose` is to identify very low or very hight rents by correcting for the explanatory variables
+
+-   similar in detecting "outliers"
+
+-   a possible solution: `prediction z-scores`
+
+## prediction z-scores
+
+Scenarios
+
+| rent | area | yearc | location | bath | kitchen | heating |
+|-----:|-----:|------:|---------:|-----:|--------:|--------:|
+| 1500 |  140 |  1983 |        3 |    1 |       1 |       1 |
+| 1000 |   55 |  1915 |        1 |    0 |       0 |       0 |
+|  800 |   65 |  1960 |        1 |    1 |       1 |       1 |
+
+## prediction z-scores (con.)
+
+```{R}
+#| echo: true
+#| eval: true
+#| warning: false
+#| message: false
+#| output: true
+    rent <- c(1500, 1000,800)
+    area <- c(140, 55, 65)
+   yearc <- c(1983, 1915, 1960)
+location <- factor(c(3,1,1))
+    bath <- factor(c(1,0,1))
+ kitchen <- factor(c(1,0,1))
+cheating <- factor(c(1,0,1))
+ndat <- data.frame(rent, area, yearc, location, bath, kitchen, cheating)
+cat("prediction z-scores", "\n")
+pp <-predict(madditive, newdata=ndat, type="parameter")
+ qNO(madditive$family$p(q=ndat$rent, par=pp))
+```
+
+## summary
+
+`GAMLSS` can tackle problems where the interest of the investigation lies **not only** in the `center` but `other parts of the distribution.`
+
+Personal view for the future of `GAMLSS` development;
+
+-   theoretical contributions
+
+-   software and
+
+-   knowledge exchange
+
+## Summary (continue)
+
+-   `theoretical contributions`
+    -   interpretable tools
+    -   model average for prediction
+-   `software`
+    -   `gamlss2`
+-   `books and knowledge exchange`
+    -   there is need for applied and elementary books
+    -   more application public health and environment
+
+## the team {.smaller}
+
+| working party          | current                | past                         |
+|:-----------------------|:-----------------------|:-----------------------------|
+| `Gillian Heller`       | `Konstantinos Pateras` | Popi Akantziliotou           |
+| `Fernanda De Bastiani` | Paul Eilers            | Vlasios Voudouris            |
+| `Thomas Kneib`         | Nikos Kametas          | Nicoleta Mortan              |
+| `Achim Zaileis`        | `Tim Cole`             | Daniil Kiose                 |
+| `Andreas Mayr`         | `Nikos Georgikopoulos` | Dea-Jin Lee                  |
+| `Nicolaus Umlauf`      | `Luiz Nakamura`        | María Xosé Rodríguez-Álvarez |
+| `Reto Stauffer`        | Nadja Klein            | Majid Djennad                |
+| `Robert Rigby`         | `Julian Merder`        | Fiona McElduff               |
+| `Mikis Stasinopoulos`  | Abu Hossain            | Raydonal Ospina              |
+
+# discussion
+
+## end
+
+[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+
+::: {layout-ncol="3," layout-nrow="1"}
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
+:::
