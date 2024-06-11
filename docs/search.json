@@ -2336,5 +2336,103 @@
     "title": "Discrete Distributions",
     "section": "END",
     "text": "END\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
+  },
+  {
+    "objectID": "select.html#introduction",
+    "href": "select.html#introduction",
+    "title": "Selection of terms",
+    "section": "Introduction",
+    "text": "Introduction\n\nstep-wise selection\nboosting\nmodelling interactions"
+  },
+  {
+    "objectID": "select.html#selection",
+    "href": "select.html#selection",
+    "title": "Selection of terms",
+    "section": "selection",
+    "text": "selection\n\n\n\n\n\n\nflowchart TB\n  A[Models] --&gt; B(automatic \\n selection) \n  A --&gt; C(declared\\n selection)\n  B --&gt; G[automatic \\n interaction]\n  B --&gt; H[set up \\n interaction]\n  G --&gt; D(NN, RT)\n  H --&gt; E(LASSO, \\n Ridge, \\n Elastic Net, \\n PCR )\n  S --&gt; M[step-wise]\n  S --&gt; N[boost]\n  C --&gt; S(LM, AM )\n\n\n\n\nFigure 1: Different methods of selecting features."
+  },
+  {
+    "objectID": "select.html#stepwise-selection-procedures",
+    "href": "select.html#stepwise-selection-procedures",
+    "title": "Selection of terms",
+    "section": "Stepwise Selection (procedures)",
+    "text": "Stepwise Selection (procedures)\n\nforward,\nbackwards,\nstepwise"
+  },
+  {
+    "objectID": "select.html#stepwise-selection-con.",
+    "href": "select.html#stepwise-selection-con.",
+    "title": "Selection of terms",
+    "section": "Stepwise Selection (con.)",
+    "text": "Stepwise Selection (con.)\n3-models\n\ncurrent model \\(C\\)\nlower model \\(L\\)\n\ncould be the null model\n\nupper model, \\(U\\). \\(U\\)\n\ncould be the saturated model"
+  },
+  {
+    "objectID": "select.html#stepwise-selection-in-gamlss-strategy-a.",
+    "href": "select.html#stepwise-selection-in-gamlss-strategy-a.",
+    "title": "Selection of terms",
+    "section": "Stepwise Selection in GAMLSS strategy A.",
+    "text": "Stepwise Selection in GAMLSS strategy A.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsteps\nLower\nDirection\nCurrent\nDirection\nUpper\nCreates\nGiven\n\n\n\n\n\n1 (\\(\\mu\\))\n\\(L_{\\mu}\\)\n\\(\\leftarrow\\)\n\\(C_{\\mu}\\)\n\\(\\rightarrow\\)\n\\(U_{\\mu}\\)\n\\(F_{\\mu}^{(1)}\\)\n\\(C_{\\sigma}, C_{\\nu}, C_{\\tau}\\)\n\n\n\n2 (\\(\\sigma\\))\n\\(L_{\\sigma}\\)\n\\(\\leftarrow\\)\n\\(C_{\\sigma}\\)\n\\(\\rightarrow\\)\n\\(U_{\\sigma}\\)\n\\(F_{\\sigma}^{(2)}\\)\n\\(F_{\\mu}^{(1)}, C_{\\nu}, C_{\\tau}\\)\n\n\n\n3 (\\(\\nu\\))\n\\(L_{\\nu}\\)\n\\(\\leftarrow\\)\n\\(C_{\\nu}\\)\n\\(\\rightarrow\\)\n\\(U_{\\nu}\\)\n\\(F_{\\nu}^{(3)}\\)\n\\(F_{\\mu}^{(1)},F_{\\sigma}^{(2)}, C_{\\tau}\\)\n\n\n\n4 (\\(\\tau\\))\n\\(L_{\\tau}\\)\n\\(\\leftarrow\\)\n\\(C_{\\tau}\\)\n\\(\\rightarrow\\)\n\\(U_{\\tau}\\)\n\\(F_{\\tau}^{(4)}\\)\n\\(F_{\\mu}^{(1)}, F_{\\sigma}^{(2)}, F_{\\nu}^{(3)}\\)\n\n\n\n5 (\\(\\nu\\))\n\\(L_{\\nu}\\)\n\\(\\leftarrow\\)\n\\(F_{\\nu}^{(3)}\\)\n\\(\\rightarrow\\)\n\\(U_{\\nu}\\)\n\\(F_{\\nu}^{(5)}\\)\n\\(F_{\\mu}^{(1)}, F_{\\sigma}^{(2)}, F_{\\tau}^{(4)}\\)\n\n\n\n6 (\\(\\sigma\\))\n\\(L_{\\sigma}\\)\n\\(\\leftarrow\\)\n\\(F_{\\sigma}^{(2)}\\)\n\\(\\rightarrow\\)\n\\(U_{\\sigma}\\)\n\\(F_{\\sigma}^{(6)}\\)\n\\(F_{\\mu}^{(1)}, F_{\\nu}^{(5)}, F_{\\tau}^{(4)}\\)\n\n\n\n7 (\\(\\mu\\))\n\\(L_{\\mu}\\)\n\\(\\leftarrow\\)\n\\(F_{\\mu}^{(1)}\\)\n\\(\\rightarrow\\)\n\\(U_{\\mu}\\)\n\\(F_{\\mu}^{(7)}\\)\n\\(F_{\\sigma}^{(6)}, F_{\\nu}^{(5)}, F_{\\tau}^{(4)}\\)"
+  },
+  {
+    "objectID": "select.html#strategy-a",
+    "href": "select.html#strategy-a",
+    "title": "Selection of terms",
+    "section": "Strategy A",
+    "text": "Strategy A\n\nlibrary(gamlss2)\nf1 &lt;-  rent~(area+yearc+location+bath+kitchen+cheating)|\n            area+yearc+location+ bath+kitchen+cheating|\n            area+yearc+location+ bath+kitchen+cheating|\n            area+yearc+location+ bath+kitchen+cheating\n m1 &lt;- gamlss2(f1,\n              family=BCTo,  data=da, trace=TRUE, n.cyc=20,\n              c.crit=0.01)\n \nmfA &lt;- gamlss2(m1, scope=list(lower=~1,\n       upper = ~poly(area,3)+poly(yearc,3)+(area+yearc+location+bath\n          +kitchen + cheating)^2),\n         trace=TRUE, parallel=\"snow\", ncpus=10, k=log(3032),\n         direction=rep(\"both\",7) )"
+  },
+  {
+    "objectID": "select.html#linear-model",
+    "href": "select.html#linear-model",
+    "title": "Selection of terms",
+    "section": "Linear model",
+    "text": "Linear model\n\\[\n          \\begin{split}\n        \\texttt{msLinear:} \\qquad &\\texttt{rent} \\sim \\text{BCTo}(\\mu, \\sigma, \\nu, \\tau ) \\\\\n        &\\mu  \\sim \\texttt{poly(area,3)}+ \\texttt{poly(yearc,3)} \\\\\n        & \\qquad  +\\texttt{location}+ \\texttt{bath}+\\texttt{cheating}+ \\texttt{bath}\\\\\n        \\log\\,&\\sigma  \\sim \\texttt{yearc}+\\texttt{kitchen}+\\texttt{yearc*kitchen}+\\\\\n         & \\qquad  +\\texttt{poly(yeatc,3)} \\\\\n        & \\nu \\sim  \\texttt{yearc} + \\texttt{kitchen} \\\\\n        \\log\\,&\\tau  \\sim \\texttt{yearc} + \\texttt{cheating}. \\\\\n        \\end{split}\n\\]"
+  },
+  {
+    "objectID": "select.html#additive-smooth-model",
+    "href": "select.html#additive-smooth-model",
+    "title": "Selection of terms",
+    "section": "Additive smooth model",
+    "text": "Additive smooth model\n\\[\n        \\begin{split}\n        \\texttt{msAdditive:} \\qquad &\\texttt{rent} \\sim \\text{BCTo}(\\mu, \\sigma, \\nu, \\tau ) \\\\\n        &\\mu  \\sim \\texttt{pb(area)}+ \\texttt{pb(yearc)} \\\\\n        & \\qquad  +\\texttt{location}+ \\texttt{bath}+\\texttt{cheating}+ \\texttt{bath}\\\\\n        \\log\\,&\\sigma  \\sim \\texttt{yearc}+\\texttt{kitchen}+\\texttt{yearc*kitchen}+\\\\\n         & \\qquad  +\\texttt{pb(yeatc)} \\\\\n        & \\nu \\sim  \\texttt{yearc} + \\texttt{kitchen} \\\\\n        \\log\\,&\\tau  \\sim \\texttt{yearc} + \\texttt{cheating}. \\\\\n        \\end{split}\n\\]"
+  },
+  {
+    "objectID": "select.html#sec-Boosting",
+    "href": "select.html#sec-Boosting",
+    "title": "Selection of terms",
+    "section": "Boosting",
+    "text": "Boosting\n\nlibrary(gamboostLSS)\nmfboost  &lt;- gamboostLSS(list(\n   mu = rent ~ bbs(area)+bbs(yearc)+\n  (area+yearc+location+kitchen+bath+cheating),\nsigma = rent ~ bbs(area)+bbs(yearc)+\n  (area+yearc+location+kitchen+bath+cheating),\n   nu = rent ~ bbs(area)+bbs(yearc)+\n  (area+yearc+location+kitchen+bath+cheating),\n  tau = rent ~ bbs(area)+bbs(yearc)+\n  (area+yearc+location+kitchen+bath+cheating)),\n        data = da, families = as.families(\"BCTo\"),\n        control=boost_control(mstop=1000, center=TRUE),\n                                  method = \"noncyclic\")"
+  },
+  {
+    "objectID": "select.html#boosting-continuous",
+    "href": "select.html#boosting-continuous",
+    "title": "Selection of terms",
+    "section": "Boosting (continuous)",
+    "text": "Boosting (continuous)\n\ncvr &lt;- cvrisk(mfboost)\n\nStarting cross-validation...\n\nmstop(cvr)\n\n[1] 989\n\nmstop(mfboost) &lt;- mstop(cvr)"
+  },
+  {
+    "objectID": "select.html#model",
+    "href": "select.html#model",
+    "title": "Selection of terms",
+    "section": "model",
+    "text": "model\n\\[\n\\begin{split}\n\\texttt{mfboost:} \\qquad &\\texttt{rent} \\sim \\text{BCTo}(\\mu, \\sigma, \\nu, \\tau ) \\\\\n  &\\mu  \\sim s(\\texttt{area})+ s(\\texttt{yearc})  +\\texttt{location}  \\\\\n  & \\qquad  +\\texttt{bath}+\\texttt{kitchen}+\\texttt{cheating}\\\\\n\\log\\,&\\sigma  \\sim s(\\texttt{area})+s(\\texttt{yearc})+\\texttt{location}\\\\\n  & \\qquad  +\\texttt{bath}+ \\texttt{cheating} \\\\        \n  & \\nu \\sim  s(\\texttt{area})+ s(\\texttt{yearc}) +\\texttt{location}  \\\\\n   & \\qquad  +\\texttt{kitchen}+ \\texttt{cheating} \\\\\n\\log\\,&\\tau  \\sim  s(\\texttt{yearc}). \\\\\n          \\end{split}\n          \\]"
+  },
+  {
+    "objectID": "select.html#neural-network",
+    "href": "select.html#neural-network",
+    "title": "Selection of terms",
+    "section": "Neural Network",
+    "text": "Neural Network\n\nset.seed(213)\nmsneural &lt;- gamlss2(rent~n(~area+yearc+location+bath+kitchen+\n                         cheating, size=10)|\n      n(~area+yearc+location+bath+kitchen+cheating, size=3)| \n      n(~area+yearc+location+bath+kitchen+cheating, size=3)| \n      n(~area+yearc+location+bath+kitchen+cheating, size=3),\n              family=BCTo, data=da)\n\nGAMLSS-RS iteration  1: Global Deviance = 37885.661 eps = 0.295880     \nGAMLSS-RS iteration  2: Global Deviance = 37819.3966 eps = 0.001749     \nGAMLSS-RS iteration  3: Global Deviance = 37808.0326 eps = 0.000300     \nGAMLSS-RS iteration  4: Global Deviance = 37802.7383 eps = 0.000140     \nGAMLSS-RS iteration  5: Global Deviance = 37800.4138 eps = 0.000061     \nGAMLSS-RS iteration  6: Global Deviance = 37799.374 eps = 0.000027     \nGAMLSS-RS iteration  7: Global Deviance = 37799.2628 eps = 0.000002"
+  },
+  {
+    "objectID": "select.html#model-1",
+    "href": "select.html#model-1",
+    "title": "Selection of terms",
+    "section": "Model",
+    "text": "Model\n\\[\n\\begin{split}\n\\texttt{msNeural:} \\qquad &\\texttt{rent} \\sim \\text{BCTo}(\\mu, \\sigma, \\nu, \\tau ) \\\\\n  & \\boldsymbol{\\mu}  = NN_{\\mu}(\\textbf{X}) \\\\\n\\log\\,&\\boldsymbol{\\sigma}  \\sim  NN_{\\sigma}(\\textbf{X}) \\\\\n  & \\nu \\sim NN_{\\nu}(\\textbf{X})  \\\\\n\\log\\,&\\tau  \\sim NN_{\\tau}(\\textbf{X}) \\\\\n\\end{split}\n\\]"
+  },
+  {
+    "objectID": "select.html#end",
+    "href": "select.html#end",
+    "title": "Selection of terms",
+    "section": "end",
+    "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   }
 ]

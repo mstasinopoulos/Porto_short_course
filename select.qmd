@@ -74,7 +74,7 @@ flowchart TB
 ## Stepwise Selection in GAMLSS strategy A. {.smaller}
 
 | steps        |    Lower     |  Direction   |      Current       |   Direction   |    Upper     |      Creates       | Given                                             |     |
-|--------------|:------------:|:------------:|:------------------:|:-------------:|:------------:|:------------------:|:--------------------------------------------------|:---:|
+|--------|:------:|:------:|:------:|:------:|:------:|:------:|:----------|:------:|
 | 1 ($\mu$)    |  $L_{\mu}$   | $\leftarrow$ |     $C_{\mu}$      | $\rightarrow$ |  $U_{\mu}$   |  $F_{\mu}^{(1)}$   | $C_{\sigma}, C_{\nu}, C_{\tau}$                   |     |
 | 2 ($\sigma$) | $L_{\sigma}$ | $\leftarrow$ |    $C_{\sigma}$    | $\rightarrow$ | $U_{\sigma}$ | $F_{\sigma}^{(2)}$ | $F_{\mu}^{(1)}, C_{\nu}, C_{\tau}$                |     |
 | 3 ($\nu$)    |  $L_{\nu}$   | $\leftarrow$ |     $C_{\nu}$      | $\rightarrow$ |  $U_{\nu}$   |  $F_{\nu}^{(3)}$   | $F_{\mu}^{(1)},F_{\sigma}^{(2)}, C_{\tau}$        |     |
@@ -231,7 +231,7 @@ $$
 
 ## end
 
-[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+[back to the index](https://mstasinopoulos.github.io/Porto_short_course/)
 
 ::: {layout-ncol="3," layout-nrow="1"}
 ![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
