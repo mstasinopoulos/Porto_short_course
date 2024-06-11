@@ -336,7 +336,7 @@ gamlss2::GAIC(mlinear, madditive, mneural, mregtree, mcf, k=2)
 ## summary {.smaller}
 
 | ML Models | coef. s.e. | stand. of x's | algo. stab., speed, conv. | non-linear terms | inter- actions | data type | auto sele-ction | interpre- tation |
-|-----------|-----------:|--------------:|---------------------------|------------------|----------------|-----------|-----------------|------------------|
+|--------|-------:|-------:|--------|--------|--------|--------|--------|--------|
 | linear    |        yes |            no | yes, fast, v.good         | poly             | declare        | $n>r$     | no              | v\. easy         |
 | additive  |         no |            no | yes, slow, good           | smooth           | declare        | $n>r$     | no              | easy             |
 | RT        |         no |            no | no, slow, bad             | trees            | auto           | $n>r$??   | yes             | easy             |
@@ -346,7 +346,7 @@ gamlss2::GAIC(mlinear, madditive, mneural, mregtree, mcf, k=2)
 ## summary (continue) {.smaller}
 
 | ML Models | coef. s.e. | stand. of x's | algo. stab., speed, conv. | non-linear terms | inter- actions | data type | auto sele-ction | interpre- tation |
-|-----------|-----------:|--------------:|---------------------------|------------------|----------------|-----------|-----------------|------------------|
+|--------|-------:|-------:|--------|--------|--------|--------|--------|--------|
 | NN        |         no |        0 to 1 | no, $\,\,$ ok, $\,\,$ ok  | auto             | auto           | both?     | yes             | v\. hard         |
 | RF        |         no |            no | no, slow, slow            | YES              | no             | both      | auto            | hard             |
 | LASSO     |         no |           yes | yes, fast, good           | poly             | declare        | both      | auto            | easy             |
@@ -356,7 +356,7 @@ gamlss2::GAIC(mlinear, madditive, mneural, mregtree, mcf, k=2)
 ## summary (continue) {.smaller}
 
 | ML Models | coef. s.e. | stand. of x's | algo. stab., speed, conv. | non-linear terms | inter- actions | data type | auto sele-ction | interpre- tation |
-|-----------|-----------:|--------------:|---------------------------|------------------|----------------|-----------|-----------------|------------------|
+|--------|-------:|-------:|--------|--------|--------|--------|--------|--------|
 | Boost     |         no |            no | yes, fast, good           | smooth trees     | declare        | $n<<r$    | yes             | easy             |
 | MCMC      |        yes |            no | good, ok, $\,\,$ ok       | smooth           | declare        | $n>r$     | no              | easy             |
 | PCR       |        yes |           yes | yes, fast, good           | poly             | declare        | both      | auto            | hard             |
@@ -364,6 +364,8 @@ gamlss2::GAIC(mlinear, madditive, mneural, mregtree, mcf, k=2)
 : Summary of properties of the machine learning algorithms {#tbl-Summary .striped .hover}
 
 ## end
+
+[back to the index](https://mstasinopoulos.github.io/Porto_short_course/)
 
 ::: {layout-ncol="3," layout-nrow="1"}
 ![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
