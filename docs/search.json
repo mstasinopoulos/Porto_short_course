@@ -1783,5 +1783,278 @@
     "title": "The R software",
     "section": "end",
     "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
+  },
+  {
+    "objectID": "Distributions.html#introduction",
+    "href": "Distributions.html#introduction",
+    "title": "Distributions",
+    "section": "Introduction",
+    "text": "Introduction\nSuitable distribution for the response variable.\n\n\ndifferent types of distributions\nproperies of distributions\ndistributions in GAMLSS\n\nexplicit\nimplicit\n\na procedure to find a good initial distribution for the response"
+  },
+  {
+    "objectID": "Distributions.html#types",
+    "href": "Distributions.html#types",
+    "title": "Distributions",
+    "section": "Types",
+    "text": "Types\n\ncontinuous\n\n\\((-\\infty, \\infty)\\), real line;\n\\((0, \\infty)\\), positive real line;\n\\((0,1)\\) from 0 to 1\n\ndiscrete\n\n\\((0,1,\\dots, \\infty)\\)\n\\((0,1,\\dots, N)\\)\n\nmixed part continuous part discrete\n\n\\([0, \\infty)\\) zero adjusted\n\\([0, 1]\\) zero (and 1) inflated"
+  },
+  {
+    "objectID": "Distributions.html#continuous",
+    "href": "Distributions.html#continuous",
+    "title": "Distributions",
+    "section": "continuous",
+    "text": "continuous\n\n\n(a) continuous"
+  },
+  {
+    "objectID": "Distributions.html#discrete",
+    "href": "Distributions.html#discrete",
+    "title": "Distributions",
+    "section": "discrete",
+    "text": "discrete\n\n\n(a) discrete"
+  },
+  {
+    "objectID": "Distributions.html#mixed",
+    "href": "Distributions.html#mixed",
+    "title": "Distributions",
+    "section": "mixed",
+    "text": "mixed\n\n\n(a) mixed"
+  },
+  {
+    "objectID": "Distributions.html#properties",
+    "href": "Distributions.html#properties",
+    "title": "Distributions",
+    "section": "properties",
+    "text": "properties\n\\(f(y;{\\theta})\\)\n\n\\(\\int_{R_Y} f(y) \\; dy=1\\)\n\\(\\sum_{y\\in R_Y} f(y)=\\sum_{y \\in R_Y} P(Y=y)=1\\)\n\\(\\int_{R_{1}} f(y)\\, dy + \\sum_{y \\in R_{2}} f(y) = 1\\)."
+  },
+  {
+    "objectID": "Distributions.html#parameters",
+    "href": "Distributions.html#parameters",
+    "title": "Distributions",
+    "section": "parameters",
+    "text": "parameters\n\n\\(f(y;{\\theta})\\)\n\\({\\theta}= (\\theta_1, \\theta_2, \\ldots, \\theta_k)\\).\nlocation\nscale\nshape\n\nskewness\nkurtosis"
+  },
+  {
+    "objectID": "Distributions.html#left-skew",
+    "href": "Distributions.html#left-skew",
+    "title": "Distributions",
+    "section": "left skew",
+    "text": "left skew\n\n\n(a) left skew"
+  },
+  {
+    "objectID": "Distributions.html#symmetric",
+    "href": "Distributions.html#symmetric",
+    "title": "Distributions",
+    "section": "symmetric",
+    "text": "symmetric\n\n\n(a) symmetric"
+  },
+  {
+    "objectID": "Distributions.html#right-skew",
+    "href": "Distributions.html#right-skew",
+    "title": "Distributions",
+    "section": "right skew",
+    "text": "right skew\n\n\nFigure 6: right skew"
+  },
+  {
+    "objectID": "Distributions.html#platy",
+    "href": "Distributions.html#platy",
+    "title": "Distributions",
+    "section": "platy",
+    "text": "platy\n\n\n(a) platy"
+  },
+  {
+    "objectID": "Distributions.html#meso",
+    "href": "Distributions.html#meso",
+    "title": "Distributions",
+    "section": "meso",
+    "text": "meso\n\n\nFigure 8: meso"
+  },
+  {
+    "objectID": "Distributions.html#lepto",
+    "href": "Distributions.html#lepto",
+    "title": "Distributions",
+    "section": "lepto",
+    "text": "lepto\n\n\nFigure 9: lepto"
+  },
+  {
+    "objectID": "Distributions.html#moments-based-characteristics",
+    "href": "Distributions.html#moments-based-characteristics",
+    "title": "Distributions",
+    "section": "moments based characteristics",
+    "text": "moments based characteristics\n\nmean \\[\\begin{align*}\nE(Y)= \\begin{cases}\n\\int_{-\\infty}^{\\infty} y f(y)\\, dy&\\text{for continuous}\\\\\n\\sum_{y \\epsilon R_Y} y\\, P(Y=y) &\\text{for discrete}\n\\end{cases}\n\\end{align*}\\]\nvariance\ncoefficient of skewness\n(adjusted) coefficient for kurtosis\n\n\n\nNot always exist"
+  },
+  {
+    "objectID": "Distributions.html#mean",
+    "href": "Distributions.html#mean",
+    "title": "Distributions",
+    "section": "mean",
+    "text": "mean\n\n\nFigure 10: The mean is the point in which the distribution is balance."
+  },
+  {
+    "objectID": "Distributions.html#centile-based-characteristics",
+    "href": "Distributions.html#centile-based-characteristics",
+    "title": "Distributions",
+    "section": "centile based characteristics",
+    "text": "centile based characteristics\n\nthe median\nsemi interquartile range\ncentile skewness\ncentile kurtosis\n\n\n\nAlways exist"
+  },
+  {
+    "objectID": "Distributions.html#quantiles",
+    "href": "Distributions.html#quantiles",
+    "title": "Distributions",
+    "section": "quantiles",
+    "text": "quantiles\n\n\nFigure 11: Showing how \\(Q1\\), \\(m\\) (median), \\(Q3\\) and the interquartile range IR of a continuous distribution are derived from \\(f(y)\\)."
+  },
+  {
+    "objectID": "Distributions.html#the-gamlss-families",
+    "href": "Distributions.html#the-gamlss-families",
+    "title": "Distributions",
+    "section": "The GAMLSS families",
+    "text": "The GAMLSS families\n\nover 100 explicit distributions\nimplicit distributions\n\ntruncation\nlog distributions\nlogit distribution\ninflated distributions\nzero adjusted\ngeneralised Tobit"
+  },
+  {
+    "objectID": "Distributions.html#explicit-distributions",
+    "href": "Distributions.html#explicit-distributions",
+    "title": "Distributions",
+    "section": "explicit distributions",
+    "text": "explicit distributions\n\nd probability density functions (pdf)\np cumulative density functions (cdf)\nq the q-function or inversed cumulative density functions (icdf)\nr random generating function\nfitting function\n\nfirst and second devivative of the log-likelihood\nother information like names of parameters, range of the response a of the parameters e.t.c."
+  },
+  {
+    "objectID": "Distributions.html#continuous-1",
+    "href": "Distributions.html#continuous-1",
+    "title": "Distributions",
+    "section": "continuous",
+    "text": "continuous"
+  },
+  {
+    "objectID": "Distributions.html#with-ggplot2",
+    "href": "Distributions.html#with-ggplot2",
+    "title": "Distributions",
+    "section": "with ggplot2",
+    "text": "with ggplot2"
+  },
+  {
+    "objectID": "Distributions.html#discrete-1",
+    "href": "Distributions.html#discrete-1",
+    "title": "Distributions",
+    "section": "discrete",
+    "text": "discrete"
+  },
+  {
+    "objectID": "Distributions.html#with-ggplot2-1",
+    "href": "Distributions.html#with-ggplot2-1",
+    "title": "Distributions",
+    "section": "with ggplot2",
+    "text": "with ggplot2"
+  },
+  {
+    "objectID": "Distributions.html#demo",
+    "href": "Distributions.html#demo",
+    "title": "Distributions",
+    "section": "demo",
+    "text": "demo\n\nlibrary(gamlss.demo)\ngamlss.demo()"
+  },
+  {
+    "objectID": "Distributions.html#truncated-distributions",
+    "href": "Distributions.html#truncated-distributions",
+    "title": "Distributions",
+    "section": "truncated distributions",
+    "text": "truncated distributions\n\nAny distribution can be truncated\n– to the left\n– to the right or\n– in both sides"
+  },
+  {
+    "objectID": "Distributions.html#truncated-continuous",
+    "href": "Distributions.html#truncated-continuous",
+    "title": "Distributions",
+    "section": "truncated continuous",
+    "text": "truncated continuous\n\nlibrary(gamlss.tr)\ngen.trun(\"NO\", par=c(0,3), type=\"both\")\n\nA truncated family of distributions from NO has been generated \n and saved under the names:  \n dNOtr pNOtr qNOtr rNOtr NOtr \nThe type of truncation is both \n and the truncation parameter is 0 3  \n\nfamily_pdf(\"NOtr\", from=0,to=3, mu=0, sigma=1)\n\nintegrate(dNOtr, 0,3)\n\n1 with absolute error &lt; 1.1e-14"
+  },
+  {
+    "objectID": "Distributions.html#truncated-discrete",
+    "href": "Distributions.html#truncated-discrete",
+    "title": "Distributions",
+    "section": "truncated discrete",
+    "text": "truncated discrete\n\ngen.trun(\"NBI\", par=0)\n\nA truncated family of distributions from NBI has been generated \n and saved under the names:  \n dNBItr pNBItr qNBItr rNBItr NBItr \nThe type of truncation is left \n and the truncation parameter is 0  \n\nfamily_pdf(\"NBItr\", from= 1, to=10, mu=1.5, sigma=1)"
+  },
+  {
+    "objectID": "Distributions.html#transformation-from--infty-infty-to-0-infty",
+    "href": "Distributions.html#transformation-from--infty-infty-to-0-infty",
+    "title": "Distributions",
+    "section": "Transformation from \\((-\\infty, \\infty)\\) to \\((0, +\\infty)\\)",
+    "text": "Transformation from \\((-\\infty, \\infty)\\) to \\((0, +\\infty)\\)\n\nAny distribution for \\(Z\\) on \\((-\\infty, \\infty)\\) can be transformed to a corresponding distribution for \\(Y=\\exp(Z)\\) on \\((0, +\\infty)\\)\nFor example: from t distribution to \\(\\log t\\) distribution"
+  },
+  {
+    "objectID": "Distributions.html#log-distributions",
+    "href": "Distributions.html#log-distributions",
+    "title": "Distributions",
+    "section": "log distributions",
+    "text": "log distributions\n\nfamily_pdf(\"TF\", from=-5,to=5, mu=0, sigma=1, nu=5)"
+  },
+  {
+    "objectID": "Distributions.html#log-distributions-con",
+    "href": "Distributions.html#log-distributions-con",
+    "title": "Distributions",
+    "section": "log distributions (con)",
+    "text": "log distributions (con)\n\ngen.Family(\"TF\")\n\nA  log  family of distributions from TF has been generated \n and saved under the names:  \n dlogTF plogTF qlogTF rlogTF logTF \n\nfamily_pdf(\"logTF\", from=0.01,to=3, mu=0, sigma=1, nu=5)"
+  },
+  {
+    "objectID": "Distributions.html#transformation-from--infty-infty-to-0-1",
+    "href": "Distributions.html#transformation-from--infty-infty-to-0-1",
+    "title": "Distributions",
+    "section": "Transformation from \\((-\\infty, \\infty)\\) to \\((0, 1)\\)",
+    "text": "Transformation from \\((-\\infty, \\infty)\\) to \\((0, 1)\\)\n\nAny distribution for \\(Z\\) on \\((-\\infty, \\infty)\\) can be transformed to a corresponding distribution for \\(Y=\\exp(Z)\\) on \\((0, 1)\\)\nFor example: from t distribution to logit t distribution"
+  },
+  {
+    "objectID": "Distributions.html#logit-distributions",
+    "href": "Distributions.html#logit-distributions",
+    "title": "Distributions",
+    "section": "logit distributions",
+    "text": "logit distributions\n\nlibrary(gamlss)\nlibrary(gamlss.ggplots)\nfamily_pdf(\"TF\", from=-5,to=5, mu=0, sigma=1, nu=5)"
+  },
+  {
+    "objectID": "Distributions.html#logit-distributions-con",
+    "href": "Distributions.html#logit-distributions-con",
+    "title": "Distributions",
+    "section": "logit distributions (con)",
+    "text": "logit distributions (con)\n\ngen.Family(\"TF\", \"logit\")\n\nA  logit  family of distributions from TF has been generated \n and saved under the names:  \n dlogitTF plogitTF qlogitTF rlogitTF logitTF \n\nfamily_pdf(\"logitTF\", from=0.001, to=.999, mu=0, sigma=1, nu=5)"
+  },
+  {
+    "objectID": "Distributions.html#inflated-distributions",
+    "href": "Distributions.html#inflated-distributions",
+    "title": "Distributions",
+    "section": "inflated distributions",
+    "text": "inflated distributions\n\n\nA  logit  family of distributions from SHASHo has been generated \n and saved under the names:  \n dlogitSHASHo plogitSHASHo qlogitSHASHo rlogitSHASHo logitSHASHo \n\n\nA  0to1 inflated logitSHASHo distribution has been generated \n and saved under the names:  \n dlogitSHASHoInf0to1 plogitSHASHoInf0to1 qlogitSHASHoInf0to1 rlogitSHASHoInf0to1 \n plotlogitSHASHoInf0to1"
+  },
+  {
+    "objectID": "Distributions.html#zero-adjusted",
+    "href": "Distributions.html#zero-adjusted",
+    "title": "Distributions",
+    "section": "zero adjusted",
+    "text": "zero adjusted\n\n\nA zero adjusted BCT distribution has been generated \n and saved under the names:  \n dBCTZadj pBCTZadj qBCTZadj rBCTZadj \n plotBCTZadj"
+  },
+  {
+    "objectID": "Distributions.html#tobit",
+    "href": "Distributions.html#tobit",
+    "title": "Distributions",
+    "section": "TOBIT",
+    "text": "TOBIT"
+  },
+  {
+    "objectID": "Distributions.html#generalized-tobit",
+    "href": "Distributions.html#generalized-tobit",
+    "title": "Distributions",
+    "section": "generalized TOBIT",
+    "text": "generalized TOBIT"
+  },
+  {
+    "objectID": "Distributions.html#book-2",
+    "href": "Distributions.html#book-2",
+    "title": "Distributions",
+    "section": "book 2",
+    "text": "book 2\n\nbook2"
+  },
+  {
+    "objectID": "Distributions.html#end",
+    "href": "Distributions.html#end",
+    "title": "Distributions",
+    "section": "end",
+    "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   }
 ]

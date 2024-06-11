@@ -26,6 +26,7 @@ format:
     css: styles.css
     theme: sky
 ---
+
 ```{r}
 
 ```
@@ -41,8 +42,8 @@ Suitable distribution for the response variable.
 
 -   `distributions in GAMLSS`
 
-     - explicit
-     - implicit
+    -   explicit
+    -   implicit
 
 -   `a procedure to find a good initial distribution for the response`
 :::
@@ -384,9 +385,6 @@ family_pdf("GA",mu=5, sigma=.6, from=0.001, to=20, title="") +
   geom_polygon(data=df4, aes(x=x, y=y), alpha=.3)
 ```
 
-
-
-
 ```{r}
 #| warning: false
 #| echo: false
@@ -410,20 +408,20 @@ library(gamlss.ggplots)
 
 ## explicit distributions
 
-- `d` probability density functions (pdf)
+-   `d` probability density functions (pdf)
 
-- `p` cumulative density functions (cdf)
+-   `p` cumulative density functions (cdf)
 
-- `q` the q-function or inversed cumulative density functions (icdf)
+-   `q` the q-function or inversed cumulative density functions (icdf)
 
-- `r` random generating  function
+-   `r` random generating function
 
-- fitting function
-    - first and second devivative of the log-likelihood
-    - other information like names of parameters, range of the response a of the parameters e.t.c.
-    
+-   fitting function
 
-## continuous 
+    -   first and second devivative of the log-likelihood
+    -   other information like names of parameters, range of the response a of the parameters e.t.c.
+
+## continuous
 
 ```{r}
 #| fig-width: 4
@@ -462,9 +460,8 @@ y<-rGA(1000, mu, sigma) # random sample
 y_hist(y)
 ```
 
+## discrete
 
-
-## discrete 
 ```{r}
 #| fig-width: 4
 #| #| fig-height: 4
@@ -510,7 +507,6 @@ y<-rGA(1000, mu, sigma) # random sample
 y_hist(y)
 ```
 
-
 ## demo
 
 ```{r}
@@ -522,17 +518,15 @@ gamlss.demo()
 
 # implicit distributions
 
-
 ## truncated distributions
 
+-   Any distribution can be truncated
 
-- Any distribution can be truncated 
+    -- to the `left`
 
-  -- to the `left`
-  
-  -- to the `right` or
-  
-  -- in `both` sides 
+    -- to the `right` or
+
+    -- in `both` sides
 
 ## truncated continuous
 
@@ -544,8 +538,6 @@ family_pdf("NOtr", from=0,to=3, mu=0, sigma=1)
 integrate(dNOtr, 0,3)
 ```
 
-
-
 ## truncated discrete
 
 ```{r}
@@ -554,12 +546,11 @@ gen.trun("NBI", par=0)
 family_pdf("NBItr", from= 1, to=10, mu=1.5, sigma=1)
 ```
 
-
 ## Transformation from $(-\infty, \infty)$ to $(0, +\infty)$
 
-- Any distribution for $Z$ on  $(-\infty, \infty)$  can be transformed to a corresponding distribution for $Y=\exp(Z)$ on $(0, +\infty)$
+-   Any distribution for $Z$ on $(-\infty, \infty)$ can be transformed to a corresponding distribution for $Y=\exp(Z)$ on $(0, +\infty)$
 
-- For example: from t distribution  to $\log t$ distribution   
+-   For example: from t distribution to $\log t$ distribution
 
 ## log distributions
 
@@ -570,21 +561,21 @@ family_pdf("TF", from=-5,to=5, mu=0, sigma=1, nu=5)
 ```
 
 ## log distributions (con)
+
 ```{r}
 #| echo: true
 gen.Family("TF")
 family_pdf("logTF", from=0.01,to=3, mu=0, sigma=1, nu=5)
 ```
 
-
 ## Transformation from $(-\infty, \infty)$ to $(0, 1)$
 
-- Any distribution for $Z$ on  $(-\infty, \infty)$  can be transformed to a corresponding distribution for $Y=\exp(Z)$ on $(0, 1)$
+-   Any distribution for $Z$ on $(-\infty, \infty)$ can be transformed to a corresponding distribution for $Y=\exp(Z)$ on $(0, 1)$
 
-- For example: from `t` distribution  to `logit t` distribution   
-
+-   For example: from `t` distribution to `logit t` distribution
 
 ## logit distributions
+
 ```{r}
 #| warning: false
 #| echo: true
@@ -594,15 +585,14 @@ family_pdf("TF", from=-5,to=5, mu=0, sigma=1, nu=5)
 ```
 
 ## logit distributions (con)
+
 ```{r}
 #| echo: true
 gen.Family("TF", "logit")
 family_pdf("logitTF", from=0.001, to=.999, mu=0, sigma=1, nu=5)
 ```
 
-
 ## inflated distributions
-
 
 ```{r}
 library(gamlss.inf)
@@ -611,7 +601,7 @@ gen.Inf0to1("logitSHASHo")
 plotlogitSHASHoInf0to1(mu=0, sigma=3, nu=-1, tau=3, xi0=.2, xi1=0.1)
 ```
 
-## zero adjusted 
+## zero adjusted
 
 ```{r}
 library(gamlss.inf)
@@ -619,15 +609,13 @@ gen.Zadj("BCT")
 plotBCTZadj(mu=2, sigma=0.3, nu=2, tau=4, xi=.1)
 ```
 
-## TOBIT 
-
+## TOBIT
 
 ![](tobit0Inf-1.png)
 
-## generalized TOBIT 
+## generalized TOBIT
 
 ![](tobit0Inf-2.png)
-
 
 ## book 2
 
@@ -635,11 +623,8 @@ plotBCTZadj(mu=2, sigma=0.3, nu=2, tau=4, xi=.1)
 
 ## end
 
-[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+[back to the index](https://mstasinopoulos.github.io/Porto_short_course/)
 
 ::: {layout-ncol="3," layout-nrow="1"}
-![](book-1.png){width="300"} 
-![](BOOK-2.png){width="323"} 
-![](book3.png){width="333"} The Books
+![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
 :::
-
