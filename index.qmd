@@ -12,13 +12,10 @@ This website contains slides from the short course on GAMLSS given in June 2024 
 
 -   [Why GAMLSS](Why_GAMLSS.qmd)
 -   [The R shoftware](TheRsoftware.qmd)
--   [Practical 1](Practical_1.qmd)
 -   [Distributions](Distributions.qmd)
 -   [Continuous Distributions](Continuous_Distributions.qmd)
--   [Practical 2](Practical_2.qmd)
 -   [Discrete Distributions](Discrete_Distributions.qmd)
 -   [Mixed Distributions](Mixed_Distributions.qmd)
--   [Practical 3](Practical_3.qmd)
 -   [Model Fitting](fitting.qmd)
 -   [Model Selection](select.qmd)
 -   [Centile Estimation](Centiles.qmd)

@@ -11,13 +11,10 @@ website:
         text: Home
       - Why_GAMLSS.qmd
       - TheRsoftware.qmd
-      - Practical_1.qmd
       - Distributions.qmd
       - Continuous_Distributions.qmd
-      - Practical_2.qmd
       - Discrete_Distributions.qmd
       - Mixed_Distributions.qmd
-      - Practical_3.qmd
       - fitting.qmd
       - select.qmd
       - Centiles.qmd
