@@ -2,13 +2,29 @@ project:
   type: website
   output-dir: docs
 website:
-  title: "GAMLSS Short Course"
+  title: "GAMLSS Port Short Course 2024"
   navbar:
     background: primary
     search: true
     left:
       - href: index.qmd
         text: Home
+      - Why_GAMLSS.qmd
+      - TheRsoftware.qmd
+      - Practical_1.qmd
+      - Distributions.qmd
+      - Continuous_Distributions.qmd
+      - Practical_2.qmd
+      - Discrete_Distributions.qmd
+      - Mixed_Distributions.qmd
+      - Practical_3.qmd
+      - fitting.qmd
+      - select.qmd
+      - Centiles.qmd
+      - diagnostics.qmd
+      - comparison.qmd
+      - Interpret.qmd
+
       
 sidebar:
   contents: auto
