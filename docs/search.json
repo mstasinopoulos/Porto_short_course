@@ -920,8 +920,8 @@
     "objectID": "Mixed_Distributions.html#introduction",
     "href": "Mixed_Distributions.html#introduction",
     "title": "Mixed Distributions",
-    "section": "",
-    "text": "A mixed distribution is special case of a finite mixture distribution\nit has two components: a continuous distribution and a discrete distribution\nit is a continuous distribution where the range of \\(Y\\) also includes discrete values with non-zero probabilities."
+    "section": "introduction",
+    "text": "introduction\n\nA mixed distribution is special case of a finite mixture distribution\nit has two components: a continuous distribution and a discrete distribution\nit is a continuous distribution where the range of \\(Y\\) also includes discrete values with non-zero probabilities."
   },
   {
     "objectID": "Mixed_Distributions.html#types",
@@ -1131,7 +1131,7 @@
     "href": "Mixed_Distributions.html#worm-plot",
     "title": "Mixed Distributions",
     "section": "worm plot",
-    "text": "worm plot\n\n\n\n\n\n\n\n\nFigure 2"
+    "text": "worm plot\n\n\nFigure 2"
   },
   {
     "objectID": "Mixed_Distributions.html#bucket-plot",
@@ -1152,7 +1152,7 @@
     "href": "Mixed_Distributions.html#end",
     "title": "Mixed Distributions",
     "section": "END",
-    "text": "END\nback to the index\n\n\n\n\n\n\n   The Books"
+    "text": "END\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   },
   {
     "objectID": "Practical_3.html",
