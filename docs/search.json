@@ -605,8 +605,8 @@
     "objectID": "diagnostics.html#graphical-diagnostic-tools",
     "href": "diagnostics.html#graphical-diagnostic-tools",
     "title": "Diagnostics and ggplots",
-    "section": "",
-    "text": "individual variable/data information\nmodels dianostics\n\nwithin model\nbetween models\n\n\n\n\nSee packages gamlss.ggplots and gamlssprepdata"
+    "section": "Graphical Diagnostic tools",
+    "text": "Graphical Diagnostic tools\n\nindividual variable/data information\nmodels dianostics\n\nwithin model\nbetween models\n\n\n\n\nSee packages gamlss.ggplots and gamlssprepdata"
   },
   {
     "objectID": "diagnostics.html#data-and-models",
@@ -809,42 +809,42 @@
     "href": "diagnostics.html#sec-modeldensity",
     "title": "Diagnostics and ggplots",
     "section": "model density",
-    "text": "model density\n\n\n\n\n\n\n\n\nFigure 3: The model density estimates of the residuals"
+    "text": "model density\n\n\nFigure 3: The model density estimates of the residuals"
   },
   {
     "objectID": "diagnostics.html#sec-modelQQplots",
     "href": "diagnostics.html#sec-modelQQplots",
     "title": "Diagnostics and ggplots",
     "section": "model QQ-plots",
-    "text": "model QQ-plots\n\n\n\n\n\n\n\n\n\n\n\n(a) QQ-plots\n\n\n\n\n\n\nFigure 4: The model QQ-plots of the residuals"
+    "text": "model QQ-plots\n\n\n(a) QQ-plots"
   },
   {
     "objectID": "diagnostics.html#sec-modelwormplots",
     "href": "diagnostics.html#sec-modelwormplots",
     "title": "Diagnostics and ggplots",
     "section": "model worm-plots",
-    "text": "model worm-plots\n\n\n\n\n\n\n\n\n\n\n\n(a) worm plots\n\n\n\n\n\n\nFigure 5: The model worm plots of the residuals"
+    "text": "model worm-plots\n\n\n(a) worm plots"
   },
   {
     "objectID": "diagnostics.html#sec-modelbucketplot",
     "href": "diagnostics.html#sec-modelbucketplot",
     "title": "Diagnostics and ggplots",
     "section": "model bucket plot",
-    "text": "model bucket plot\n\n\n\n\n\n\n\n\n\n\n\n(a) bucket plot\n\n\n\n\n\n\nFigure 6: The model bucket plot of the residuals"
+    "text": "model bucket plot\n\n\n(a) bucket plot"
   },
   {
     "objectID": "diagnostics.html#sec-modelWPplotwrap1",
     "href": "diagnostics.html#sec-modelWPplotwrap1",
     "title": "Diagnostics and ggplots",
     "section": "model wp wrap",
-    "text": "model wp wrap\n\n\n\n\n\n\n\n\nFigure 7: Worm plots for different fitted models at different values of the continuous variable area"
+    "text": "model wp wrap\n\n\nFigure 7: Worm plots for different fitted models at different values of the continuous variable area"
   },
   {
     "objectID": "diagnostics.html#sec-modelWPplotwrap2",
     "href": "diagnostics.html#sec-modelWPplotwrap2",
     "title": "Diagnostics and ggplots",
     "section": "model wp wrap (continue)",
-    "text": "model wp wrap (continue)\n\n\n\n\n\n\n\n\nFigure 8: Worm plots for different fitted models at different levels of the factor location"
+    "text": "model wp wrap (continue)\n\n\nFigure 8: Worm plots for different fitted models at different levels of the factor location"
   },
   {
     "objectID": "diagnostics.html#model-deviance-increment-difference",
@@ -858,7 +858,7 @@
     "href": "diagnostics.html#end",
     "title": "Diagnostics and ggplots",
     "section": "END",
-    "text": "END\nback to the index\n\n\n\n\n\n\n   The Books"
+    "text": "END\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   },
   {
     "objectID": "Practical_5.html",
