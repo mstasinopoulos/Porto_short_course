@@ -2686,5 +2686,75 @@
     "title": "Centile estimation",
     "section": "end",
     "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
+  },
+  {
+    "objectID": "comparison.html#introduction",
+    "href": "comparison.html#introduction",
+    "title": "Comparing Models",
+    "section": "Introduction",
+    "text": "Introduction\n\nwhat to compare\n\ndistributions\nx-variables\n\nhow ro compare\n\ngraphical diagnostic tools;\nmodel summary statistics"
+  },
+  {
+    "objectID": "comparison.html#summary-statistics",
+    "href": "comparison.html#summary-statistics",
+    "title": "Comparing Models",
+    "section": "summary statistics",
+    "text": "summary statistics\n\n\n\nData\nMethods\n\n\n\n\nall data\n\\(\\chi^2\\), GAIC\n\n\ntest data\nLS, CRPS, MSE etc.\n\n\ndata partitioning\n\n\n\nK-fold\nLS, CRPS\n\n\nbootstrap\nLS, CRPS"
+  },
+  {
+    "objectID": "comparison.html#sec-Model_Comparison",
+    "href": "comparison.html#sec-Model_Comparison",
+    "title": "Comparing Models",
+    "section": "Summary Comparison Statistics",
+    "text": "Summary Comparison Statistics\n\nif no partition evaluation is done in the training dataset\n\nGeneralized AIC\n\\[ GAIC = \\hat{GD}+ k \\times df \\]\n\\(\\chi^2\\) test: likelihood ratio test for nested models \\[LR= GD_1/ GD_0 \\sim \\chi^2(df0- df_1) \\]\n\n\n\n\nNote that degrees of freedom are required"
+  },
+  {
+    "objectID": "comparison.html#summary-comparison-statistics-con.",
+    "href": "comparison.html#summary-comparison-statistics-con.",
+    "title": "Comparing Models",
+    "section": "Summary Comparison Statistics (con.)",
+    "text": "Summary Comparison Statistics (con.)\n\npartition: evaluation is done on new data\n\nLikelihod score (LS) \\(\\equiv\\) Prediction Global Deviance (PGD)\nContinuous Rank Probabily Score (CRPS)\nMean Absolute Prediction Error (MAPE)\ne.t.c."
+  },
+  {
+    "objectID": "comparison.html#sec-GAIC",
+    "href": "comparison.html#sec-GAIC",
+    "title": "Comparing Models",
+    "section": "GAIC",
+    "text": "GAIC\n\n\n\nmodels\ndf\nAIC\n\\(\\chi^2\\)\nBIC\n\n\n\n\nmlinear\n24\n22808.89\n22855.45\n22953.69\n\n\nmadditive\n29.24\n22814.33\n22871.07\n22990.77\n\n\nmfneural\n160\n22930.36\n23240.76\n23895.69\n\n\nmregtree\n30\n38754.64\n38812.84\n38935.64\n\n\nmcf\n404\n38754.64\n24481.28\n26134.99"
+  },
+  {
+    "objectID": "comparison.html#sec-GAIC1",
+    "href": "comparison.html#sec-GAIC1",
+    "title": "Comparing Models",
+    "section": "GAIC (continuous)",
+    "text": "GAIC (continuous)\n\n\nFigure 1: A lollipop plot of AIC of the fitted models."
+  },
+  {
+    "objectID": "comparison.html#prediction-measures",
+    "href": "comparison.html#prediction-measures",
+    "title": "Comparing Models",
+    "section": "prediction measures",
+    "text": "prediction measures\n\n\\[LS= \\sum_{i=1}^{n^*} \\log \\left[y^*_i | \\hat{\\theta}_i \\left(\\textbf{x}_i^*\\right) \\right] \\]\n\\[CRPS = -\\sum_{i=1}^{n} \\int \\left(F(y| \\hat{\\theta}_i \\left(\\textbf{x}_i^*\\right) -\\textbf{I}\\left(y \\ge y^*_i\\right)\\right)^2 dy,\\]\n\\[MAPE= \\texttt{med} \\left(\\left|100 \\left(\\frac{\\hat{\\mu}_i(\\textbf{x}_i^*)-y^*}{y^*}\\right)  \\right|_{i=1,\\ldots.n}\\right)\\]"
+  },
+  {
+    "objectID": "comparison.html#prediction-measures-table",
+    "href": "comparison.html#prediction-measures-table",
+    "title": "Comparing Models",
+    "section": "prediction measures table",
+    "text": "prediction measures table\n\n\n\nmodels\nLS\nCRPS\n\n\n\n\n\nmlinear\n-\n-\n\n\n\nmadditive\n-6.2288\n73.8201\n\n\n\nmfneural\n-6.5126\n79.9394\n\n\n\nmregtree\n-6.2930\n78.6704\n\n\n\nmcf\n-6.2966\n79.0644\n\n\n\n\n\n\nResults would vary with different partitions of the data."
+  },
+  {
+    "objectID": "comparison.html#summary",
+    "href": "comparison.html#summary",
+    "title": "Comparing Models",
+    "section": "summary",
+    "text": "summary\n\nthe GAIC is well established and tested (the df of freedom need to be known)\nthe linear and additive model are good when there are not many explanatory variables (but somehow interactions have to be considered)\nmore work has to be done to standardised all ML techniques so their partitioning of data are comparable to the conventional additive models"
+  },
+  {
+    "objectID": "comparison.html#end",
+    "href": "comparison.html#end",
+    "title": "Comparing Models",
+    "section": "end",
+    "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nwww.gamlss.com"
   }
 ]
