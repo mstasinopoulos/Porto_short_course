@@ -1594,5 +1594,194 @@
     "title": "Interpreting models",
     "section": "end",
     "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
+  },
+  {
+    "objectID": "TheRsoftware.html#introduction",
+    "href": "TheRsoftware.html#introduction",
+    "title": "The R software",
+    "section": "Introduction",
+    "text": "Introduction\n\nresiduals in GAMLSS\nan example; the rent99 data\nR packages"
+  },
+  {
+    "objectID": "TheRsoftware.html#introduction-1",
+    "href": "TheRsoftware.html#introduction-1",
+    "title": "The R software",
+    "section": "Introduction",
+    "text": "Introduction\n\nGAMLSS uses as residuals the\n\nnormalised quantile residuals\\(\\equiv\\) z-scores"
+  },
+  {
+    "objectID": "TheRsoftware.html#pit-and-z-scores-residuals",
+    "href": "TheRsoftware.html#pit-and-z-scores-residuals",
+    "title": "The R software",
+    "section": "PIT and z-scores residuals",
+    "text": "PIT and z-scores residuals\nlet \\(y_i\\) and \\(F(y_i, \\hat(\\theta)_i)\\) be the ith observation and its fitted cdf respectively. Then the Probability Integral Transformed (PIT) residuals are\n\\[u_i = F(y_i, \\hat(\\theta)_i) \\] and the z-scores residuals are\n\\[z_i = \\Phi^{-1}(y_i, \\hat(\\theta)_i) \\]"
+  },
+  {
+    "objectID": "TheRsoftware.html#properties",
+    "href": "TheRsoftware.html#properties",
+    "title": "The R software",
+    "section": "properties",
+    "text": "properties\nIf the distribution of \\(y_i\\) is specified correctly then PIT are uniform;\ni.e \\[u_i \\sim U(0,1)\\]\nand z-scores are normally distributed\ni.e. \\[z_i \\sim NO(0,1)\\]"
+  },
+  {
+    "objectID": "TheRsoftware.html#pit",
+    "href": "TheRsoftware.html#pit",
+    "title": "The R software",
+    "section": "PIT",
+    "text": "PIT"
+  },
+  {
+    "objectID": "TheRsoftware.html#z-scores",
+    "href": "TheRsoftware.html#z-scores",
+    "title": "The R software",
+    "section": "z-scores",
+    "text": "z-scores"
+  },
+  {
+    "objectID": "TheRsoftware.html#diagnostics-plots",
+    "href": "TheRsoftware.html#diagnostics-plots",
+    "title": "The R software",
+    "section": "diagnostics plots",
+    "text": "diagnostics plots\n\nresiduals plots against other variables\nindex \nx-variable\nparameters \nquantiles\nqqplots\nworm plots\ndensity plots\nbucket plots\nskewness plots"
+  },
+  {
+    "objectID": "TheRsoftware.html#data",
+    "href": "TheRsoftware.html#data",
+    "title": "The R software",
+    "section": "Data",
+    "text": "Data\n\n\n\nTable 1: The Table of Data\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nobs number\ny\nx1\nx2\nx3\n…\nxr-1\nxr\n\n\n\n\n1\ny1\nx11\nx12\nx13\n…\nx1r-1\nx1r\n\n\n2\ny2\nx21\nx22\nx23\n…\nx2r-1\nx2r\n\n\n3\ny3\nx31\nx32\nx33\n…\nx3r-1\nx3r\n\n\n…\n…\n…\n…\n…\n…\n…\n…\n\n\nn-1\nyn-1\nxn-11\nxn-12\nxn-12\n…\nxn-1r-1\nxn-1r\n\n\nn\nyn\nxn1\nxn2\nxn3\n…\nxnr-1\nxnr"
+  },
+  {
+    "objectID": "TheRsoftware.html#the-rent-1999-munich-data",
+    "href": "TheRsoftware.html#the-rent-1999-munich-data",
+    "title": "The R software",
+    "section": "The rent 1999 Munich data",
+    "text": "The rent 1999 Munich data\n\n\n\n\nTable 2: Variables in Munich rent data\n\n\n\n\n\n\nR\nFl\nA\nB\nH\nL\nloc\n\n\n\n\n693.3\n50\n1972\n0\n0\n0\n2\n\n\n422.0\n54\n1972\n0\n0\n0\n2\n\n\n736.6\n70\n1972\n0\n0\n0\n2\n\n\n732.2\n50\n1972\n0\n0\n0\n2\n\n\n1295.1\n55\n1893\n0\n0\n0\n2\n\n\n1195.9\n59\n1893\n0\n0\n0\n2"
+  },
+  {
+    "objectID": "TheRsoftware.html#fitting",
+    "href": "TheRsoftware.html#fitting",
+    "title": "The R software",
+    "section": "Fitting",
+    "text": "Fitting\n\nr1 &lt;- gamlss2(R~pb(Fl)+pb(A)+H+loc|pb(Fl)+pb(A)+H+loc, \n           family=GA, data=rent)\n\nGAMLSS-RS iteration  1: Global Deviance = 27566.2472 eps = 0.090862     \nGAMLSS-RS iteration  2: Global Deviance = 27564.2738 eps = 0.000071     \nGAMLSS-RS iteration  3: Global Deviance = 27564.1927 eps = 0.000002"
+  },
+  {
+    "objectID": "TheRsoftware.html#residual-plots-agaist-index",
+    "href": "TheRsoftware.html#residual-plots-agaist-index",
+    "title": "The R software",
+    "section": "residual plots agaist index",
+    "text": "residual plots agaist index\n\nlibrary(gamlss.ggplots)\nresid_index(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#against-continuous-x-variables",
+    "href": "TheRsoftware.html#against-continuous-x-variables",
+    "title": "The R software",
+    "section": "against continuous x-variables",
+    "text": "against continuous x-variables\n\nresid_xvar(r1, A)"
+  },
+  {
+    "objectID": "TheRsoftware.html#against-factor-x-variables",
+    "href": "TheRsoftware.html#against-factor-x-variables",
+    "title": "The R software",
+    "section": "against factor x-variables",
+    "text": "against factor x-variables\n\nresid_xvar(r1,loc)"
+  },
+  {
+    "objectID": "TheRsoftware.html#qq-plots",
+    "href": "TheRsoftware.html#qq-plots",
+    "title": "The R software",
+    "section": "QQ-plots",
+    "text": "QQ-plots\n\nresid_qqplot(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#worm-plots",
+    "href": "TheRsoftware.html#worm-plots",
+    "title": "The R software",
+    "section": "worm plots",
+    "text": "worm plots\n\nresid_wp(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#density-plots",
+    "href": "TheRsoftware.html#density-plots",
+    "title": "The R software",
+    "section": "density plots",
+    "text": "density plots\n\nresid_density(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#bucket-plots",
+    "href": "TheRsoftware.html#bucket-plots",
+    "title": "The R software",
+    "section": "bucket plots",
+    "text": "bucket plots\n\nmoment_bucket(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#symmetry-plots",
+    "href": "TheRsoftware.html#symmetry-plots",
+    "title": "The R software",
+    "section": "symmetry plots",
+    "text": "symmetry plots\n\nresid_symmetry(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#ecdf-plot",
+    "href": "TheRsoftware.html#ecdf-plot",
+    "title": "The R software",
+    "section": "ecdf plot",
+    "text": "ecdf plot\n\nresid_ecdf(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#detrended-ecdf-plot",
+    "href": "TheRsoftware.html#detrended-ecdf-plot",
+    "title": "The R software",
+    "section": "detrended ecdf plot",
+    "text": "detrended ecdf plot\n\nresid_dtop(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#all-in-one-plots",
+    "href": "TheRsoftware.html#all-in-one-plots",
+    "title": "The R software",
+    "section": "all in one plots",
+    "text": "all in one plots\n\nresid_plots(r1)"
+  },
+  {
+    "objectID": "TheRsoftware.html#all-in-one-plots-standard",
+    "href": "TheRsoftware.html#all-in-one-plots-standard",
+    "title": "The R software",
+    "section": "all in one plots (standard)",
+    "text": "all in one plots (standard)\n\nplot(r1,which=\"resid\")"
+  },
+  {
+    "objectID": "TheRsoftware.html#older-packages",
+    "href": "TheRsoftware.html#older-packages",
+    "title": "The R software",
+    "section": "Older Packages",
+    "text": "Older Packages\n\ngamlss: the original (needs dist and data)\ngamlss.dist: defining the gamlss.family distributions\ngamlss.data: for extra data sets\ngamlss.add: connect with mgcv, nnet and trees\ngamlss.tr: for truncating gamlss.family distributions\ngamlss.cens: for censored response variables\ngamlss.demo: for demonstrating GAMLSS concepts\ngamlss.mx: for fitting finite mixtures"
+  },
+  {
+    "objectID": "TheRsoftware.html#new-packages",
+    "href": "TheRsoftware.html#new-packages",
+    "title": "The R software",
+    "section": "New Packages",
+    "text": "New Packages\n\ngamboostLSS for GAMLSS boosting\nbamlss the Bayesian GAMLSS\ngamlss2\\(^*\\): the new version of GAMLSS\ngamlss.ggplots: using ggplot2 within GAMLSS\ngamlss.foreach: for parallel computing\ngamlss.prepdata: preparation of data before fitting\ngamlss.lasso: for LASSO. Ridge and elastic Net regression\ngamlss.shiny\\(^*\\): similar to gamlss.demo\ntopmodels distributional regression help (not necessary gamlss)\n\n\n\n\\(^*\\) in GitHub needed testing"
+  },
+  {
+    "objectID": "TheRsoftware.html#why-gamlss2",
+    "href": "TheRsoftware.html#why-gamlss2",
+    "title": "The R software",
+    "section": "why gamlss2",
+    "text": "why gamlss2\n\ngamlss() for very large data is slow\npredict in gamlss is not easy to use\ncurrent implementation can cope with only 4 parameters \\(\\mu\\), \\(\\sigma\\), \\(\\nu\\) and \\(\\tau\\)\nto connect different estimation statistical approaches\n\npenalised likelihood\nBayesian\nboosting\n\nto implement extra algorithms i.e. stepwise, robust\nto implement machine learning methodology"
+  },
+  {
+    "objectID": "TheRsoftware.html#getting-the-libraries",
+    "href": "TheRsoftware.html#getting-the-libraries",
+    "title": "The R software",
+    "section": "getting the libraries",
+    "text": "getting the libraries\n\nFor CRAN use\n\ninstall.packages(gamlss)\n\nfor GitHub use\n\ndevtools::install_github(\"gamlss-dev/gamlss2\")\nhttps://gamlss-dev.r-universe.dev/builds\n\nand then use\n\nlibrary(gamlss2)"
+  },
+  {
+    "objectID": "TheRsoftware.html#end",
+    "href": "TheRsoftware.html#end",
+    "title": "The R software",
+    "section": "end",
+    "text": "end\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   }
 ]
