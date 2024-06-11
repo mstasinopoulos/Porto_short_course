@@ -317,7 +317,7 @@ Personal view for the future of `GAMLSS` development;
 ## the team {.smaller}
 
 | working party          | current                | past                         |
-|:-----------------------|:-----------------------|:-----------------------------|
+|:---------------------|:---------------------|:---------------------------|
 | `Gillian Heller`       | `Konstantinos Pateras` | Popi Akantziliotou           |
 | `Fernanda De Bastiani` | Paul Eilers            | Vlasios Voudouris            |
 | `Thomas Kneib`         | Nikos Kametas          | Nicoleta Mortan              |
@@ -332,7 +332,7 @@ Personal view for the future of `GAMLSS` development;
 
 ## end
 
-[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+[back to the index](https://mstasinopoulos.github.io/Porto_short_course/)
 
 ::: {layout-ncol="3," layout-nrow="1"}
 ![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books
