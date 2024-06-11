@@ -616,7 +616,7 @@ m3 <- histDist(Rdax, family=GT, nbins=30, line.col="black")
 
 ## END
 
-[back to the index](https://mstasinopoulos.github.io/ShortCourse/)
+[back to the index](https://mstasinopoulos.github.io/Porto_short_course/)
 
 ::: {layout-ncol="3," layout-nrow="1"}
 ![](book-1.png){width="300"} ![](BOOK-2.png){width="323"} ![](book3.png){width="333"} The Books

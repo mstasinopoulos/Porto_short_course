@@ -290,8 +290,8 @@
     "objectID": "Continuous_Distributions.html#types",
     "href": "Continuous_Distributions.html#types",
     "title": "Continuous Distributions",
-    "section": "",
-    "text": "\\((-\\infty, \\infty)\\) real line \\(\\Re\\) [Chapter 4 of Rigby et al (2019)]\n\\((0, \\infty )\\) positive real line \\(\\Re^{+}\\) [Chapter 5]\n\\((0,1)\\) real line on interval \\(\\Re_{(0,1)}\\) (not containing zero or one) [Chapter 6]"
+    "section": "Types",
+    "text": "Types\n\n\\((-\\infty, \\infty)\\) real line \\(\\Re\\) [Chapter 4 of Rigby et al (2019)]\n\\((0, \\infty )\\) positive real line \\(\\Re^{+}\\) [Chapter 5]\n\\((0,1)\\) real line on interval \\(\\Re_{(0,1)}\\) (not containing zero or one) [Chapter 6]"
   },
   {
     "objectID": "Continuous_Distributions.html#location-and-scale-family",
@@ -592,7 +592,7 @@
     "href": "Continuous_Distributions.html#end",
     "title": "Continuous Distributions",
     "section": "END",
-    "text": "END\nback to the index\n\n\n\n\n\n\n   The Books"
+    "text": "END\nback to the index\n\n\n\n   The Books\n\n\n\n\n\n\n\nwww.gamlss.com"
   },
   {
     "objectID": "diagnostics.html",
