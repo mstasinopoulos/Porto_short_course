@@ -143,7 +143,7 @@ Rsq(r1)
 One way of checking the adequacy of a model is to examine the residuals.
 
 ```{r}
-resid_plots(r1)
+head(resid(r1))
 ```
 
 <!-- More about the interpretation of the four plots in Figure \ref{fig:LM_residual_plot} can be found in Section \ref{The plot() function}. -->

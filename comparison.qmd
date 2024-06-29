@@ -91,11 +91,11 @@ Note that degrees of freedom are required
 ## GAIC {#sec-GAIC}
 
 ```{r}
+rm(list=ls())
 library(gamlss)
 library(broom)
 library(knitr)
 load("~/Dropbox/github/website/shortCourse/Porto-gamlss sort course/selecting.RData")
-# remove two variables
 ```
 
 | models    |    df |      AIC | $\chi^2$ |      BIC |
@@ -130,7 +130,7 @@ model_GAIC_lollipop(mlinear, madditive, mneural, mregtree, mcf)
 
 | models    |      LS |    CRPS |     |
 |-----------|--------:|--------:|----:|
-| mlinear   |      \- |      \- |     |
+| mlinear   | -6.2302 | 73.5738 |     |
 | madditive | -6.2288 | 73.8201 |     |
 | mfneural  | -6.5126 | 79.9394 |     |
 | mregtree  | -6.2930 | 78.6704 |     |
